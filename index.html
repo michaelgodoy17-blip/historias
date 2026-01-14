@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Anotações por Cliente</title>
+
+  <style>
+    /* 🔒 CSS ORIGINAL – NÃO ALTERADO */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #f4f5f7;
+      color: #333;
+    }
+
+    header {
+      background: #fff;
+      padding: 14px 16px;
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    header select,
+    header button {
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    header button:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    #cardsContainer {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .06);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .cliente-nome {
+      font-size: 12px;
+      opacity: .6;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .card-footer button {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .card-acoes {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      opacity: .6;
+    }
+
+    .card-acoes span {
+      cursor: pointer;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .modal-content {
+      width: 80vw;
+      max-width: 1200px;
+      height: 80vh;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    #tituloAssunto {
+      font-size: 20px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .importante {
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+      align-items: center;
+    }
+
+    #historico {
+      background: #f7f8fa;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .nota {
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, .05);
+    }
+
+    .nota-topo {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .nota-acoes {
+      display: flex;
+      gap: 8px;
+      opacity: .5;
+      font-size: 13px;
+    }
+
+    .nota-acoes span {
+      cursor: pointer;
+    }
+
+    .nota small {
+      display: block;
+      margin-top: 4px;
+      opacity: .5;
+    }
+
+    #novaAnotacao {
+      height: 120px;
+      resize: none;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .modal-actions button {
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <select id="clienteSelect"></select>
+    <select id="filtroSelect">
+      <option value="todos">Todos</option>
+      <option value="importantes">Importantes</option>
+    </select>
+    <button id="novoClienteBtn">+ Cliente</button>
+    <button id="novoAssuntoBtn" disabled>+ História</button>
+  </header>
+
+  <main id="cardsContainer"></main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <input id="tituloAssunto" placeholder="Título da história">
+
+      <label class="importante">
+        <input type="checkbox" id="assuntoImportante">
+        Marcar como importante
+      </label>
+
+      <div id="historico"></div>
+
+      <textarea id="novaAnotacao" placeholder="Nova anotação..."></textarea>
+
+      <div class="modal-actions">
+        <button id="salvarAnotacao">Salvar</button>
+        <button id="fecharModal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let dados = JSON.parse(localStorage.getItem("dados")) || { clientes: [] };
+    let clienteAtual = null;
+    let assuntoAtual = null;
+    let filtroAtual = "todos";
+
+    function salvar() {
+      localStorage.setItem("dados", JSON.stringify(dados));
+    }
+
+    function renderClientes() {
+      clienteSelect.innerHTML = `<option value="todos">Todos os Clientes</option>`;
+      dados.clientes.forEach((c, i) => {
+        clienteSelect.innerHTML += `<option value="${i}">${c.nome}</option>`;
+      });
+      clienteSelect.value = "todos";
+      clienteAtual = null;
+      novoAssuntoBtn.disabled = true;
+    }
+
+    function renderCards() {
+      cardsContainer.innerHTML = "";
+
+      dados.clientes.forEach((cliente, ci) => {
+        if (clienteAtual && cliente !== clienteAtual) return;
+
+        cliente.assuntos.forEach((assunto, ai) => {
+          if (filtroAtual === "importantes" && !assunto.importante) return;
+
+          const card = document.createElement("div");
+          card.className = "card";
+
+          card.innerHTML = `
+            <h3>${cliente.nome}</h3>
+            <div class="cliente-nome">${assunto.titulo || "Sem título"}</div>
+
+            <div class="card-footer">
+              <button onclick="abrirAssunto(${ci}, ${ai})">Abrir</button>
+              <div class="card-acoes">
+                ${assunto.importante ? "⭐" : ""}
+                <span onclick="excluirHistoria(${ci}, ${ai})">🗑️</span>
+              </div>
+            </div>
+          `;
+
+          cardsContainer.appendChild(card);
+        });
+      });
+    }
+
+    function abrirAssunto(ci, ai) {
+      clienteAtual = dados.clientes[ci];
+      assuntoAtual = clienteAtual.assuntos[ai];
+
+      modal.classList.remove("hidden");
+      tituloAssunto.value = assuntoAtual.titulo;
+      assuntoImportante.checked = assuntoAtual.importante;
+      renderHistorico();
+    }
+
+    function renderHistorico() {
+      historico.innerHTML = "";
+
+      [...assuntoAtual.anotacoes].reverse().forEach((a, i) => {
+        const realIndex = assuntoAtual.anotacoes.length - 1 - i;
+
+        historico.innerHTML += `
+          <div class="nota">
+            <div class="nota-topo">
+              <div class="nota-texto">${a.texto}</div>
+              <div class="nota-acoes">
+                <span onclick="editarNota(${realIndex}, this)">✏️</span>
+                <span onclick="excluirNota(${realIndex})">🗑️</span>
+              </div>
+            </div>
+            <small>${a.data}</small>
+          </div>
+        `;
+      });
+    }
+
+    function editarNota(index, el) {
+      const div = el.closest(".nota").querySelector(".nota-texto");
+      div.contentEditable = true;
+      div.focus();
+      div.onblur = () => {
+        assuntoAtual.anotacoes[index].texto = div.textContent.trim();
+        div.contentEditable = false;
+        salvar();
+      };
+    }
+
+    function excluirNota(index) {
+      if (!confirm("Excluir anotação?")) return;
+      assuntoAtual.anotacoes.splice(index, 1);
+      salvar();
+      renderHistorico();
+    }
+
+    function excluirHistoria(ci, ai) {
+      if (!confirm("Deseja excluir esta história?")) return;
+      dados.clientes[ci].assuntos.splice(ai, 1);
+      salvar();
+      renderCards();
+    }
+
+    clienteSelect.onchange = () => {
+      if (clienteSelect.value === "todos") {
+        clienteAtual = null;
+        novoAssuntoBtn.disabled = true;
+      } else {
+        clienteAtual = dados.clientes[clienteSelect.value];
+        novoAssuntoBtn.disabled = false;
+      }
+      renderCards();
+    };
+
+    filtroSelect.onchange = () => {
+      filtroAtual = filtroSelect.value;
+      renderCards();
+    };
+
+    novoClienteBtn.onclick = () => {
+      const nome = prompt("Nome do cliente:");
+      if (!nome) return;
+      dados.clientes.push({ nome, assuntos: [] });
+      salvar();
+      renderClientes();
+      renderCards();
+    };
+
+    novoAssuntoBtn.onclick = () => {
+      const novoAssunto = { titulo: "", importante: false, anotacoes: [] };
+      clienteAtual.assuntos.push(novoAssunto);
+      assuntoAtual = novoAssunto;
+
+      salvar();
+      renderCards();
+
+      modal.classList.remove("hidden");
+      tituloAssunto.value = "";
+      assuntoImportante.checked = false;
+      historico.innerHTML = "";
+      novaAnotacao.value = "";
+    };
+
+    salvarAnotacao.onclick = () => {
+      assuntoAtual.titulo = tituloAssunto.value;
+      assuntoAtual.importante = assuntoImportante.checked;
+
+      if (novaAnotacao.value.trim()) {
+        assuntoAtual.anotacoes.push({
+          texto: novaAnotacao.value,
+          data: new Date().toLocaleString("pt-BR")
+        });
+        novaAnotacao.value = "";
+      }
+
+      salvar();
+      renderHistorico();
+      renderCards();
+    };
+
+    fecharModal.onclick = () => modal.classList.add("hidden");
+
+    renderClientes();
+    renderCards();
+  </script>
+
+</body>
+
+</html>
