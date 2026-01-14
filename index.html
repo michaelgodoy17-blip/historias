@@ -265,6 +265,9 @@
           const card = document.createElement("div");
           card.className = "card";
 
+          // 🔹 ADIÇÃO: abrir com duplo clique
+          card.ondblclick = () => abrirAssunto(ci, ai);
+
           card.innerHTML = `
             <h3>${cliente.nome}</h3>
             <div class="cliente-nome">${assunto.titulo || "Sem título"}</div>
@@ -397,6 +400,13 @@
     };
 
     fecharModal.onclick = () => modal.classList.add("hidden");
+
+    // 🔹 ADIÇÃO: fechar modal com ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        modal.classList.add("hidden");
+      }
+    });
 
     renderClientes();
     renderCards();
