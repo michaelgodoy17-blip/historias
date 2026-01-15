@@ -24,6 +24,46 @@
       --radius-lg: 14px;
       --radius-xl: 18px;
       --transition: all 0.2s ease;
+
+      /* Tags colors */
+      --tag-urgent: #fef3c7;
+      --tag-urgent-text: #92400e;
+      --tag-followup: #dbeafe;
+      --tag-followup-text: #1e40af;
+      --tag-vip: #f3e8ff;
+      --tag-vip-text: #6b21a8;
+      --tag-pending: #f0f9ff;
+      --tag-pending-text: #0369a1;
+      --tag-general: #f1f5f9;
+      --tag-general-text: #475569;
+    }
+
+    /* Dark theme variables */
+    .dark-mode {
+      --primary: #60a5fa;
+      --primary-hover: #3b82f6;
+      --surface: #1e293b;
+      --surface-secondary: #0f172a;
+      --surface-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-tertiary: #94a3b8;
+      --border: #475569;
+      --border-hover: #64748b;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.25), 0 6px 15px rgba(0, 0, 0, 0.2);
+
+      /* Dark mode tag colors */
+      --tag-urgent: #92400e;
+      --tag-urgent-text: #fef3c7;
+      --tag-followup: #1e40af;
+      --tag-followup-text: #dbeafe;
+      --tag-vip: #6b21a8;
+      --tag-vip-text: #f3e8ff;
+      --tag-pending: #0369a1;
+      --tag-pending-text: #f0f9ff;
+      --tag-general: #475569;
+      --tag-general-text: #f1f5f9;
     }
 
     * {
@@ -39,12 +79,13 @@
       line-height: 1.5;
       font-size: 14px;
       min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     /* HEADER */
     header {
       background: var(--surface);
-      padding: 16px 24px;
+      padding: 20px 24px;
       border-bottom: 1px solid var(--border);
       box-shadow: var(--shadow);
       position: sticky;
@@ -52,29 +93,88 @@
       z-index: 100;
     }
 
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
+    .header-top {
       display: flex;
-      gap: 12px;
+      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .logo {
       font-weight: 600;
       font-size: 18px;
       color: var(--primary);
-      margin-right: 8px;
-      padding-right: 16px;
-      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .header-controls {
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface-tertiary);
+      color: var(--text-primary);
+    }
+
+    .sun-icon,
+    .moon-icon {
+      display: none;
+    }
+
+    .dark-mode .moon-icon {
+      display: block;
+    }
+
+    .dark-mode .sun-icon {
+      display: none;
+    }
+
+    .light-mode .sun-icon {
+      display: block;
+    }
+
+    .light-mode .moon-icon {
+      display: none;
+    }
+
+    /* CONTROLS SECTION */
+    .controls-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .client-controls {
       display: flex;
       gap: 10px;
+      align-items: center;
       flex-wrap: wrap;
-      flex: 1;
     }
 
     select,
@@ -89,6 +189,10 @@
       cursor: pointer;
       transition: var(--transition);
       outline: none;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     select:focus,
@@ -119,10 +223,92 @@
       cursor: not-allowed;
     }
 
-    .header-actions {
+    .import-export {
       display: flex;
       gap: 8px;
       margin-left: auto;
+    }
+
+    /* SEARCH SECTION */
+    .search-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    #searchInput:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      outline: none;
+    }
+
+    .search-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .search-filter {
+      padding: 6px 12px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .search-filter:hover {
+      background: var(--surface-tertiary);
+    }
+
+    .search-filter.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .clear-search {
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      opacity: 0.7;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .clear-search:hover {
+      opacity: 1;
+      color: var(--primary);
     }
 
     /* MAIN CONTENT */
@@ -153,7 +339,7 @@
     /* CARDS GRID */
     #cardsContainer {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
 
@@ -189,6 +375,70 @@
       color: var(--text-secondary);
       font-weight: 500;
       letter-spacing: 0.3px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tag-urgent {
+      background: var(--tag-urgent);
+      color: var(--tag-urgent-text);
+    }
+
+    .tag-followup {
+      background: var(--tag-followup);
+      color: var(--tag-followup-text);
+    }
+
+    .tag-vip {
+      background: var(--tag-vip);
+      color: var(--tag-vip-text);
+    }
+
+    .tag-pending {
+      background: var(--tag-pending);
+      color: var(--tag-pending-text);
+    }
+
+    .tag-general {
+      background: var(--tag-general);
+      color: var(--tag-general-text);
+    }
+
+    .tag-remove {
+      cursor: pointer;
+      opacity: 0.7;
+      transition: var(--transition);
+      padding: 1px;
+      border-radius: 50%;
+      width: 14px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tag-remove:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .dark-mode .tag-remove:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .card-footer {
@@ -311,6 +561,32 @@
       align-items: center;
       gap: 16px;
       margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .modal-tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tags-input-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .tags-select {
+      font-size: 12px;
+      padding: 4px 8px;
+      min-width: 120px;
+    }
+
+    .add-tag-btn {
+      padding: 4px 12px;
+      font-size: 12px;
     }
 
     .checkbox-container {
@@ -486,14 +762,53 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
-      .header-content {
+      header {
+        padding: 16px;
+      }
+
+      .header-top {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
         gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .logo-area {
+        width: 100%;
+        justify-content: space-between;
       }
 
       .header-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .controls-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .client-controls {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .import-export {
         margin-left: 0;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .search-section {
+        width: 100%;
+      }
+
+      .search-container {
+        max-width: 100%;
+      }
+
+      .search-filters {
         justify-content: flex-start;
       }
 
@@ -513,6 +828,31 @@
 
       .modal-body {
         padding: 16px;
+      }
+
+      .modal-options {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .client-controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .client-controls select,
+      .client-controls button {
+        width: 100%;
+      }
+
+      .import-export {
+        flex-direction: column;
+      }
+
+      .import-export button {
+        width: 100%;
       }
     }
 
@@ -539,12 +879,47 @@
   </style>
 </head>
 
-<body>
+<body class="light-mode">
 
   <header>
-    <div class="header-content">
-      <div class="logo">Notas</div>
-      <div class="header-controls">
+    <!-- TOP ROW: Logo e Toggle de Tema -->
+    <div class="header-top">
+      <div class="logo-area">
+        <div class="logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          Notas
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECOND ROW: Controles Principais -->
+    <div class="controls-section">
+      <div class="client-controls">
         <select id="clienteSelect"></select>
         <select id="filtroSelect">
           <option value="todos">Todos</option>
@@ -553,10 +928,32 @@
         <button id="novoClienteBtn" class="primary">+ Cliente</button>
         <button id="novoAssuntoBtn" class="primary" disabled>+ História</button>
       </div>
-      <div class="header-actions">
+
+      <div class="import-export">
         <button onclick="exportarDados()">Exportar</button>
         <button onclick="importInput.click()">Importar</button>
         <input type="file" id="importInput" accept=".json" hidden>
+      </div>
+    </div>
+
+    <!-- THIRD ROW: Busca -->
+    <div class="search-section">
+      <div class="search-container">
+        <div class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </div>
+        <input id="searchInput" type="text" placeholder="Buscar em histórias e anotações...">
+      </div>
+
+      <div class="search-filters">
+        <span class="search-filter active" data-filter="all">Tudo</span>
+        <span class="search-filter" data-filter="titles">Títulos</span>
+        <span class="search-filter" data-filter="notes">Anotações</span>
+        <span class="search-filter" data-filter="tags">Tags</span>
+        <span class="clear-search" onclick="limparBusca()">Limpar busca</span>
       </div>
     </div>
   </header>
@@ -581,6 +978,22 @@
             <input type="checkbox" id="assuntoImportante">
             <span>Marcar como importante</span>
           </label>
+
+          <div class="modal-tags">
+            <span style="font-size: 14px; color: var(--text-secondary);">Tags:</span>
+            <div class="tags-input-container" id="modalTagsContainer">
+              <!-- Tags serão inseridas aqui -->
+            </div>
+            <select class="tags-select" id="tagSelect">
+              <option value="">Adicionar tag...</option>
+              <option value="urgent" style="color: var(--tag-urgent-text);">🔴 Urgente</option>
+              <option value="followup" style="color: var(--tag-followup-text);">🔵 Follow-up</option>
+              <option value="vip" style="color: var(--tag-vip-text);">🟣 VIP</option>
+              <option value="pending" style="color: var(--tag-pending-text);">🟡 Pendente</option>
+              <option value="general" style="color: var(--tag-general-text);">⚪ Geral</option>
+            </select>
+            <button class="add-tag-btn primary" id="addTagBtn">+</button>
+          </div>
         </div>
       </div>
 
@@ -608,7 +1021,104 @@
     let clienteAtual = null
     let assuntoAtual = null
     let filtroAtual = "todos"
+    let searchFilter = "all"
+    let searchTerm = ""
 
+    // Sistema de Tema
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light'
+      document.body.className = savedTheme + '-mode'
+
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark-mode')) {
+          document.body.className = 'light-mode'
+          localStorage.setItem('theme', 'light')
+        } else {
+          document.body.className = 'dark-mode'
+          localStorage.setItem('theme', 'dark')
+        }
+      })
+    }
+
+    // Sistema de Busca
+    function initSearch() {
+      const searchInput = document.getElementById('searchInput')
+      const searchFilters = document.querySelectorAll('.search-filter')
+
+      searchInput.addEventListener('input', (e) => {
+        searchTerm = e.target.value.toLowerCase().trim()
+        renderCards()
+      })
+
+      searchFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+          if (filter.classList.contains('clear-search')) return
+          searchFilters.forEach(f => f.classList.remove('active'))
+          filter.classList.add('active')
+          searchFilter = filter.dataset.filter
+          renderCards()
+        })
+      })
+    }
+
+    // Sistema de Tags
+    const tagConfig = {
+      urgent: { name: 'Urgente', class: 'tag-urgent' },
+      followup: { name: 'Follow-up', class: 'tag-followup' },
+      vip: { name: 'VIP', class: 'tag-vip' },
+      pending: { name: 'Pendente', class: 'tag-pending' },
+      general: { name: 'Geral', class: 'tag-general' }
+    }
+
+    function initTags() {
+      const tagSelect = document.getElementById('tagSelect')
+      const addTagBtn = document.getElementById('addTagBtn')
+
+      addTagBtn.addEventListener('click', () => {
+        const tagValue = tagSelect.value
+        if (tagValue && assuntoAtual && !assuntoAtual.tags?.includes(tagValue)) {
+          if (!assuntoAtual.tags) assuntoAtual.tags = []
+          assuntoAtual.tags.push(tagValue)
+          renderModalTags()
+          salvar()
+        }
+      })
+
+      tagSelect.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          addTagBtn.click()
+        }
+      })
+    }
+
+    function renderModalTags() {
+      const container = document.getElementById('modalTagsContainer')
+      if (!assuntoAtual?.tags || assuntoAtual.tags.length === 0) {
+        container.innerHTML = '<span style="color: var(--text-tertiary); font-size: 13px;">Nenhuma tag adicionada</span>'
+        return
+      }
+
+      container.innerHTML = assuntoAtual.tags.map(tag => `
+        <span class="tag ${tagConfig[tag].class}">
+          ${tagConfig[tag].name}
+          <span class="tag-remove" onclick="removerTag('${tag}')">×</span>
+        </span>
+      `).join('')
+    }
+
+    function removerTag(tag) {
+      if (assuntoAtual?.tags) {
+        const index = assuntoAtual.tags.indexOf(tag)
+        if (index > -1) {
+          assuntoAtual.tags.splice(index, 1)
+          renderModalTags()
+          salvar()
+          renderCards()
+        }
+      }
+    }
+
+    // Funções principais
     function salvar() {
       localStorage.setItem("dados", JSON.stringify(dados))
     }
@@ -653,45 +1163,116 @@
       cardsContainer.innerHTML = ""
 
       let cardCount = 0
+      let filteredCards = []
 
+      // Coletar todos os cards primeiro
       dados.clientes.forEach((cliente, ci) => {
         if (clienteAtual && cliente !== clienteAtual) return
 
         cliente.assuntos.forEach((assunto, ai) => {
           if (filtroAtual === "importantes" && !assunto.importante) return
 
-          cardCount++
+          // Aplicar filtro de busca
+          let matchesSearch = false
 
-          const card = document.createElement("div")
-          card.className = "card fade-in"
-          card.ondblclick = () => abrirAssunto(ci, ai)
+          if (!searchTerm) {
+            matchesSearch = true
+          } else {
+            const searchLower = searchTerm.toLowerCase()
 
-          card.innerHTML = `
-            <div>
-              <div class="card-cliente">${cliente.nome}</div>
-              <h3>${assunto.titulo || "Sem título"}</h3>
-            </div>
-            <div class="card-footer">
-              <div class="card-meta">
-                ${assunto.importante ? '<div class="important-badge">⭐ Importante</div>' : ''}
-                <div>${assunto.anotacoes?.length || 0} nota(s)</div>
-              </div>
-              <div class="card-actions">
-                <button onclick="abrirAssunto(${ci},${ai})">Abrir</button>
-                <div class="delete-btn" onclick="excluirHistoria(${ci},${ai})" title="Excluir história">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          `
-          cardsContainer.appendChild(card)
+            switch (searchFilter) {
+              case 'all':
+                matchesSearch =
+                  cliente.nome.toLowerCase().includes(searchLower) ||
+                  assunto.titulo?.toLowerCase().includes(searchLower) ||
+                  assunto.anotacoes?.some(nota => nota.texto.toLowerCase().includes(searchLower)) ||
+                  (assunto.tags || []).some(tag => tagConfig[tag].name.toLowerCase().includes(searchLower))
+                break
+
+              case 'titles':
+                matchesSearch =
+                  cliente.nome.toLowerCase().includes(searchLower) ||
+                  assunto.titulo?.toLowerCase().includes(searchLower)
+                break
+
+              case 'notes':
+                matchesSearch =
+                  assunto.anotacoes?.some(nota => nota.texto.toLowerCase().includes(searchLower))
+                break
+
+              case 'tags':
+                matchesSearch =
+                  (assunto.tags || []).some(tag => tagConfig[tag].name.toLowerCase().includes(searchLower))
+                break
+            }
+          }
+
+          if (matchesSearch) {
+            filteredCards.push({ cliente, assunto, ci, ai })
+          }
         })
+      })
+
+      // Ordenar: importantes primeiro, depois por data (última anotação)
+      filteredCards.sort((a, b) => {
+        if (a.assunto.importante && !b.assunto.importante) return -1
+        if (!a.assunto.importante && b.assunto.importante) return 1
+
+        const aDate = a.assunto.anotacoes?.length ?
+          new Date(a.assunto.anotacoes[a.assunto.anotacoes.length - 1].data) : new Date(0)
+        const bDate = b.assunto.anotacoes?.length ?
+          new Date(b.assunto.anotacoes[b.assunto.anotacoes.length - 1].data) : new Date(0)
+
+        return bDate - aDate
+      })
+
+      // Renderizar cards filtrados
+      filteredCards.forEach(({ cliente, assunto, ci, ai }) => {
+        cardCount++
+
+        const card = document.createElement("div")
+        card.className = "card fade-in"
+        card.ondblclick = () => abrirAssunto(ci, ai)
+
+        const tagsHTML = assunto.tags?.map(tag =>
+          `<span class="tag ${tagConfig[tag].class}">${tagConfig[tag].name}</span>`
+        ).join('') || ''
+
+        card.innerHTML = `
+          <div>
+            <div class="card-cliente">${cliente.nome}</div>
+            <h3>${assunto.titulo || "Sem título"}</h3>
+            ${tagsHTML ? `<div class="card-tags">${tagsHTML}</div>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-meta">
+              ${assunto.importante ? '<div class="important-badge">⭐ Importante</div>' : ''}
+              <div>${assunto.anotacoes?.length || 0} nota(s)</div>
+            </div>
+            <div class="card-actions">
+              <button onclick="abrirAssunto(${ci},${ai})">Abrir</button>
+              <div class="delete-btn" onclick="excluirHistoria(${ci},${ai})" title="Excluir história">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        `
+        cardsContainer.appendChild(card)
       })
 
       // Atualizar contador
       if (cardCount === 0) {
+        let message = "Nenhuma história encontrada."
+        if (searchTerm) {
+          message = `Nenhuma história encontrada para "${searchTerm}"`
+          if (searchFilter !== 'all') {
+            const filterText = document.querySelector(`.search-filter[data-filter="${searchFilter}"]`).textContent
+            message += ` em ${filterText.toLowerCase()}`
+          }
+        }
+
         cardsContainer.innerHTML = `
           <div class="empty-state">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -700,12 +1281,18 @@
               <line x1="12" y1="18" x2="12" y2="12"/>
               <line x1="9" y1="15" x2="15" y2="15"/>
             </svg>
-            <p>Nenhuma história encontrada. Crie uma nova história para começar.</p>
+            <p>${message}</p>
           </div>
         `
       }
 
-      cardsCount.textContent = `${cardCount} história${cardCount !== 1 ? 's' : ''}`
+      cardsCount.textContent = `${cardCount} história${cardCount !== 1 ? 's' : ''}${searchTerm ? ' encontrada(s)' : ''}`
+    }
+
+    function limparBusca() {
+      searchInput.value = ''
+      searchTerm = ''
+      renderCards()
     }
 
     function abrirAssunto(ci, ai) {
@@ -714,6 +1301,7 @@
       modal.classList.remove("hidden")
       tituloAssunto.value = assuntoAtual.titulo
       assuntoImportante.checked = assuntoAtual.importante
+      renderModalTags()
       renderHistorico()
       // Foco no textarea de nova anotação
       setTimeout(() => novaAnotacao.focus(), 100)
@@ -789,6 +1377,7 @@
       assuntoAtual.anotacoes.splice(index, 1)
       salvar()
       renderHistorico()
+      renderCards()
     }
 
     function excluirHistoria(ci, ai) {
@@ -819,7 +1408,7 @@
     }
 
     novoAssuntoBtn.onclick = () => {
-      const novo = { titulo: "", importante: false, anotacoes: [] }
+      const novo = { titulo: "", importante: false, anotacoes: [], tags: [] }
       clienteAtual.assuntos.push(novo)
       assuntoAtual = novo
       salvar()
@@ -829,6 +1418,7 @@
       assuntoImportante.checked = false
       historico.innerHTML = ""
       novaAnotacao.value = ""
+      renderModalTags()
       tituloAssunto.focus()
     }
 
@@ -873,6 +1463,9 @@
     })
 
     // Inicialização
+    initTheme()
+    initSearch()
+    initTags()
     renderClientes()
     renderCards()
   </script>
