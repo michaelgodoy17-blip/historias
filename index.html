@@ -3,70 +3,192 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anotações por Cliente</title>
-
   <style>
-    /* 🔒 CSS ORIGINAL – NÃO ALTERADO */
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --surface: #ffffff;
+      --surface-secondary: #f8fafc;
+      --surface-tertiary: #f1f5f9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-tertiary: #94a3b8;
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05), 0 6px 15px rgba(0, 0, 0, 0.03);
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --transition: all 0.2s ease;
+    }
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #f4f5f7;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: var(--surface-secondary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      font-size: 14px;
+      min-height: 100vh;
     }
 
+    /* HEADER */
     header {
-      background: #fff;
-      padding: 14px 16px;
+      background: var(--surface);
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--primary);
+      margin-right: 8px;
+      padding-right: 16px;
+      border-right: 1px solid var(--border);
+    }
+
+    .header-controls {
       display: flex;
       gap: 10px;
-      border-bottom: 1px solid #e0e0e0;
+      flex-wrap: wrap;
+      flex: 1;
     }
 
-    header select,
-    header button {
-      padding: 8px 12px;
+    select,
+    button {
+      font-family: inherit;
       font-size: 13px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      background: #fff;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-primary);
       cursor: pointer;
+      transition: var(--transition);
+      outline: none;
     }
 
-    header button:disabled {
-      opacity: .4;
+    select:focus,
+    button:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    select:hover,
+    button:hover:not(:disabled) {
+      border-color: var(--border-hover);
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    button.primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    button:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
     }
 
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .cards-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .cards-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .cards-count {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* CARDS GRID */
     #cardsContainer {
-      padding: 16px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, .06);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 12px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border);
     }
 
     .card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
       margin: 0;
-      font-size: 16px;
-      font-weight: 500;
     }
 
-    .cliente-nome {
+    .card-cliente {
       font-size: 12px;
-      opacity: .6;
+      color: var(--text-secondary);
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
     .card-footer {
@@ -74,35 +196,77 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
     }
 
-    .card-footer button {
+    .card-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .card-actions button {
       padding: 6px 12px;
       font-size: 12px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      background: #fff;
-      cursor: pointer;
+      background: var(--surface-tertiary);
     }
 
-    .card-acoes {
+    .card-actions button:hover {
+      background: var(--border);
+    }
+
+    .card-meta {
       display: flex;
+      align-items: center;
       gap: 8px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .important-badge {
+      color: #f59e0b;
       font-size: 13px;
-      opacity: .6;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .card-acoes span {
+    .delete-btn {
+      color: var(--text-tertiary);
       cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      transition: var(--transition);
     }
 
+    .delete-btn:hover {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    /* MODAL */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .45);
+      background: rgba(15, 23, 42, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.15s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     .hidden {
@@ -110,91 +274,267 @@
     }
 
     .modal-content {
-      width: 80vw;
-      max-width: 1200px;
-      height: 80vh;
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 85vh;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
-    #tituloAssunto {
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header input {
+      width: 100%;
       font-size: 20px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
+      font-weight: 600;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: var(--transition);
     }
 
-    .importante {
+    .modal-header input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .modal-options {
       display: flex;
-      gap: 8px;
-      font-size: 14px;
       align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .modal-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      overflow: hidden;
+    }
+
+    .historico-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
     }
 
     #historico {
-      background: #f7f8fa;
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 13px;
-      overflow-y: auto;
       flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    #historico::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #historico::-webkit-scrollbar-track {
+      background: var(--surface-tertiary);
+      border-radius: 10px;
+    }
+
+    #historico::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 10px;
     }
 
     .nota {
-      padding-bottom: 12px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid rgba(0, 0, 0, .05);
+      background: var(--surface-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .nota:last-child {
+      margin-bottom: 0;
     }
 
     .nota-topo {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .nota-texto {
+      flex: 1;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      color: var(--text-primary);
+      min-height: 20px;
+      outline: none;
+    }
+
+    .nota-texto[contenteditable="true"] {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      border: 1px solid var(--border);
     }
 
     .nota-acoes {
       display: flex;
       gap: 8px;
-      opacity: .5;
-      font-size: 13px;
+      opacity: 0.7;
+      transition: var(--transition);
+    }
+
+    .nota:hover .nota-acoes {
+      opacity: 1;
     }
 
     .nota-acoes span {
       cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      color: var(--text-tertiary);
+      transition: var(--transition);
+      font-size: 14px;
     }
 
-    .nota small {
+    .nota-acoes span:hover {
+      color: var(--primary);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .nota-data {
       display: block;
-      margin-top: 4px;
-      opacity: .5;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 8px;
+    }
+
+    .nova-anotacao-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     #novaAnotacao {
-      height: 120px;
-      resize: none;
-      padding: 12px;
+      width: 100%;
+      min-height: 100px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: inherit;
       font-size: 14px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
+      resize: vertical;
+      transition: var(--transition);
     }
 
-    .modal-actions {
+    #novaAnotacao::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .modal-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 12px;
+      background: var(--surface-secondary);
     }
 
-    .modal-actions button {
-      padding: 10px 16px;
-      font-size: 14px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      background: #fff;
-      cursor: pointer;
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-tertiary);
+    }
+
+    .empty-state p {
+      margin-top: 12px;
+      font-size: 15px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .header-actions {
+        margin-left: 0;
+        justify-content: flex-start;
+      }
+
+      .cards-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      #cardsContainer {
+        grid-template-columns: 1fr;
+      }
+
+      .modal {
+        padding: 12px;
+      }
+
+      .modal-body {
+        padding: 16px;
+      }
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+
+    .slide-up {
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -202,214 +542,339 @@
 <body>
 
   <header>
-    <select id="clienteSelect"></select>
-    <select id="filtroSelect">
-      <option value="todos">Todos</option>
-      <option value="importantes">Importantes</option>
-    </select>
-    <button id="novoClienteBtn">+ Cliente</button>
-    <button id="novoAssuntoBtn" disabled>+ História</button>
+    <div class="header-content">
+      <div class="logo">Notas</div>
+      <div class="header-controls">
+        <select id="clienteSelect"></select>
+        <select id="filtroSelect">
+          <option value="todos">Todos</option>
+          <option value="importantes">Importantes</option>
+        </select>
+        <button id="novoClienteBtn" class="primary">+ Cliente</button>
+        <button id="novoAssuntoBtn" class="primary" disabled>+ História</button>
+      </div>
+      <div class="header-actions">
+        <button onclick="exportarDados()">Exportar</button>
+        <button onclick="importInput.click()">Importar</button>
+        <input type="file" id="importInput" accept=".json" hidden>
+      </div>
+    </div>
   </header>
 
-  <main id="cardsContainer"></main>
+  <main>
+    <div class="cards-header">
+      <h2>Histórias</h2>
+      <div class="cards-count" id="cardsCount"></div>
+    </div>
+
+    <div id="cardsContainer">
+      <!-- Cards serão inseridos aqui dinamicamente -->
+    </div>
+  </main>
 
   <div id="modal" class="modal hidden">
-    <div class="modal-content">
-      <input id="tituloAssunto" placeholder="Título da história">
+    <div class="modal-content slide-up">
+      <div class="modal-header">
+        <input id="tituloAssunto" placeholder="Título da história">
+        <div class="modal-options">
+          <label class="checkbox-container">
+            <input type="checkbox" id="assuntoImportante">
+            <span>Marcar como importante</span>
+          </label>
+        </div>
+      </div>
 
-      <label class="importante">
-        <input type="checkbox" id="assuntoImportante">
-        Marcar como importante
-      </label>
+      <div class="modal-body">
+        <div class="historico-section">
+          <div class="section-title">Histórico</div>
+          <div id="historico"></div>
+        </div>
 
-      <div id="historico"></div>
+        <div class="nova-anotacao-section">
+          <div class="section-title">Nova Anotação</div>
+          <textarea id="novaAnotacao" placeholder="Digite sua anotação aqui..."></textarea>
+        </div>
+      </div>
 
-      <textarea id="novaAnotacao" placeholder="Nova anotação..."></textarea>
-
-      <div class="modal-actions">
-        <button id="salvarAnotacao">Salvar</button>
-        <button id="fecharModal">Fechar</button>
+      <div class="modal-footer">
+        <button id="fecharModal">Cancelar</button>
+        <button id="salvarAnotacao" class="primary">Salvar Anotação</button>
       </div>
     </div>
   </div>
 
   <script>
-    let dados = JSON.parse(localStorage.getItem("dados")) || { clientes: [] };
-    let clienteAtual = null;
-    let assuntoAtual = null;
-    let filtroAtual = "todos";
+    let dados = JSON.parse(localStorage.getItem("dados")) || { clientes: [] }
+    let clienteAtual = null
+    let assuntoAtual = null
+    let filtroAtual = "todos"
 
     function salvar() {
-      localStorage.setItem("dados", JSON.stringify(dados));
+      localStorage.setItem("dados", JSON.stringify(dados))
+    }
+
+    function exportarDados() {
+      const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" })
+      const a = document.createElement("a")
+      a.href = URL.createObjectURL(blob)
+      a.download = "anotacoes.json"
+      a.click()
+    }
+
+    importInput.onchange = e => {
+      const file = e.target.files[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = () => {
+        try {
+          dados = JSON.parse(reader.result)
+          salvar()
+          renderClientes()
+          renderCards()
+          alert("Dados importados com sucesso!")
+        } catch {
+          alert("Arquivo inválido")
+        }
+      }
+      reader.readAsText(file)
     }
 
     function renderClientes() {
-      clienteSelect.innerHTML = `<option value="todos">Todos os Clientes</option>`;
+      clienteSelect.innerHTML = `<option value="todos">Todos os Clientes</option>`
       dados.clientes.forEach((c, i) => {
-        clienteSelect.innerHTML += `<option value="${i}">${c.nome}</option>`;
-      });
-      clienteSelect.value = "todos";
-      clienteAtual = null;
-      novoAssuntoBtn.disabled = true;
+        clienteSelect.innerHTML += `<option value="${i}">${c.nome}</option>`
+      })
+      clienteSelect.value = "todos"
+      clienteAtual = null
+      novoAssuntoBtn.disabled = true
     }
 
     function renderCards() {
-      cardsContainer.innerHTML = "";
+      cardsContainer.innerHTML = ""
+
+      let cardCount = 0
 
       dados.clientes.forEach((cliente, ci) => {
-        if (clienteAtual && cliente !== clienteAtual) return;
+        if (clienteAtual && cliente !== clienteAtual) return
 
         cliente.assuntos.forEach((assunto, ai) => {
-          if (filtroAtual === "importantes" && !assunto.importante) return;
+          if (filtroAtual === "importantes" && !assunto.importante) return
 
-          const card = document.createElement("div");
-          card.className = "card";
+          cardCount++
 
-          // 🔹 ADIÇÃO: abrir com duplo clique
-          card.ondblclick = () => abrirAssunto(ci, ai);
+          const card = document.createElement("div")
+          card.className = "card fade-in"
+          card.ondblclick = () => abrirAssunto(ci, ai)
 
           card.innerHTML = `
-            <h3>${cliente.nome}</h3>
-            <div class="cliente-nome">${assunto.titulo || "Sem título"}</div>
-
+            <div>
+              <div class="card-cliente">${cliente.nome}</div>
+              <h3>${assunto.titulo || "Sem título"}</h3>
+            </div>
             <div class="card-footer">
-              <button onclick="abrirAssunto(${ci}, ${ai})">Abrir</button>
-              <div class="card-acoes">
-                ${assunto.importante ? "⭐" : ""}
-                <span onclick="excluirHistoria(${ci}, ${ai})">🗑️</span>
+              <div class="card-meta">
+                ${assunto.importante ? '<div class="important-badge">⭐ Importante</div>' : ''}
+                <div>${assunto.anotacoes?.length || 0} nota(s)</div>
+              </div>
+              <div class="card-actions">
+                <button onclick="abrirAssunto(${ci},${ai})">Abrir</button>
+                <div class="delete-btn" onclick="excluirHistoria(${ci},${ai})" title="Excluir história">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </div>
               </div>
             </div>
-          `;
+          `
+          cardsContainer.appendChild(card)
+        })
+      })
 
-          cardsContainer.appendChild(card);
-        });
-      });
+      // Atualizar contador
+      if (cardCount === 0) {
+        cardsContainer.innerHTML = `
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <p>Nenhuma história encontrada. Crie uma nova história para começar.</p>
+          </div>
+        `
+      }
+
+      cardsCount.textContent = `${cardCount} história${cardCount !== 1 ? 's' : ''}`
     }
 
     function abrirAssunto(ci, ai) {
-      clienteAtual = dados.clientes[ci];
-      assuntoAtual = clienteAtual.assuntos[ai];
-
-      modal.classList.remove("hidden");
-      tituloAssunto.value = assuntoAtual.titulo;
-      assuntoImportante.checked = assuntoAtual.importante;
-      renderHistorico();
+      clienteAtual = dados.clientes[ci]
+      assuntoAtual = clienteAtual.assuntos[ai]
+      modal.classList.remove("hidden")
+      tituloAssunto.value = assuntoAtual.titulo
+      assuntoImportante.checked = assuntoAtual.importante
+      renderHistorico()
+      // Foco no textarea de nova anotação
+      setTimeout(() => novaAnotacao.focus(), 100)
     }
 
     function renderHistorico() {
-      historico.innerHTML = "";
+      historico.innerHTML = ""
 
-      [...assuntoAtual.anotacoes].reverse().forEach((a, i) => {
-        const realIndex = assuntoAtual.anotacoes.length - 1 - i;
+      if (!assuntoAtual.anotacoes || assuntoAtual.anotacoes.length === 0) {
+        historico.innerHTML = `
+          <div class="empty-state">
+            <p>Nenhuma anotação ainda. Adicione a primeira anotação abaixo.</p>
+          </div>
+        `
+        return
+      }
 
+      ;[...assuntoAtual.anotacoes].reverse().forEach((a, i) => {
+        const idx = assuntoAtual.anotacoes.length - 1 - i
         historico.innerHTML += `
           <div class="nota">
             <div class="nota-topo">
-              <div class="nota-texto">${a.texto}</div>
+              <div class="nota-texto" contenteditable="false">${a.texto}</div>
               <div class="nota-acoes">
-                <span onclick="editarNota(${realIndex}, this)">✏️</span>
-                <span onclick="excluirNota(${realIndex})">🗑️</span>
+                <span onclick="editarNota(${idx},this)" title="Editar nota">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </span>
+                <span onclick="excluirNota(${idx})" title="Excluir nota">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </span>
               </div>
             </div>
-            <small>${a.data}</small>
+            <small class="nota-data">${a.data}</small>
           </div>
-        `;
-      });
+        `
+      })
     }
 
     function editarNota(index, el) {
-      const div = el.closest(".nota").querySelector(".nota-texto");
-      div.contentEditable = true;
-      div.focus();
+      const div = el.closest(".nota").querySelector(".nota-texto")
+      div.contentEditable = true
+      div.focus()
+
+      // Selecionar todo o texto ao editar
+      const range = document.createRange()
+      range.selectNodeContents(div)
+      const sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+
       div.onblur = () => {
-        assuntoAtual.anotacoes[index].texto = div.textContent.trim();
-        div.contentEditable = false;
-        salvar();
-      };
+        assuntoAtual.anotacoes[index].texto = div.textContent.trim()
+        div.contentEditable = false
+        salvar()
+      }
+
+      // Também salvar ao pressionar Enter (mas não criar nova linha)
+      div.onkeydown = (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault()
+          div.blur()
+        }
+      }
     }
 
     function excluirNota(index) {
-      if (!confirm("Excluir anotação?")) return;
-      assuntoAtual.anotacoes.splice(index, 1);
-      salvar();
-      renderHistorico();
+      if (!confirm("Excluir anotação?")) return
+      assuntoAtual.anotacoes.splice(index, 1)
+      salvar()
+      renderHistorico()
     }
 
     function excluirHistoria(ci, ai) {
-      if (!confirm("Deseja excluir esta história?")) return;
-      dados.clientes[ci].assuntos.splice(ai, 1);
-      salvar();
-      renderCards();
+      if (!confirm("Excluir história?")) return
+      dados.clientes[ci].assuntos.splice(ai, 1)
+      salvar()
+      renderCards()
+    }
+
+    novoClienteBtn.onclick = () => {
+      const nome = prompt("Nome do cliente:")
+      if (!nome) return
+      dados.clientes.push({ nome, assuntos: [] })
+      salvar()
+      renderClientes()
+      renderCards()
     }
 
     clienteSelect.onchange = () => {
-      if (clienteSelect.value === "todos") {
-        clienteAtual = null;
-        novoAssuntoBtn.disabled = true;
-      } else {
-        clienteAtual = dados.clientes[clienteSelect.value];
-        novoAssuntoBtn.disabled = false;
-      }
-      renderCards();
-    };
+      clienteAtual = clienteSelect.value === "todos" ? null : dados.clientes[clienteSelect.value]
+      novoAssuntoBtn.disabled = !clienteAtual
+      renderCards()
+    }
 
     filtroSelect.onchange = () => {
-      filtroAtual = filtroSelect.value;
-      renderCards();
-    };
-
-    novoClienteBtn.onclick = () => {
-      const nome = prompt("Nome do cliente:");
-      if (!nome) return;
-      dados.clientes.push({ nome, assuntos: [] });
-      salvar();
-      renderClientes();
-      renderCards();
-    };
+      filtroAtual = filtroSelect.value
+      renderCards()
+    }
 
     novoAssuntoBtn.onclick = () => {
-      const novoAssunto = { titulo: "", importante: false, anotacoes: [] };
-      clienteAtual.assuntos.push(novoAssunto);
-      assuntoAtual = novoAssunto;
-
-      salvar();
-      renderCards();
-
-      modal.classList.remove("hidden");
-      tituloAssunto.value = "";
-      assuntoImportante.checked = false;
-      historico.innerHTML = "";
-      novaAnotacao.value = "";
-    };
+      const novo = { titulo: "", importante: false, anotacoes: [] }
+      clienteAtual.assuntos.push(novo)
+      assuntoAtual = novo
+      salvar()
+      renderCards()
+      modal.classList.remove("hidden")
+      tituloAssunto.value = ""
+      assuntoImportante.checked = false
+      historico.innerHTML = ""
+      novaAnotacao.value = ""
+      tituloAssunto.focus()
+    }
 
     salvarAnotacao.onclick = () => {
-      assuntoAtual.titulo = tituloAssunto.value;
-      assuntoAtual.importante = assuntoImportante.checked;
+      assuntoAtual.titulo = tituloAssunto.value.trim()
+      assuntoAtual.importante = assuntoImportante.checked
 
       if (novaAnotacao.value.trim()) {
         assuntoAtual.anotacoes.push({
           texto: novaAnotacao.value,
           data: new Date().toLocaleString("pt-BR")
-        });
-        novaAnotacao.value = "";
+        })
+        novaAnotacao.value = ""
       }
 
-      salvar();
-      renderHistorico();
-      renderCards();
-    };
+      salvar()
+      renderHistorico()
+      renderCards()
 
-    fecharModal.onclick = () => modal.classList.add("hidden");
+      // Foco de volta no textarea
+      novaAnotacao.focus()
+    }
 
-    // 🔹 ADIÇÃO: fechar modal com ESC
-    document.addEventListener("keydown", (e) => {
+    fecharModal.onclick = () => modal.classList.add("hidden")
+
+    document.addEventListener("keydown", e => {
       if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-        modal.classList.add("hidden");
+        modal.classList.add("hidden")
       }
-    });
 
-    renderClientes();
-    renderCards();
+      // Salvar com Ctrl+Enter no textarea
+      if (e.key === "Enter" && e.ctrlKey && !modal.classList.contains("hidden") && document.activeElement === novaAnotacao) {
+        salvarAnotacao.click()
+      }
+    })
+
+    // Fechar modal ao clicar fora
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden")
+      }
+    })
+
+    // Inicialização
+    renderClientes()
+    renderCards()
   </script>
 
 </body>
