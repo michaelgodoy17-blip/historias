@@ -4,509 +4,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anotações por Cliente</title>
+  <title>Histórias por Cliente</title>
+
   <style>
     :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
       --primary: #3b82f6;
       --primary-hover: #2563eb;
-      --surface: #ffffff;
-      --surface-secondary: #f8fafc;
-      --surface-tertiary: #f1f5f9;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --text-tertiary: #94a3b8;
       --border: #e2e8f0;
-      --border-hover: #cbd5e1;
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.03);
-      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05), 0 6px 15px rgba(0, 0, 0, 0.03);
-      --radius-sm: 6px;
-      --radius: 10px;
-      --radius-lg: 14px;
-      --radius-xl: 18px;
-      --transition: all 0.2s ease;
-
-      /* Tags colors */
-      --tag-urgent: #fef3c7;
-      --tag-urgent-text: #92400e;
-      --tag-followup: #dbeafe;
-      --tag-followup-text: #1e40af;
-      --tag-vip: #f3e8ff;
-      --tag-vip-text: #6b21a8;
-      --tag-pending: #f0f9ff;
-      --tag-pending-text: #0369a1;
-      --tag-general: #f1f5f9;
-      --tag-general-text: #475569;
+      --border-light: #f1f5f9;
+      --overlay: rgba(15, 23, 42, 0.8);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --api-color: #8b5cf6;
+      --danger-hover: #dc2626;
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
     }
 
-    /* Dark theme variables */
-    .dark-mode {
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --text-light: #94a3b8;
       --primary: #60a5fa;
       --primary-hover: #3b82f6;
-      --surface: #1e293b;
-      --surface-secondary: #0f172a;
-      --surface-tertiary: #334155;
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --text-tertiary: #94a3b8;
-      --border: #475569;
-      --border-hover: #64748b;
-      --shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
-      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.25), 0 6px 15px rgba(0, 0, 0, 0.2);
-
-      /* Dark mode tag colors */
-      --tag-urgent: #92400e;
-      --tag-urgent-text: #fef3c7;
-      --tag-followup: #1e40af;
-      --tag-followup-text: #dbeafe;
-      --tag-vip: #6b21a8;
-      --tag-vip-text: #f3e8ff;
-      --tag-pending: #0369a1;
-      --tag-pending-text: #f0f9ff;
-      --tag-general: #475569;
-      --tag-general-text: #f1f5f9;
+      --border: #334155;
+      --border-light: #2d3748;
+      --overlay: rgba(0, 0, 0, 0.85);
+      --api-color: #a78bfa;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      background: var(--surface-secondary);
-      color: var(--text-primary);
-      line-height: 1.5;
-      font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
       min-height: 100vh;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* HEADER */
-    header {
-      background: var(--surface);
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .header-top {
+    /* Cabeçalho com menu hambúrguer */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 32px;
+    }
+
+    .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
     }
 
-    .logo-area {
+    .header-left {
       display: flex;
       align-items: center;
       gap: 16px;
     }
 
-    .logo {
-      font-weight: 600;
-      font-size: 18px;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
     }
 
-    .header-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .theme-toggle {
+    /* Menu Hambúrguer */
+    .menu-toggle {
       background: none;
-      border: 1px solid var(--border);
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background: var(--border-light);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Menu Lateral */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--overlay);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      height: 100%;
+      background: var(--card);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+
+    .menu-sidebar.active {
+      left: 0;
+    }
+
+    .menu-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .menu-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-light);
+      cursor: pointer;
       width: 36px;
       height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       border-radius: 50%;
-      cursor: pointer;
-      color: var(--text-secondary);
-      transition: var(--transition);
-    }
-
-    .theme-toggle:hover {
-      background: var(--surface-tertiary);
-      color: var(--text-primary);
-    }
-
-    .sun-icon,
-    .moon-icon {
-      display: none;
-    }
-
-    .dark-mode .moon-icon {
-      display: block;
-    }
-
-    .dark-mode .sun-icon {
-      display: none;
-    }
-
-    .light-mode .sun-icon {
-      display: block;
-    }
-
-    .light-mode .moon-icon {
-      display: none;
-    }
-
-    /* CONTROLS SECTION */
-    .controls-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .client-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    select,
-    button {
-      font-family: inherit;
-      font-size: 13px;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: var(--transition);
-      outline: none;
-      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s ease;
     }
 
-    select:focus,
-    button:focus,
-    input:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    .menu-close:hover {
+      background: var(--border-light);
+      color: var(--text);
     }
 
-    select:hover,
-    button:hover:not(:disabled) {
-      border-color: var(--border-hover);
+    .menu-items {
+      padding: 16px 0;
     }
 
-    button.primary {
-      background: var(--primary);
-      color: white;
-      border: none;
-    }
-
-    button.primary:hover:not(:disabled) {
-      background: var(--primary-hover);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .import-export {
+    .menu-item {
       display: flex;
-      gap: 8px;
-      margin-left: auto;
-    }
-
-    /* SEARCH SECTION */
-    .search-section {
-      display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 12px;
-    }
-
-    .search-container {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-tertiary);
-      pointer-events: none;
-    }
-
-    #searchInput {
-      width: 100%;
-      padding: 10px 16px 10px 40px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--surface);
-      color: var(--text-primary);
-      font-size: 14px;
-      transition: var(--transition);
-    }
-
-    #searchInput:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      outline: none;
-    }
-
-    .search-filters {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .search-filter {
-      padding: 6px 12px;
-      font-size: 12px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text-secondary);
-      border-radius: var(--radius-sm);
+      padding: 16px 24px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.2s ease;
       cursor: pointer;
-      transition: var(--transition);
-      white-space: nowrap;
+      border-left: 4px solid transparent;
     }
 
-    .search-filter:hover {
-      background: var(--surface-tertiary);
+    .menu-item:hover {
+      background: var(--border-light);
+      border-left-color: var(--primary);
     }
 
-    .search-filter.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .clear-search {
-      padding: 6px 12px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      opacity: 0.7;
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-
-    .clear-search:hover {
-      opacity: 1;
+    .menu-item.active {
+      background: rgba(59, 130, 246, 0.1);
+      border-left-color: var(--primary);
       color: var(--primary);
-    }
-
-    /* MAIN CONTENT */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .cards-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-
-    .cards-header h2 {
-      font-size: 20px;
       font-weight: 600;
-      color: var(--text-primary);
     }
 
-    .cards-count {
-      color: var(--text-secondary);
-      font-size: 13px;
+    .menu-item-icon {
+      font-size: 18px;
+      width: 24px;
+      text-align: center;
     }
 
-    /* CARDS GRID */
-    #cardsContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
+    .header-right {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      transition: var(--transition);
-      border: 1px solid transparent;
-      position: relative;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--border);
-    }
-
-    .card h3 {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      line-height: 1.4;
-      margin: 0;
-    }
-
-    .card-cliente {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 8px 0;
-    }
-
-    .tag {
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 500;
-      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 16px;
     }
 
-    .tag-urgent {
-      background: var(--tag-urgent);
-      color: var(--tag-urgent-text);
-    }
-
-    .tag-followup {
-      background: var(--tag-followup);
-      color: var(--tag-followup-text);
-    }
-
-    .tag-vip {
-      background: var(--tag-vip);
-      color: var(--tag-vip-text);
-    }
-
-    .tag-pending {
-      background: var(--tag-pending);
-      color: var(--tag-pending-text);
-    }
-
-    .tag-general {
-      background: var(--tag-general);
-      color: var(--tag-general-text);
-    }
-
-    .tag-remove {
-      cursor: pointer;
-      opacity: 0.7;
-      transition: var(--transition);
-      padding: 1px;
+    .toggle {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 50%;
-      width: 14px;
-      height: 14px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .tag-remove:hover {
-      opacity: 1;
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    .dark-mode .tag-remove:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .card-actions button {
-      padding: 6px 12px;
-      font-size: 12px;
-      background: var(--surface-tertiary);
-    }
-
-    .card-actions button:hover {
-      background: var(--border);
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--text-tertiary);
-    }
-
-    .important-badge {
-      color: #f59e0b;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .delete-btn {
-      color: var(--text-tertiary);
       cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-      transition: var(--transition);
+      transition: all 0.2s ease;
+      font-size: 18px;
     }
 
-    .delete-btn:hover {
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.05);
+    .toggle:hover {
+      transform: rotate(15deg);
+      box-shadow: var(--shadow);
     }
 
-    /* MODAL */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-      backdrop-filter: blur(4px);
-      animation: fadeIn 0.15s ease;
+    /* Conteúdo Principal */
+    .main-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .main-content.active {
+      display: block;
     }
 
     @keyframes fadeIn {
@@ -519,955 +278,1849 @@
       }
     }
 
-    .hidden {
-      display: none;
-    }
-
-    .modal-content {
-      width: 100%;
-      max-width: 800px;
-      max-height: 85vh;
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-header {
-      padding: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-header input {
-      width: 100%;
-      font-size: 20px;
-      font-weight: 600;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--surface);
-      color: var(--text-primary);
-      transition: var(--transition);
-    }
-
-    .modal-header input::placeholder {
-      color: var(--text-tertiary);
-    }
-
-    .modal-options {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .modal-tags {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .tags-input-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .tags-select {
-      font-size: 12px;
-      padding: 4px 8px;
-      min-width: 120px;
-    }
-
-    .add-tag-btn {
-      padding: 4px 12px;
-      font-size: 12px;
-    }
-
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .checkbox-container input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-      accent-color: var(--primary);
-    }
-
-    .modal-body {
-      padding: 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      overflow: hidden;
-    }
-
-    .historico-section {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow: hidden;
+    /* SEÇÃO: Criar Nova História */
+    .section-creation {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      height: fit-content;
     }
 
     .section-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    #historico {
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 8px;
+    .section-title::before {
+      content: "✏️";
+      font-size: 18px;
     }
 
-    #historico::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    #historico::-webkit-scrollbar-track {
-      background: var(--surface-tertiary);
-      border-radius: 10px;
-    }
-
-    #historico::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 10px;
-    }
-
-    .nota {
-      background: var(--surface-secondary);
+    /* SEÇÃO: Adicionar Cliente */
+    .section-add-client {
+      background: var(--card);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      height: fit-content;
+    }
+
+    .section-add-client .section-title::before {
+      content: "👤";
+      font-size: 18px;
+    }
+
+    /* Formulário de cliente */
+    .client-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-group label::before {
+      content: "→";
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+      font-family: inherit;
+      font-size: 15px;
+      border-radius: 8px;
       border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      transition: all 0.2s ease;
     }
 
-    .nota:last-child {
-      margin-bottom: 0;
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
-    .nota-topo {
+    input,
+    select {
+      padding: 12px 16px;
+      height: 46px;
+    }
+
+    /* Área de criação de histórias */
+    .story-creation {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .story-form-header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    /* Barra de ferramentas de formatação */
+    .formatting-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      background: var(--border-light);
+      border-radius: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .format-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .format-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .format-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .format-btn.list-btn {
+      width: auto;
+      padding: 0 12px;
+      font-size: 13px;
+    }
+
+    .divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 4px;
+    }
+
+    /* Área de texto grande */
+    .story-textarea-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #texto {
+      width: 100%;
+      min-height: 300px;
+      padding: 20px;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.6;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      color: var(--text);
+      resize: vertical;
+      transition: border-color 0.2s ease;
+    }
+
+    #texto:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .story-form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    button.primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    button.secondary {
+      background: var(--border-light);
+      color: var(--text);
+    }
+
+    button.secondary:hover {
+      background: var(--border);
+    }
+
+    button.danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    button.danger:hover {
+      background: var(--danger-hover);
+    }
+
+    button.small {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+
+    button.full-width {
+      width: 100%;
+    }
+
+    /* SEÇÃO: Visualização dos Cards */
+    .section-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cards-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .cards-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+    }
+
+    .cards-header h2::before {
+      content: "📋";
+      font-size: 20px;
+    }
+
+    .client-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* ===== FILTROS MODIFICADOS - LADO DO TÍTULO ===== */
+    .filters-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .filter-group label {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      font-size: 13px;
+      min-width: auto;
+    }
+
+    #clienteSelectCards,
+    #statusFilter {
+      min-width: 150px;
+      padding: 6px 10px;
+      font-size: 13px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    #clienteSelectCards:hover,
+    #statusFilter:hover {
+      border-color: var(--primary);
+    }
+
+    #clienteSelectCards:focus,
+    #statusFilter:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .cards-container {
+      flex: 1;
+      margin-top: 16px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
+
+    /* CARD MODIFICADO - Sem prévia do conteúdo */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--border);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card[data-status="Resolvido"] {
+      border-top-color: var(--success);
+    }
+
+    .card[data-status="Importante"] {
+      border-top-color: var(--warning);
+    }
+
+    .card[data-status="Pendente"] {
+      border-top-color: var(--danger);
+    }
+
+    .card[data-status="API"] {
+      border-top-color: var(--api-color);
+    }
+
+    .card-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 8px;
+      margin-bottom: 16px;
     }
 
-    .nota-texto {
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
       flex: 1;
-      white-space: pre-wrap;
-      line-height: 1.5;
-      color: var(--text-primary);
-      min-height: 20px;
-      outline: none;
+      margin-right: 12px;
     }
 
-    .nota-texto[contenteditable="true"] {
-      background: var(--surface);
-      border-radius: var(--radius-sm);
-      padding: 8px;
-      border: 1px solid var(--border);
+    /* Status badge */
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--border-light);
+      white-space: nowrap;
     }
 
-    .nota-acoes {
-      display: flex;
-      gap: 8px;
-      opacity: 0.7;
-      transition: var(--transition);
+    .status[data-status="Resolvido"] {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
     }
 
-    .nota:hover .nota-acoes {
-      opacity: 1;
+    .status[data-status="Importante"] {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
     }
 
-    .nota-acoes span {
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-      color: var(--text-tertiary);
-      transition: var(--transition);
-      font-size: 14px;
+    .status[data-status="Pendente"] {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
     }
 
-    .nota-acoes span:hover {
-      color: var(--primary);
-      background: rgba(59, 130, 246, 0.05);
+    .status[data-status="API"] {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--api-color);
     }
 
-    .nota-data {
-      display: block;
-      font-size: 11px;
-      color: var(--text-tertiary);
-      margin-top: 8px;
-    }
-
-    .nova-anotacao-section {
+    /* Informações de data */
+    .card-dates {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 6px;
+      margin-bottom: 20px;
+      padding: 12px;
+      background: var(--border-light);
+      border-radius: 8px;
+      font-size: 13px;
     }
 
-    #novaAnotacao {
-      width: 100%;
-      min-height: 100px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      color: var(--text-primary);
-      font-family: inherit;
-      font-size: 14px;
-      resize: vertical;
-      transition: var(--transition);
-    }
-
-    #novaAnotacao::placeholder {
-      color: var(--text-tertiary);
-    }
-
-    .modal-footer {
-      padding: 20px 24px;
-      border-top: 1px solid var(--border);
+    .date-info {
       display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      background: var(--surface-secondary);
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
     }
 
+    .date-info .label {
+      font-weight: 600;
+      color: var(--text);
+      min-width: 70px;
+    }
+
+    .date-info .value {
+      flex: 1;
+    }
+
+    /* Ações do card */
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Estado vazio */
     .empty-state {
       text-align: center;
-      padding: 60px 20px;
-      color: var(--text-tertiary);
+      padding: 80px 20px;
+      color: var(--text-light);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-state h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text);
     }
 
     .empty-state p {
-      margin-top: 12px;
-      font-size: 15px;
+      max-width: 400px;
+      margin: 0 auto;
     }
 
-    /* RESPONSIVE */
+    /* ===== MODAL DE EDIÇÃO MODIFICADO ===== */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--overlay);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--card);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      animation: modalSlideUp 0.3s ease;
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--border-light);
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-header h2::before {
+      content: "📝";
+      font-size: 18px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-light);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: var(--text);
+    }
+
+    .modal-body {
+      padding: 24px 32px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal-main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: none;
+      letter-spacing: normal;
+      margin: 0;
+    }
+
+    /* Status no modal - minimalista na mesma linha */
+    .modal-status-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-status-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    #editStatus {
+      padding: 4px 10px;
+      font-size: 13px;
+      height: 30px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      font-weight: 500;
+      min-width: 120px;
+      transition: all 0.2s ease;
+    }
+
+    #editStatus:hover {
+      border-color: var(--primary);
+    }
+
+    #editStatus:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Área de texto editável no modal - sem barra de formatação */
+    .modal-editable-content {
+      width: 100%;
+      min-height: 300px;
+      padding: 16px;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.6;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--text);
+      resize: vertical;
+      transition: all 0.2s ease;
+      overflow-y: auto;
+      outline: none;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .modal-editable-content:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Estilos para conteúdo formatado dentro da área editável */
+    .modal-editable-content strong {
+      font-weight: bold;
+    }
+
+    .modal-editable-content em {
+      font-style: italic;
+    }
+
+    .modal-editable-content del {
+      text-decoration: line-through;
+    }
+
+    .modal-editable-content ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+
+    .modal-editable-content ol {
+      list-style-type: decimal;
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+
+    .modal-editable-content li {
+      margin-bottom: 4px;
+    }
+
+    /* Garantir que as quebras de linha sejam visíveis */
+    .modal-editable-content br {
+      display: block;
+      content: "";
+      margin-top: 0;
+    }
+
+    .modal-footer {
+      padding: 16px 32px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--border-light);
+    }
+
+    .client-info {
+      color: var(--text-light);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .client-info strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .modal-footer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-footer-actions button {
+      padding: 8px 20px;
+      font-size: 13px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* Responsividade para os filtros */
+    @media (max-width: 1024px) {
+      .cards-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .filters-container {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      #clienteSelectCards,
+      #statusFilter {
+        min-width: 140px;
+      }
+
+      .modal-box {
+        max-width: 95%;
+      }
+    }
+
     @media (max-width: 768px) {
-      header {
-        padding: 16px;
+      .container {
+        padding: 0 16px;
       }
 
-      .header-top {
+      .header-content {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .logo-area {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .header-actions {
-        width: 100%;
-        justify-content: flex-end;
-      }
-
-      .controls-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-
-      .client-controls {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .import-export {
-        margin-left: 0;
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .search-section {
-        width: 100%;
-      }
-
-      .search-container {
-        max-width: 100%;
-      }
-
-      .search-filters {
-        justify-content: flex-start;
+        gap: 16px;
       }
 
       .cards-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 12px;
+      }
+
+      .filters-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
         gap: 8px;
       }
 
-      #cardsContainer {
-        grid-template-columns: 1fr;
+      .filter-group {
+        width: 100%;
       }
 
-      .modal {
-        padding: 12px;
+      #clienteSelectCards,
+      #statusFilter {
+        min-width: 100%;
+        width: 100%;
       }
 
-      .modal-body {
+      .modal-header,
+      .modal-body,
+      .modal-footer {
         padding: 16px;
       }
 
-      .modal-options {
+      .modal-box {
+        max-width: 98%;
+      }
+
+      .form-section-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 8px;
+      }
+
+      .modal-status-container {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .menu-sidebar {
+        width: 280px;
+      }
+
+      .menu-item {
+        padding: 14px 20px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .card h3 {
+        margin-right: 0;
+      }
+
+      .status {
+        align-self: flex-start;
       }
     }
 
     @media (max-width: 480px) {
-      .client-controls {
-        flex-direction: column;
-        align-items: flex-start;
+      .cards-grid {
+        grid-template-columns: 1fr;
       }
 
-      .client-controls select,
-      .client-controls button {
-        width: 100%;
+      .menu-sidebar {
+        width: 260px;
       }
 
-      .import-export {
-        flex-direction: column;
+      .header-left {
+        gap: 12px;
       }
 
-      .import-export button {
-        width: 100%;
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .cards-header h2 {
+        font-size: 20px;
+      }
+
+      .filter-group label {
+        font-size: 12px;
+      }
+
+      #clienteSelectCards,
+      #statusFilter {
+        font-size: 12px;
+        padding: 6px 8px;
+        height: 30px;
+      }
+
+      .modal-editable-content {
+        min-height: 250px;
       }
     }
 
-    /* ANIMATIONS */
-    .fade-in {
-      animation: fadeIn 0.3s ease;
-    }
-
-    .slide-up {
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateY(0);
-        opacity: 1;
+    @media (max-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       }
     }
   </style>
 </head>
 
-<body class="light-mode">
+<body>
 
-  <header>
-    <!-- TOP ROW: Logo e Toggle de Tema -->
-    <div class="header-top">
-      <div class="logo-area">
-        <div class="logo">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <line x1="16" y1="13" x2="8" y2="13" />
-            <line x1="16" y1="17" x2="8" y2="17" />
-            <polyline points="10 9 9 9 8 9" />
-          </svg>
-          Notas
+  <!-- Menu Hambúrguer Overlay -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Menu Lateral -->
+  <div class="menu-sidebar" id="menuSidebar">
+    <div class="menu-header">
+      <h2>Menu</h2>
+      <button class="menu-close" id="menuClose">×</button>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item active" data-section="historias-salvas">
+        <span class="menu-item-icon">📋</span>
+        <span>Histórias Salvas</span>
+      </div>
+      <div class="menu-item" data-section="criar-historia">
+        <span class="menu-item-icon">✏️</span>
+        <span>Criar Nova História</span>
+      </div>
+      <div class="menu-item" data-section="adicionar-cliente">
+        <span class="menu-item-icon">👤</span>
+        <span>Adicionar Cliente</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <h1>Histórias por Cliente</h1>
+        </div>
+        <div class="header-right">
+          <button class="toggle" onclick="toggleDark()" title="Alternar tema">🌙</button>
         </div>
       </div>
-
-      <div class="header-actions">
-        <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5" />
-            <line x1="12" y1="1" x2="12" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="23" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-            <line x1="1" y1="12" x2="3" y2="12" />
-            <line x1="21" y1="12" x2="23" y2="12" />
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-          </svg>
-          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-        </button>
-      </div>
     </div>
 
-    <!-- SECOND ROW: Controles Principais -->
-    <div class="controls-section">
-      <div class="client-controls">
-        <select id="clienteSelect"></select>
-        <select id="filtroSelect">
-          <option value="todos">Todos</option>
-          <option value="importantes">Importantes</option>
-        </select>
-        <button id="novoClienteBtn" class="primary">+ Cliente</button>
-        <button id="novoAssuntoBtn" class="primary" disabled>+ História</button>
-      </div>
+    <!-- Conteúdo: Histórias Salvas (visível por padrão) -->
+    <div class="main-content active" id="historias-salvas">
+      <div class="section-cards">
+        <div class="cards-header">
+          <h2>Histórias Salvas</h2>
 
-      <div class="import-export">
-        <button onclick="exportarDados()">Exportar</button>
-        <button onclick="importInput.click()">Importar</button>
-        <input type="file" id="importInput" accept=".json" hidden>
-      </div>
-    </div>
-
-    <!-- THIRD ROW: Busca -->
-    <div class="search-section">
-      <div class="search-container">
-        <div class="search-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </div>
-        <input id="searchInput" type="text" placeholder="Buscar em histórias e anotações...">
-      </div>
-
-      <div class="search-filters">
-        <span class="search-filter active" data-filter="all">Tudo</span>
-        <span class="search-filter" data-filter="titles">Títulos</span>
-        <span class="search-filter" data-filter="notes">Anotações</span>
-        <span class="search-filter" data-filter="tags">Tags</span>
-        <span class="clear-search" onclick="limparBusca()">Limpar busca</span>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <div class="cards-header">
-      <h2>Histórias</h2>
-      <div class="cards-count" id="cardsCount"></div>
-    </div>
-
-    <div id="cardsContainer">
-      <!-- Cards serão inseridos aqui dinamicamente -->
-    </div>
-  </main>
-
-  <div id="modal" class="modal hidden">
-    <div class="modal-content slide-up">
-      <div class="modal-header">
-        <input id="tituloAssunto" placeholder="Título da história">
-        <div class="modal-options">
-          <label class="checkbox-container">
-            <input type="checkbox" id="assuntoImportante">
-            <span>Marcar como importante</span>
-          </label>
-
-          <div class="modal-tags">
-            <span style="font-size: 14px; color: var(--text-secondary);">Tags:</span>
-            <div class="tags-input-container" id="modalTagsContainer">
-              <!-- Tags serão inseridas aqui -->
+          <!-- Filtros agora ao lado do título -->
+          <div class="filters-container">
+            <div class="filter-group">
+              <label for="clienteSelectCards">Cliente:</label>
+              <select id="clienteSelectCards" onchange="renderCards()">
+                <option value="">Todos</option>
+              </select>
             </div>
-            <select class="tags-select" id="tagSelect">
-              <option value="">Adicionar tag...</option>
-              <option value="urgent" style="color: var(--tag-urgent-text);">🔴 Urgente</option>
-              <option value="followup" style="color: var(--tag-followup-text);">🔵 Follow-up</option>
-              <option value="vip" style="color: var(--tag-vip-text);">🟣 VIP</option>
-              <option value="pending" style="color: var(--tag-pending-text);">🟡 Pendente</option>
-              <option value="general" style="color: var(--tag-general-text);">⚪ Geral</option>
-            </select>
-            <button class="add-tag-btn primary" id="addTagBtn">+</button>
+
+            <div class="filter-group">
+              <label for="statusFilter">Status:</label>
+              <select id="statusFilter" onchange="renderCards()">
+                <option value="">Todos</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Resolvido">Resolvido</option>
+                <option value="Importante">Importante</option>
+                <option value="API">API</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards-container">
+          <div class="cards-grid" id="cards">
+            <!-- Cards serão renderizados aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo: Criar Nova História (oculto por padrão) -->
+    <div class="main-content" id="criar-historia">
+      <div class="section-creation">
+        <h2 class="section-title">Criar Nova História</h2>
+
+        <!-- Formulário de Criar Histórias -->
+        <div class="story-creation">
+          <div class="story-form-header">
+            <div class="form-group">
+              <label for="clienteSelect">Cliente</label>
+              <select id="clienteSelect">
+                <option value="">Selecione um cliente</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="titulo">Título da História</label>
+              <input id="titulo" placeholder="Digite o título">
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status">
+                <option value="Pendente">Pendente</option>
+                <option value="Resolvido">Resolvido</option>
+                <option value="Importante">Importante</option>
+                <option value="API">API</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="story-form-content">
+            <!-- Barra de ferramentas de formatação -->
+            <div class="formatting-toolbar">
+              <button class="format-btn" data-format="bold" title="Negrito">B</button>
+              <button class="format-btn" data-format="italic" title="Itálico">I</button>
+              <button class="format-btn" data-format="strike" title="Tachado">S</button>
+              <div class="divider"></div>
+              <button class="format-btn list-btn" data-format="ul" title="Lista com marcadores">• Lista</button>
+              <button class="format-btn list-btn" data-format="ol" title="Lista numerada">1. Lista</button>
+            </div>
+
+            <!-- Área de texto grande -->
+            <div class="story-textarea-container">
+              <textarea id="texto" placeholder="Detalhes da história... (Use os botões acima para formatar o texto)"></textarea>
+            </div>
+          </div>
+
+          <div class="story-form-actions">
+            <button class="primary full-width" onclick="addCard()">Salvar História</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo: Adicionar Cliente (nova seção) -->
+    <div class="main-content" id="adicionar-cliente">
+      <div class="section-add-client">
+        <h2 class="section-title">Adicionar Cliente</h2>
+
+        <!-- Formulário de Adicionar Cliente -->
+        <div class="client-form">
+          <div class="form-group">
+            <label for="clienteNome">Nome do Cliente</label>
+            <div style="display: flex; gap: 12px;">
+              <input id="clienteNome" placeholder="Digite o nome do cliente">
+              <button class="primary" onclick="addCliente()" style="white-space: nowrap;">Adicionar Cliente</button>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--text-light); margin-top: 8px;">
+            ⓘ Após adicionar um cliente, você poderá selecioná-lo na seção "Criar Nova História".
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EDIÇÃO MODIFICADO -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>Editar História</h2>
+        <button class="modal-close" onclick="fecharModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-main-content">
+          <div class="modal-form">
+            <div class="form-section">
+              <div class="form-section-header">
+                <h3>Informações da História</h3>
+                <div class="modal-status-container">
+                  <span class="modal-status-label">Status:</span>
+                  <select id="editStatus">
+                    <option value="Pendente">Pendente</option>
+                    <option value="Resolvido">Resolvido</option>
+                    <option value="Importante">Importante</option>
+                    <option value="API">API</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="editTitulo">Título</label>
+                <input id="editTitulo" placeholder="Digite o título da história">
+              </div>
+
+              <div class="form-group">
+                <label for="editTexto">Conteúdo</label>
+                <!-- Área editável - sem barra de formatação -->
+                <div id="editTexto" class="modal-editable-content" contenteditable="true" placeholder="Descreva os detalhes da história..."></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="modal-body">
-        <div class="historico-section">
-          <div class="section-title">Histórico</div>
-          <div id="historico"></div>
-        </div>
-
-        <div class="nova-anotacao-section">
-          <div class="section-title">Nova Anotação</div>
-          <textarea id="novaAnotacao" placeholder="Digite sua anotação aqui..."></textarea>
-        </div>
-      </div>
-
       <div class="modal-footer">
-        <button id="fecharModal">Cancelar</button>
-        <button id="salvarAnotacao" class="primary">Salvar Anotação</button>
+        <div class="client-info">
+          <span>Editando história de:</span>
+          <strong id="currentClienteName"></strong>
+        </div>
+
+        <div class="modal-footer-actions">
+          <button class="secondary" onclick="fecharModal()">Cancelar</button>
+          <button class="primary" onclick="salvarEdicao()">Salvar Alterações</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    let dados = JSON.parse(localStorage.getItem("dados")) || { clientes: [] }
-    let clienteAtual = null
-    let assuntoAtual = null
-    let filtroAtual = "todos"
-    let searchFilter = "all"
-    let searchTerm = ""
+    let dados = JSON.parse(localStorage.getItem("clientes")) || {};
+    let editCliente = null;
+    let editIndex = null;
 
-    // Sistema de Tema
-    function initTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'light'
-      document.body.className = savedTheme + '-mode'
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function () {
+      if (localStorage.getItem("dark") === "true") {
+        document.body.classList.add("dark");
+        document.querySelector('.toggle').textContent = '☀️';
+      }
+      atualizarSelects();
+      renderCards();
+      setupFormattingButtons();
+      setupMenu();
+      setupModalEvents();
+    });
 
-      themeToggle.addEventListener('click', () => {
-        if (document.body.classList.contains('dark-mode')) {
-          document.body.className = 'light-mode'
-          localStorage.setItem('theme', 'light')
-        } else {
-          document.body.className = 'dark-mode'
-          localStorage.setItem('theme', 'dark')
-        }
-      })
-    }
+    // Configurar menu hambúrguer
+    function setupMenu() {
+      const menuToggle = document.getElementById('menuToggle');
+      const menuClose = document.getElementById('menuClose');
+      const menuOverlay = document.getElementById('menuOverlay');
+      const menuSidebar = document.getElementById('menuSidebar');
+      const menuItems = document.querySelectorAll('.menu-item');
+      const sections = document.querySelectorAll('.main-content');
 
-    // Sistema de Busca
-    function initSearch() {
-      const searchInput = document.getElementById('searchInput')
-      const searchFilters = document.querySelectorAll('.search-filter')
+      // Abrir menu
+      menuToggle.addEventListener('click', function () {
+        menuSidebar.classList.add('active');
+        menuOverlay.classList.add('active');
+        menuToggle.classList.add('active');
+      });
 
-      searchInput.addEventListener('input', (e) => {
-        searchTerm = e.target.value.toLowerCase().trim()
-        renderCards()
-      })
-
-      searchFilters.forEach(filter => {
-        filter.addEventListener('click', () => {
-          if (filter.classList.contains('clear-search')) return
-          searchFilters.forEach(f => f.classList.remove('active'))
-          filter.classList.add('active')
-          searchFilter = filter.dataset.filter
-          renderCards()
-        })
-      })
-    }
-
-    // Sistema de Tags
-    const tagConfig = {
-      urgent: { name: 'Urgente', class: 'tag-urgent' },
-      followup: { name: 'Follow-up', class: 'tag-followup' },
-      vip: { name: 'VIP', class: 'tag-vip' },
-      pending: { name: 'Pendente', class: 'tag-pending' },
-      general: { name: 'Geral', class: 'tag-general' }
-    }
-
-    function initTags() {
-      const tagSelect = document.getElementById('tagSelect')
-      const addTagBtn = document.getElementById('addTagBtn')
-
-      addTagBtn.addEventListener('click', () => {
-        const tagValue = tagSelect.value
-        if (tagValue && assuntoAtual && !assuntoAtual.tags?.includes(tagValue)) {
-          if (!assuntoAtual.tags) assuntoAtual.tags = []
-          assuntoAtual.tags.push(tagValue)
-          renderModalTags()
-          salvar()
-        }
-      })
-
-      tagSelect.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          addTagBtn.click()
-        }
-      })
-    }
-
-    function renderModalTags() {
-      const container = document.getElementById('modalTagsContainer')
-      if (!assuntoAtual?.tags || assuntoAtual.tags.length === 0) {
-        container.innerHTML = '<span style="color: var(--text-tertiary); font-size: 13px;">Nenhuma tag adicionada</span>'
-        return
+      // Fechar menu
+      function closeMenu() {
+        menuSidebar.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        menuToggle.classList.remove('active');
       }
 
-      container.innerHTML = assuntoAtual.tags.map(tag => `
-        <span class="tag ${tagConfig[tag].class}">
-          ${tagConfig[tag].name}
-          <span class="tag-remove" onclick="removerTag('${tag}')">×</span>
-        </span>
-      `).join('')
+      menuClose.addEventListener('click', closeMenu);
+      menuOverlay.addEventListener('click', closeMenu);
+
+      // Navegar entre seções
+      menuItems.forEach(item => {
+        item.addEventListener('click', function () {
+          const sectionId = this.dataset.section;
+
+          // Atualizar item ativo no menu
+          menuItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+
+          // Mostrar seção correspondente
+          sections.forEach(section => {
+            section.classList.remove('active');
+            if (section.id === sectionId) {
+              section.classList.add('active');
+            }
+          });
+
+          // Fechar menu
+          closeMenu();
+        });
+      });
     }
 
-    function removerTag(tag) {
-      if (assuntoAtual?.tags) {
-        const index = assuntoAtual.tags.indexOf(tag)
-        if (index > -1) {
-          assuntoAtual.tags.splice(index, 1)
-          renderModalTags()
-          salvar()
-          renderCards()
-        }
+    function setupFormattingButtons() {
+      const formatButtons = document.querySelectorAll('.format-btn');
+      const textarea = document.getElementById('texto');
+
+      formatButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const format = this.dataset.format;
+          applyFormatting(format, textarea);
+
+          // Feedback visual
+          formatButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          setTimeout(() => {
+            this.classList.remove('active');
+          }, 200);
+        });
+      });
+    }
+
+    function applyFormatting(format, textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = textarea.value.substring(start, end);
+      let formattedText = '';
+
+      switch (format) {
+        case 'bold':
+          formattedText = `**${selectedText}**`;
+          break;
+        case 'italic':
+          formattedText = `*${selectedText}*`;
+          break;
+        case 'strike':
+          formattedText = `~~${selectedText}~~`;
+          break;
+        case 'ul':
+          formattedText = selectedText.split('\n').map(line => `• ${line}`).join('\n');
+          break;
+        case 'ol':
+          formattedText = selectedText.split('\n').map((line, i) => `${i + 1}. ${line}`).join('\n');
+          break;
       }
+
+      // Substituir o texto selecionado
+      textarea.value = textarea.value.substring(0, start) +
+        formattedText +
+        textarea.value.substring(end);
+
+      // Restaurar o foco e seleção
+      textarea.focus();
+      textarea.setSelectionRange(start, start + formattedText.length);
     }
 
-    // Funções principais
+    // Função para converter HTML para markdown preservando formatação
+    function htmlToMarkdown(html) {
+      // Criar um elemento temporário para manipulação
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+
+      // Função recursiva para converter elementos
+      function convertNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          return node.textContent;
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const tagName = node.tagName.toLowerCase();
+          const children = Array.from(node.childNodes);
+          const content = children.map(convertNode).join('');
+
+          switch (tagName) {
+            case 'strong':
+            case 'b':
+              return `**${content}**`;
+            case 'em':
+            case 'i':
+              return `*${content}*`;
+            case 'del':
+            case 'strike':
+              return `~~${content}~~`;
+            case 'ul':
+              const listItems = Array.from(node.querySelectorAll('li'));
+              return listItems.map(li => `• ${convertNode(li)}`).join('\n') + '\n';
+            case 'ol':
+              const olItems = Array.from(node.querySelectorAll('li'));
+              return olItems.map((li, i) => `${i + 1}. ${convertNode(li)}`).join('\n') + '\n';
+            case 'li':
+              return Array.from(node.childNodes).map(convertNode).join('');
+            case 'br':
+              return '\n';
+            case 'div':
+            case 'p':
+              return content + '\n\n';
+            default:
+              return content;
+          }
+        }
+
+        return '';
+      }
+
+      let markdown = convertNode(tempDiv);
+
+      // Limpar múltiplas quebras de linha
+      markdown = markdown.replace(/\n\s*\n\s*\n/g, '\n\n');
+      markdown = markdown.trim();
+
+      return markdown;
+    }
+
+    // Função para converter markdown para HTML preservando formatação
+    function markdownToHtml(markdown) {
+      let html = markdown;
+
+      // Primeiro, converter quebras de linha para <br>
+      html = html.replace(/\n/g, '<br>');
+
+      // Converter formatação - usando regex mais robustos
+      // Negrito: **texto** ou __texto__
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+      // Itálico: *texto* ou _texto_
+      html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+      // Tachado: ~~texto~~
+      html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
+
+      // Listas com marcadores
+      html = html.replace(/^• (.*?)$/gm, '<li>$1</li>');
+      html = html.replace(/^\* (.*?)$/gm, '<li>$1</li>');
+      html = html.replace(/^- (.*?)$/gm, '<li>$1</li>');
+
+      // Listas numeradas
+      html = html.replace(/^(\d+)\. (.*?)$/gm, '<li>$2</li>');
+
+      // Adicionar tags de lista se houver itens de lista
+      if (html.includes('<li>')) {
+        // Encontrar onde começa e termina as listas
+        const lines = html.split('<br>');
+        let inList = false;
+        let result = [];
+
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].includes('<li>')) {
+            if (!inList) {
+              result.push('<ul>');
+              inList = true;
+            }
+            result.push(lines[i]);
+          } else {
+            if (inList) {
+              result.push('</ul>');
+              inList = false;
+            }
+            result.push(lines[i]);
+          }
+        }
+
+        if (inList) {
+          result.push('</ul>');
+        }
+
+        html = result.join('<br>');
+      }
+
+      return html;
+    }
+
+    // Função para limpar e preservar HTML para área editável
+    function prepareHtmlForEditable(html) {
+      // Garantir que as quebras de linha sejam preservadas
+      let cleanHtml = html;
+
+      // Converter múltiplos <br> seguidos para um único <br>
+      cleanHtml = cleanHtml.replace(/(<br\s*\/?>\s*){2,}/gi, '<br><br>');
+
+      // Garantir formatação consistente
+      cleanHtml = cleanHtml.replace(/<b>/g, '<strong>').replace(/<\/b>/g, '</strong>');
+      cleanHtml = cleanHtml.replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>');
+      cleanHtml = cleanHtml.replace(/<strike>/g, '<del>').replace(/<\/strike>/g, '</del>');
+
+      return cleanHtml;
+    }
+
+    function setupModalEvents() {
+      const modal = document.getElementById('modal');
+      const modalBox = modal.querySelector('.modal-box');
+      const closeBtn = modal.querySelector('.modal-close');
+
+      // Fechar com botão X
+      closeBtn.addEventListener('click', fecharModal);
+
+      // Fechar com ESC
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+          fecharModal();
+        }
+      });
+
+      // PREVENIR fechamento ao clicar fora do modal
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+          event.stopPropagation();
+        }
+      });
+
+      // Permitir interação dentro do modal
+      modalBox.addEventListener('click', function (event) {
+        event.stopPropagation();
+      });
+    }
+
     function salvar() {
-      localStorage.setItem("dados", JSON.stringify(dados))
+      localStorage.setItem("clientes", JSON.stringify(dados));
     }
 
-    function exportarDados() {
-      const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" })
-      const a = document.createElement("a")
-      a.href = URL.createObjectURL(blob)
-      a.download = "anotacoes.json"
-      a.click()
+    function toggleDark() {
+      const body = document.body;
+      const toggleBtn = document.querySelector('.toggle');
+
+      body.classList.toggle("dark");
+      toggleBtn.textContent = body.classList.contains("dark") ? '☀️' : '🌙';
+      localStorage.setItem("dark", body.classList.contains("dark"));
     }
 
-    importInput.onchange = e => {
-      const file = e.target.files[0]
-      if (!file) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        try {
-          dados = JSON.parse(reader.result)
-          salvar()
-          renderClientes()
-          renderCards()
-          alert("Dados importados com sucesso!")
-        } catch {
-          alert("Arquivo inválido")
-        }
+    function atualizarSelects() {
+      // Atualizar select da seção de criação
+      const selectCriacao = document.getElementById('clienteSelect');
+      selectCriacao.innerHTML = '<option value="">Selecione um cliente</option>';
+
+      // Atualizar select da seção de cards (filtro por cliente)
+      const selectClienteCards = document.getElementById('clienteSelectCards');
+      selectClienteCards.innerHTML = '<option value="">Todos</option>';
+
+      Object.keys(dados).sort().forEach(cliente => {
+        // Para select de criação
+        const option1 = document.createElement('option');
+        option1.value = cliente;
+        option1.textContent = cliente;
+        selectCriacao.appendChild(option1);
+
+        // Para select de visualização (filtro por cliente)
+        const option2 = document.createElement('option');
+        option2.value = cliente;
+        option2.textContent = cliente;
+        selectClienteCards.appendChild(option2);
+      });
+
+      // O filtro por status já está configurado no HTML
+    }
+
+    function addCliente() {
+      const nomeInput = document.getElementById('clienteNome');
+      const nome = nomeInput.value.trim();
+
+      if (!nome) {
+        alert('Por favor, digite um nome para o cliente.');
+        nomeInput.focus();
+        return;
       }
-      reader.readAsText(file)
+
+      if (dados[nome]) {
+        alert('Já existe um cliente com esse nome.');
+        nomeInput.focus();
+        return;
+      }
+
+      dados[nome] = [];
+      salvar();
+      atualizarSelects();
+      nomeInput.value = "";
+
+      // Focar novamente no campo após adicionar
+      nomeInput.focus();
+
+      // Mostrar mensagem de sucesso
+      alert(`Cliente "${nome}" adicionado com sucesso!`);
     }
 
-    function renderClientes() {
-      clienteSelect.innerHTML = `<option value="todos">Todos os Clientes</option>`
-      dados.clientes.forEach((c, i) => {
-        clienteSelect.innerHTML += `<option value="${i}">${c.nome}</option>`
-      })
-      clienteSelect.value = "todos"
-      clienteAtual = null
-      novoAssuntoBtn.disabled = true
+    function addCard() {
+      const cliente = document.getElementById('clienteSelect').value;
+      if (!cliente) {
+        alert('Selecione um cliente primeiro.');
+        return;
+      }
+
+      const titulo = document.getElementById('titulo').value.trim();
+      const texto = document.getElementById('texto').value;
+      const status = document.getElementById('status').value;
+
+      if (!titulo) {
+        alert('Por favor, digite um título para a história.');
+        document.getElementById('titulo').focus();
+        return;
+      }
+
+      // Converter formatação markdown para HTML
+      const textoFormatado = formatText(texto);
+      const dataAtual = new Date().toISOString().split('T')[0];
+      const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+      dados[cliente].push({
+        titulo: titulo,
+        texto: textoFormatado,
+        textoOriginal: texto,
+        status: status,
+        dataCriacao: dataAtual,
+        horaCriacao: horaAtual,
+        dataEdicao: dataAtual,
+        horaEdicao: horaAtual,
+        cliente: cliente
+      });
+
+      salvar();
+      renderCards();
+
+      // Limpa os campos, mas mantém o cliente selecionado
+      document.getElementById('titulo').value = '';
+      document.getElementById('texto').value = '';
+
+      // Foco no título para próxima história
+      document.getElementById('titulo').focus();
+
+      // Voltar para a seção de histórias salvas após criar
+      document.querySelector('.menu-item[data-section="historias-salvas"]').click();
+    }
+
+    function formatText(text) {
+      // Converter markdown simples para HTML
+      let formatted = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/~~(.*?)~~/g, '<del>$1</del>')
+        .replace(/^• (.*?)$/gm, '<li>$1</li>')
+        .replace(/^(\d+)\. (.*?)$/gm, '<li>$2</li>');
+
+      // Adicionar tags de lista
+      if (formatted.includes('<li>')) {
+        formatted = '<ul>' + formatted.replace(/<\/li>\s*<li>/g, '</li><li>') + '</ul>';
+      }
+
+      // Manter quebras de linha
+      formatted = formatted.replace(/\n/g, '<br>');
+
+      return formatted;
     }
 
     function renderCards() {
-      cardsContainer.innerHTML = ""
+      const container = document.getElementById('cards');
+      const clienteSelecionado = document.getElementById('clienteSelectCards').value;
+      const statusSelecionado = document.getElementById('statusFilter').value;
 
-      let cardCount = 0
-      let filteredCards = []
+      // Verificar se há dados
+      const totalHistorias = Object.values(dados).reduce((total, arr) => total + arr.length, 0);
 
-      // Coletar todos os cards primeiro
-      dados.clientes.forEach((cliente, ci) => {
-        if (clienteAtual && cliente !== clienteAtual) return
+      if (totalHistorias === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <h3>Nenhuma história encontrada</h3>
+            <p>Adicione clientes e crie histórias usando o menu.</p>
+          </div>
+        `;
+        return;
+      }
 
-        cliente.assuntos.forEach((assunto, ai) => {
-          if (filtroAtual === "importantes" && !assunto.importante) return
+      // Se há dados mas nenhum filtro selecionado, mostrar todos
+      if (!clienteSelecionado && !statusSelecionado) {
+        mostrarTodasHistorias(container);
+      } else {
+        mostrarHistoriasFiltradas(container, clienteSelecionado, statusSelecionado);
+      }
+    }
 
-          // Aplicar filtro de busca
-          let matchesSearch = false
+    function mostrarTodasHistorias(container) {
+      container.innerHTML = '';
 
-          if (!searchTerm) {
-            matchesSearch = true
-          } else {
-            const searchLower = searchTerm.toLowerCase()
+      Object.keys(dados).forEach(cliente => {
+        if (dados[cliente].length > 0) {
+          // Adicionar título do cliente
+          const clienteTitle = document.createElement('div');
+          clienteTitle.style.cssText = `
+            grid-column: 1 / -1;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 16px 0 8px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+          `;
+          clienteTitle.textContent = `Cliente: ${cliente}`;
+          container.appendChild(clienteTitle);
 
-            switch (searchFilter) {
-              case 'all':
-                matchesSearch =
-                  cliente.nome.toLowerCase().includes(searchLower) ||
-                  assunto.titulo?.toLowerCase().includes(searchLower) ||
-                  assunto.anotacoes?.some(nota => nota.texto.toLowerCase().includes(searchLower)) ||
-                  (assunto.tags || []).some(tag => tagConfig[tag].name.toLowerCase().includes(searchLower))
-                break
+          // Adicionar cards do cliente
+          dados[cliente].forEach((historia, index) => {
+            container.appendChild(criarCardElement(cliente, historia, index));
+          });
+        }
+      });
+    }
 
-              case 'titles':
-                matchesSearch =
-                  cliente.nome.toLowerCase().includes(searchLower) ||
-                  assunto.titulo?.toLowerCase().includes(searchLower)
-                break
+    function mostrarHistoriasFiltradas(container, clienteFiltro, statusFiltro) {
+      container.innerHTML = '';
 
-              case 'notes':
-                matchesSearch =
-                  assunto.anotacoes?.some(nota => nota.texto.toLowerCase().includes(searchLower))
-                break
+      let historiasFiltradas = [];
+      let clientesComHistorias = [];
 
-              case 'tags':
-                matchesSearch =
-                  (assunto.tags || []).some(tag => tagConfig[tag].name.toLowerCase().includes(searchLower))
-                break
+      // Coletar todas as histórias que correspondem aos filtros
+      Object.keys(dados).forEach(cliente => {
+        if (!clienteFiltro || cliente === clienteFiltro) {
+          dados[cliente].forEach(historia => {
+            if (!statusFiltro || historia.status === statusFiltro) {
+              historiasFiltradas.push({
+                cliente: cliente,
+                historia: historia,
+                index: dados[cliente].indexOf(historia)
+              });
+
+              if (!clientesComHistorias.includes(cliente)) {
+                clientesComHistorias.push(cliente);
+              }
             }
-          }
-
-          if (matchesSearch) {
-            filteredCards.push({ cliente, assunto, ci, ai })
-          }
-        })
-      })
-
-      // Ordenar: importantes primeiro, depois por data (última anotação)
-      filteredCards.sort((a, b) => {
-        if (a.assunto.importante && !b.assunto.importante) return -1
-        if (!a.assunto.importante && b.assunto.importante) return 1
-
-        const aDate = a.assunto.anotacoes?.length ?
-          new Date(a.assunto.anotacoes[a.assunto.anotacoes.length - 1].data) : new Date(0)
-        const bDate = b.assunto.anotacoes?.length ?
-          new Date(b.assunto.anotacoes[b.assunto.anotacoes.length - 1].data) : new Date(0)
-
-        return bDate - aDate
-      })
-
-      // Renderizar cards filtrados
-      filteredCards.forEach(({ cliente, assunto, ci, ai }) => {
-        cardCount++
-
-        const card = document.createElement("div")
-        card.className = "card fade-in"
-        card.ondblclick = () => abrirAssunto(ci, ai)
-
-        const tagsHTML = assunto.tags?.map(tag =>
-          `<span class="tag ${tagConfig[tag].class}">${tagConfig[tag].name}</span>`
-        ).join('') || ''
-
-        card.innerHTML = `
-          <div>
-            <div class="card-cliente">${cliente.nome}</div>
-            <h3>${assunto.titulo || "Sem título"}</h3>
-            ${tagsHTML ? `<div class="card-tags">${tagsHTML}</div>` : ''}
-          </div>
-          <div class="card-footer">
-            <div class="card-meta">
-              ${assunto.importante ? '<div class="important-badge">⭐ Importante</div>' : ''}
-              <div>${assunto.anotacoes?.length || 0} nota(s)</div>
-            </div>
-            <div class="card-actions">
-              <button onclick="abrirAssunto(${ci},${ai})">Abrir</button>
-              <div class="delete-btn" onclick="excluirHistoria(${ci},${ai})" title="Excluir história">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        `
-        cardsContainer.appendChild(card)
-      })
-
-      // Atualizar contador
-      if (cardCount === 0) {
-        let message = "Nenhuma história encontrada."
-        if (searchTerm) {
-          message = `Nenhuma história encontrada para "${searchTerm}"`
-          if (searchFilter !== 'all') {
-            const filterText = document.querySelector(`.search-filter[data-filter="${searchFilter}"]`).textContent
-            message += ` em ${filterText.toLowerCase()}`
-          }
+          });
         }
+      });
 
-        cardsContainer.innerHTML = `
+      if (historiasFiltradas.length === 0) {
+        container.innerHTML = `
           <div class="empty-state">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="12" y1="18" x2="12" y2="12"/>
-              <line x1="9" y1="15" x2="15" y2="15"/>
-            </svg>
-            <p>${message}</p>
+            <h3>Nenhuma história encontrada</h3>
+            <p>Não há histórias que correspondam aos filtros selecionados.</p>
           </div>
-        `
+        `;
+        return;
       }
 
-      cardsCount.textContent = `${cardCount} história${cardCount !== 1 ? 's' : ''}${searchTerm ? ' encontrada(s)' : ''}`
-    }
+      // Mostrar por cliente ou todas juntas dependendo dos filtros
+      if (clienteFiltro) {
+        // Filtro por cliente específico
+        const clienteTitle = document.createElement('div');
+        clienteTitle.style.cssText = `
+          grid-column: 1 / -1;
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 2px solid var(--primary);
+        `;
 
-    function limparBusca() {
-      searchInput.value = ''
-      searchTerm = ''
-      renderCards()
-    }
-
-    function abrirAssunto(ci, ai) {
-      clienteAtual = dados.clientes[ci]
-      assuntoAtual = clienteAtual.assuntos[ai]
-      modal.classList.remove("hidden")
-      tituloAssunto.value = assuntoAtual.titulo
-      assuntoImportante.checked = assuntoAtual.importante
-      renderModalTags()
-      renderHistorico()
-      // Foco no textarea de nova anotação
-      setTimeout(() => novaAnotacao.focus(), 100)
-    }
-
-    function renderHistorico() {
-      historico.innerHTML = ""
-
-      if (!assuntoAtual.anotacoes || assuntoAtual.anotacoes.length === 0) {
-        historico.innerHTML = `
-          <div class="empty-state">
-            <p>Nenhuma anotação ainda. Adicione a primeira anotação abaixo.</p>
-          </div>
-        `
-        return
-      }
-
-      ;[...assuntoAtual.anotacoes].reverse().forEach((a, i) => {
-        const idx = assuntoAtual.anotacoes.length - 1 - i
-        historico.innerHTML += `
-          <div class="nota">
-            <div class="nota-topo">
-              <div class="nota-texto" contenteditable="false">${a.texto}</div>
-              <div class="nota-acoes">
-                <span onclick="editarNota(${idx},this)" title="Editar nota">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                  </svg>
-                </span>
-                <span onclick="excluirNota(${idx})" title="Excluir nota">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <small class="nota-data">${a.data}</small>
-          </div>
-        `
-      })
-    }
-
-    function editarNota(index, el) {
-      const div = el.closest(".nota").querySelector(".nota-texto")
-      div.contentEditable = true
-      div.focus()
-
-      // Selecionar todo o texto ao editar
-      const range = document.createRange()
-      range.selectNodeContents(div)
-      const sel = window.getSelection()
-      sel.removeAllRanges()
-      sel.addRange(range)
-
-      div.onblur = () => {
-        assuntoAtual.anotacoes[index].texto = div.textContent.trim()
-        div.contentEditable = false
-        salvar()
-      }
-
-      // Também salvar ao pressionar Enter (mas não criar nova linha)
-      div.onkeydown = (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault()
-          div.blur()
+        let titulo = `Cliente: ${clienteFiltro}`;
+        if (statusFiltro) {
+          titulo += ` (Filtrado por status: ${statusFiltro})`;
         }
+        titulo += ` (${historiasFiltradas.length} histórias)`;
+
+        clienteTitle.textContent = titulo;
+        container.appendChild(clienteTitle);
+
+        // Adicionar cards filtrados
+        historiasFiltradas.forEach(item => {
+          container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
+        });
+      } else {
+        // Filtro apenas por status (ou nenhum filtro)
+        const filtroTitle = document.createElement('div');
+        filtroTitle.style.cssText = `
+          grid-column: 1 / -1;
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 2px solid var(--primary);
+        `;
+
+        let titulo = 'Todas as histórias';
+        if (statusFiltro) {
+          titulo = `Histórias com status: ${statusFiltro}`;
+        }
+        titulo += ` (${historiasFiltradas.length} histórias)`;
+
+        filtroTitle.textContent = titulo;
+        container.appendChild(filtroTitle);
+
+        // Agrupar por cliente para melhor organização
+        const historiasPorCliente = {};
+
+        historiasFiltradas.forEach(item => {
+          if (!historiasPorCliente[item.cliente]) {
+            historiasPorCliente[item.cliente] = [];
+          }
+          historiasPorCliente[item.cliente].push(item);
+        });
+
+        // Adicionar cards agrupados por cliente
+        Object.keys(historiasPorCliente).forEach(cliente => {
+          const clienteTitle = document.createElement('div');
+          clienteTitle.style.cssText = `
+            grid-column: 1 / -1;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 20px 0 8px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+          `;
+          clienteTitle.textContent = `Cliente: ${cliente}`;
+          container.appendChild(clienteTitle);
+
+          historiasPorCliente[cliente].forEach(item => {
+            container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
+          });
+        });
       }
     }
 
-    function excluirNota(index) {
-      if (!confirm("Excluir anotação?")) return
-      assuntoAtual.anotacoes.splice(index, 1)
-      salvar()
-      renderHistorico()
-      renderCards()
+    function criarCardElement(cliente, historia, index) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.status = historia.status;
+
+      // Formatar data para exibição
+      const dataCriacao = historia.dataCriacao || 'Não informado';
+      const horaCriacao = historia.horaCriacao || '';
+      const dataEdicao = historia.dataEdicao || dataCriacao;
+      const horaEdicao = historia.horaEdicao || horaCriacao;
+
+      card.innerHTML = `
+        <div class="card-header">
+          <h3>${historia.titulo}</h3>
+          <span class="status" data-status="${historia.status}">${historia.status}</span>
+        </div>
+        
+        <div class="card-dates">
+          <div class="date-info">
+            <span class="label">Criado em:</span>
+            <span class="value">${dataCriacao} ${horaCriacao ? `às ${horaCriacao}` : ''}</span>
+          </div>
+          <div class="date-info">
+            <span class="label">Editado em:</span>
+            <span class="value">${dataEdicao} ${horaEdicao ? `às ${horaEdicao}` : ''}</span>
+          </div>
+        </div>
+        
+        <div class="card-footer">
+          <div class="card-actions">
+            <button class="secondary small" onclick="abrirModal('${cliente}', ${index})">Editar</button>
+            <button class="danger small" onclick="excluir('${cliente}', ${index})">Excluir</button>
+          </div>
+        </div>
+      `;
+
+      return card;
     }
 
-    function excluirHistoria(ci, ai) {
-      if (!confirm("Excluir história?")) return
-      dados.clientes[ci].assuntos.splice(ai, 1)
-      salvar()
-      renderCards()
+    function excluir(cliente, index) {
+      if (!confirm("Tem certeza que deseja excluir esta história?")) return;
+
+      dados[cliente].splice(index, 1);
+      salvar();
+      renderCards();
+
+      // Atualizar selects se o cliente ficou sem histórias
+      if (dados[cliente].length === 0) {
+        atualizarSelects();
+      }
     }
 
-    novoClienteBtn.onclick = () => {
-      const nome = prompt("Nome do cliente:")
-      if (!nome) return
-      dados.clientes.push({ nome, assuntos: [] })
-      salvar()
-      renderClientes()
-      renderCards()
+    function abrirModal(cliente, index) {
+      editCliente = cliente;
+      editIndex = index;
+
+      const historia = dados[cliente][index];
+      document.getElementById('editTitulo').value = historia.titulo;
+
+      // Converter markdown para HTML e colocar na área editável
+      const htmlContent = markdownToHtml(historia.textoOriginal || historia.texto);
+      const cleanHtml = prepareHtmlForEditable(htmlContent);
+      document.getElementById('editTexto').innerHTML = cleanHtml;
+
+      document.getElementById('editStatus').value = historia.status;
+      document.getElementById('currentClienteName').textContent = cliente;
+
+      document.getElementById('modal').classList.add('active');
+
+      // Foco no conteúdo (área editável) ao abrir o modal
+      setTimeout(() => {
+        document.getElementById('editTexto').focus();
+        // Colocar o cursor no início do texto
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.setStart(document.getElementById('editTexto'), 0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }, 100);
     }
 
-    clienteSelect.onchange = () => {
-      clienteAtual = clienteSelect.value === "todos" ? null : dados.clientes[clienteSelect.value]
-      novoAssuntoBtn.disabled = !clienteAtual
-      renderCards()
+    function fecharModal() {
+      document.getElementById('modal').classList.remove('active');
     }
 
-    filtroSelect.onchange = () => {
-      filtroAtual = filtroSelect.value
-      renderCards()
-    }
+    function salvarEdicao() {
+      const titulo = document.getElementById('editTitulo').value.trim();
 
-    novoAssuntoBtn.onclick = () => {
-      const novo = { titulo: "", importante: false, anotacoes: [], tags: [] }
-      clienteAtual.assuntos.push(novo)
-      assuntoAtual = novo
-      salvar()
-      renderCards()
-      modal.classList.remove("hidden")
-      tituloAssunto.value = ""
-      assuntoImportante.checked = false
-      historico.innerHTML = ""
-      novaAnotacao.value = ""
-      renderModalTags()
-      tituloAssunto.focus()
-    }
-
-    salvarAnotacao.onclick = () => {
-      assuntoAtual.titulo = tituloAssunto.value.trim()
-      assuntoAtual.importante = assuntoImportante.checked
-
-      if (novaAnotacao.value.trim()) {
-        assuntoAtual.anotacoes.push({
-          texto: novaAnotacao.value,
-          data: new Date().toLocaleString("pt-BR")
-        })
-        novaAnotacao.value = ""
+      if (!titulo) {
+        alert('O título é obrigatório.');
+        document.getElementById('editTitulo').focus();
+        return;
       }
 
-      salvar()
-      renderHistorico()
-      renderCards()
+      // Obter HTML da área editável e converter para markdown
+      const htmlContent = document.getElementById('editTexto').innerHTML;
+      const markdownContent = htmlToMarkdown(htmlContent);
+      const textoFormatado = formatText(markdownContent);
 
-      // Foco de volta no textarea
-      novaAnotacao.focus()
+      const dataAtual = new Date().toISOString().split('T')[0];
+      const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+      // Preservar dados existentes e atualizar
+      const historiaExistente = dados[editCliente][editIndex];
+
+      dados[editCliente][editIndex] = {
+        titulo: titulo,
+        texto: textoFormatado,
+        textoOriginal: markdownContent, // Salvar em markdown para edição futura
+        status: document.getElementById('editStatus').value,
+        dataCriacao: historiaExistente.dataCriacao || dataAtual,
+        horaCriacao: historiaExistente.horaCriacao || horaAtual,
+        dataEdicao: dataAtual,
+        horaEdicao: horaAtual,
+        cliente: editCliente
+      };
+
+      salvar();
+      fecharModal();
+      renderCards();
     }
 
-    fecharModal.onclick = () => modal.classList.add("hidden")
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-        modal.classList.add("hidden")
+    // Fechar modal com ESC
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
+        fecharModal();
       }
+    });
 
-      // Salvar com Ctrl+Enter no textarea
-      if (e.key === "Enter" && e.ctrlKey && !modal.classList.contains("hidden") && document.activeElement === novaAnotacao) {
-        salvarAnotacao.click()
+    // PREVENIR fechamento ao clicar fora do modal
+    document.getElementById('modal').addEventListener('click', function (event) {
+      if (event.target === this) {
+        // Não faz nada - impede o fechamento
+        event.stopPropagation();
       }
-    })
+    });
 
-    // Fechar modal ao clicar fora
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.add("hidden")
-      }
-    })
-
-    // Inicialização
-    initTheme()
-    initSearch()
-    initTags()
-    renderClientes()
-    renderCards()
   </script>
 
 </body>
