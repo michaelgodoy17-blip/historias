@@ -25,6 +25,9 @@
       --radius: 8px;
       --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --expand-color: #3b82f6;
+      --note-bg: #f0f9ff;
+      --note-border: #bae6fd;
     }
 
     body.dark {
@@ -38,6 +41,9 @@
       --border-light: #2d3748;
       --overlay: rgba(0, 0, 0, 0.85);
       --api-color: #a78bfa;
+      --expand-color: #60a5fa;
+      --note-bg: #1e3a5f;
+      --note-border: #2563eb;
     }
 
     * {
@@ -780,7 +786,7 @@
       margin-bottom: 12px;
     }
 
-    /* ===== MODAL DE EDIÇÃO ===== */
+    /* ===== MODAL DE EDIÇÃO - MODIFICADO ===== */
     .modal {
       position: fixed;
       top: 0;
@@ -804,8 +810,8 @@
     .modal-box {
       background: var(--card);
       border-radius: var(--radius);
-      width: 100%;
-      max-width: 600px;
+      width: 90%;
+      height: 90%;
       max-height: 90vh;
       display: flex;
       flex-direction: column;
@@ -833,6 +839,7 @@
       justify-content: space-between;
       align-items: center;
       background: var(--border-light);
+      flex-shrink: 0;
     }
 
     .modal-header h2 {
@@ -875,13 +882,16 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .modal-form {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
     }
 
     .modal-status-container {
@@ -919,31 +929,6 @@
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
-    .modal-editable-content {
-      width: 100%;
-      min-height: 200px;
-      padding: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      line-height: 1.6;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--card);
-      color: var(--text);
-      resize: vertical;
-      transition: all 0.2s ease;
-      overflow-y: auto;
-      outline: none;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .modal-editable-content:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-    }
-
     .modal-footer {
       padding: 16px 24px;
       border-top: 1px solid var(--border-light);
@@ -951,6 +936,7 @@
       justify-content: space-between;
       align-items: center;
       background: var(--border-light);
+      flex-shrink: 0;
     }
 
     .client-info {
@@ -978,6 +964,160 @@
       font-weight: 600;
     }
 
+    /* ===== SEÇÃO DE ANOTAÇÕES - PRINCIPAL NO MODAL ===== */
+    .modal-notes-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-notes-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-notes-title::before {
+      content: "📝";
+      font-size: 14px;
+    }
+
+    .add-note-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .add-note-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .notes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      min-height: 300px;
+    }
+
+    .note-item {
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
+      border-radius: 6px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .note-date {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .note-expand-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--expand-color);
+      font-size: 16px;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .note-expand-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .note-content {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      max-height: 80px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .note-content.expanded {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .note-content-placeholder {
+      color: var(--text-light);
+      font-style: italic;
+      font-size: 13px;
+      padding: 8px;
+    }
+
+    .note-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+
+    .note-actions button {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 4px;
+    }
+
+    .note-edit-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+
+    .note-edit-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
     /* Responsividade */
     @media (max-width: 1024px) {
       .cards-header {
@@ -997,7 +1137,8 @@
       }
 
       .modal-box {
-        max-width: 95%;
+        width: 95%;
+        height: 95%;
       }
     }
 
@@ -1042,7 +1183,8 @@
       }
 
       .modal-box {
-        max-width: 98%;
+        width: 98%;
+        height: 98%;
       }
 
       .form-section-header {
@@ -1076,6 +1218,16 @@
 
       .status {
         align-self: flex-start;
+      }
+
+      .modal-notes-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .add-note-btn {
+        align-self: flex-end;
       }
     }
 
@@ -1111,8 +1263,27 @@
         height: 30px;
       }
 
-      .modal-editable-content {
-        min-height: 180px;
+      .modal-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .client-info {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .modal-footer-actions {
+        justify-content: center;
+      }
+
+      .note-item {
+        padding: 12px;
+      }
+
+      .note-edit-input {
+        min-height: 100px;
       }
     }
 
@@ -1300,263 +1471,273 @@
               <input type="file" id="jsonFile" accept=".json" style="padding: 8px; font-size: 14px;">
               <button class="secondary full-width" onclick="importarDados()">Importar do JSON</button>
             </div>
-          </div>
 
-          <div class="data-option">
-            <h3>🗑️ Excluir Todos os Dados</h3>
-            <p style="color: var(--danger);">ATENÇÃO: Esta ação excluirá permanentemente todos os clientes, histórias, cards e anotações. Não é possível desfazer.</p>
-            <button class="danger full-width" onclick="excluirTodosDados()">Excluir Todos os Dados</button>
+            <div class="data-option">
+              <h3>🗑️ Excluir Todos os Dados</h3>
+              <p style="color: var(--danger);">ATENÇÃO: Esta ação excluirá permanentemente todos os clientes, histórias, cards e anotações. Não é possível desfazer.</p>
+              <button class="danger full-width" onclick="excluirTodosDados()">Excluir Todos os Dados</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- MODAL DE EDIÇÃO DE HISTÓRIA -->
-  <div class="modal" id="modal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2>Editar História</h2>
-        <button class="modal-close" onclick="fecharModal()">×</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="modal-form">
-          <div class="form-group">
-            <label for="editTitulo">Título</label>
-            <input id="editTitulo" placeholder="Digite o título da história">
-          </div>
-
-          <div class="form-group">
-            <label for="editTexto">Conteúdo</label>
-            <div id="editTexto" class="modal-editable-content" contenteditable="true" placeholder="Descreva os detalhes da história..."></div>
-          </div>
-
-          <div class="modal-status-container">
-            <span class="modal-status-label">Status:</span>
-            <select id="editStatus">
-              <option value="Pendente">Pendente</option>
-              <option value="Resolvido">Resolvido</option>
-              <option value="Importante">Importante</option>
-              <option value="API">API</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <div class="client-info">
-          <span>Editando história de:</span>
-          <strong id="currentClienteName"></strong>
+    <!-- MODAL DE EDIÇÃO DE HISTÓRIA - MODIFICADO (SOMENTE ANOTAÇÕES) -->
+    <div class="modal" id="modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>Editar História</h2>
+          <button class="modal-close" onclick="fecharModal()">×</button>
         </div>
 
-        <div class="modal-footer-actions">
-          <button class="secondary" onclick="fecharModal()">Cancelar</button>
-          <button class="primary" onclick="salvarEdicao()">Salvar</button>
+        <div class="modal-body">
+          <!-- Formulário básico para título e status -->
+          <div class="modal-form">
+            <div class="form-group">
+              <label for="editTitulo">Título</label>
+              <input id="editTitulo" placeholder="Digite o título da história">
+            </div>
+
+            <div class="modal-status-container">
+              <span class="modal-status-label">Status:</span>
+              <select id="editStatus">
+                <option value="Pendente">Pendente</option>
+                <option value="Resolvido">Resolvido</option>
+                <option value="Importante">Importante</option>
+                <option value="API">API</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SEÇÃO DE ANOTAÇÕES - AGORA É O CONTEÚDO PRINCIPAL -->
+          <div class="modal-notes-section" id="notesSection">
+            <div class="modal-notes-header">
+              <h3 class="modal-notes-title">Anotações da História</h3>
+              <button class="add-note-btn" onclick="adicionarNovaAnotacao()">
+                <span>+</span>
+                <span>Nova Anotação</span>
+              </button>
+            </div>
+
+            <div class="notes-container" id="notesContainer">
+              <!-- Anotações serão renderizadas aqui -->
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="client-info">
+            <span>Editando história de:</span>
+            <strong id="currentClienteName"></strong>
+          </div>
+
+          <div class="modal-footer-actions">
+            <button class="secondary" onclick="fecharModal()">Cancelar</button>
+            <button class="primary" onclick="salvarEdicao()">Salvar</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- MODAL DE EDIÇÃO DE CLIENTE -->
-  <div class="modal" id="modalCliente">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2>Editar Cliente</h2>
-        <button class="modal-close" onclick="fecharModalCliente()">×</button>
-      </div>
+    <!-- MODAL DE EDIÇÃO DE CLIENTE -->
+    <div class="modal" id="modalCliente">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>Editar Cliente</h2>
+          <button class="modal-close" onclick="fecharModalCliente()">×</button>
+        </div>
 
-      <div class="modal-body">
-        <div class="modal-form">
-          <div class="form-group">
-            <label for="editClienteNome">Nome do Cliente</label>
-            <input id="editClienteNome" placeholder="Digite o nome do cliente">
+        <div class="modal-body">
+          <div class="modal-form">
+            <div class="form-group">
+              <label for="editClienteNome">Nome do Cliente</label>
+              <input id="editClienteNome" placeholder="Digite o nome do cliente">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-footer-actions">
+            <button class="secondary" onclick="fecharModalCliente()">Cancelar</button>
+            <button class="primary" onclick="salvarEdicaoCliente()">Salvar</button>
           </div>
         </div>
       </div>
-
-      <div class="modal-footer">
-        <div class="modal-footer-actions">
-          <button class="secondary" onclick="fecharModalCliente()">Cancelar</button>
-          <button class="primary" onclick="salvarEdicaoCliente()">Salvar</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    let dados = JSON.parse(localStorage.getItem("clientes")) || {};
-    let editCliente = null;
-    let editIndex = null;
-    let editClienteNome = null;
+    <script>
+      let dados = JSON.parse(localStorage.getItem("clientes")) || {};
+      let editCliente = null;
+      let editIndex = null;
+      let editClienteNome = null;
 
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', function () {
-      // Configurar tema
-      const isDark = localStorage.getItem("dark") === "true" ||
-        (localStorage.getItem("dark") === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      // Inicialização
+      document.addEventListener('DOMContentLoaded', function () {
+        // Configurar tema
+        const isDark = localStorage.getItem("dark") === "true" ||
+          (localStorage.getItem("dark") === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-      if (isDark) {
-        document.body.classList.add("dark");
-      }
-      atualizarTemaIcone(isDark);
+        if (isDark) {
+          document.body.classList.add("dark");
+        }
+        atualizarTemaIcone(isDark);
 
-      // Configurar menu
-      setupMenu();
+        // Configurar menu
+        setupMenu();
 
-      // Configurar eventos
-      setupModalEvents();
+        // Configurar eventos
+        setupModalEvents();
 
-      // Inicializar dados
-      atualizarSelects();
-      renderCards();
-      renderClientesList();
-    });
-
-    // Configurar menu hambúrguer
-    function setupMenu() {
-      const menuToggle = document.getElementById('menuToggle');
-      const menuClose = document.getElementById('menuClose');
-      const menuOverlay = document.getElementById('menuOverlay');
-      const menuSidebar = document.getElementById('menuSidebar');
-      const menuItems = document.querySelectorAll('.menu-item');
-      const sections = document.querySelectorAll('.main-content');
-      const themeToggle = document.getElementById('themeToggle');
-
-      // Abrir menu
-      menuToggle.addEventListener('click', function () {
-        menuSidebar.classList.add('active');
-        menuOverlay.classList.add('active');
-        menuToggle.classList.add('active');
+        // Inicializar dados
+        atualizarSelects();
+        renderCards();
+        renderClientesList();
       });
 
-      // Fechar menu
-      function closeMenu() {
-        menuSidebar.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        menuToggle.classList.remove('active');
-      }
+      // Configurar menu hambúrguer
+      function setupMenu() {
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuSidebar = document.getElementById('menuSidebar');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.main-content');
+        const themeToggle = document.getElementById('themeToggle');
 
-      menuClose.addEventListener('click', closeMenu);
-      menuOverlay.addEventListener('click', closeMenu);
+        // Abrir menu
+        menuToggle.addEventListener('click', function () {
+          menuSidebar.classList.add('active');
+          menuOverlay.classList.add('active');
+          menuToggle.classList.add('active');
+        });
 
-      // Alternar tema
-      themeToggle.addEventListener('click', function () {
-        toggleDark();
-        closeMenu();
-      });
+        // Fechar menu
+        function closeMenu() {
+          menuSidebar.classList.remove('active');
+          menuOverlay.classList.remove('active');
+          menuToggle.classList.remove('active');
+        }
 
-      // Navegar entre seções
-      menuItems.forEach(item => {
-        if (item === themeToggle) return; // Pular o botão de tema
+        menuClose.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
 
-        item.addEventListener('click', function () {
-          const sectionId = this.dataset.section;
-
-          // Atualizar item ativo no menu
-          menuItems.forEach(i => {
-            if (i.dataset.section) {
-              i.classList.remove('active');
-            }
-          });
-          this.classList.add('active');
-
-          // Mostrar seção correspondente
-          sections.forEach(section => {
-            section.classList.remove('active');
-            if (section.id === sectionId) {
-              section.classList.add('active');
-            }
-          });
-
-          // Fechar menu
+        // Alternar tema
+        themeToggle.addEventListener('click', function () {
+          toggleDark();
           closeMenu();
         });
-      });
-    }
 
-    function setupModalEvents() {
-      // Fechar com ESC
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-          if (document.getElementById('modal').classList.contains('active')) {
-            fecharModal();
-          }
-          if (document.getElementById('modalCliente').classList.contains('active')) {
-            fecharModalCliente();
-          }
-        }
-      });
-    }
+        // Navegar entre seções
+        menuItems.forEach(item => {
+          if (item === themeToggle) return; // Pular o botão de tema
 
-    function salvar() {
-      localStorage.setItem("clientes", JSON.stringify(dados));
-    }
+          item.addEventListener('click', function () {
+            const sectionId = this.dataset.section;
 
-    function toggleDark() {
-      const body = document.body;
-      body.classList.toggle("dark");
-      const isDark = body.classList.contains("dark");
-      localStorage.setItem("dark", isDark);
-      atualizarTemaIcone(isDark);
-    }
+            // Atualizar item ativo no menu
+            menuItems.forEach(i => {
+              if (i.dataset.section) {
+                i.classList.remove('active');
+              }
+            });
+            this.classList.add('active');
 
-    function atualizarTemaIcone(isDark) {
-      const themeIcon = document.getElementById('themeIcon');
-      const themeText = document.getElementById('themeText');
+            // Mostrar seção correspondente
+            sections.forEach(section => {
+              section.classList.remove('active');
+              if (section.id === sectionId) {
+                section.classList.add('active');
+              }
+            });
 
-      if (isDark) {
-        themeIcon.textContent = '☀️';
-        themeText.textContent = 'Tema Claro';
-      } else {
-        themeIcon.textContent = '🌙';
-        themeText.textContent = 'Tema Escuro';
+            // Fechar menu
+            closeMenu();
+          });
+        });
       }
-    }
 
-    function atualizarSelects() {
-      // Atualizar select da seção de criação
-      const selectCriacao = document.getElementById('clienteSelect');
-      selectCriacao.innerHTML = '<option value="">Selecione um cliente</option>';
+      function setupModalEvents() {
+        // Fechar com ESC
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') {
+            if (document.getElementById('modal').classList.contains('active')) {
+              fecharModal();
+            }
+            if (document.getElementById('modalCliente').classList.contains('active')) {
+              fecharModalCliente();
+            }
+          }
+        });
+      }
 
-      // Atualizar select da seção de cards (filtro por cliente)
-      const selectClienteCards = document.getElementById('clienteSelectCards');
-      selectClienteCards.innerHTML = '<option value="">Todos</option>';
+      function salvar() {
+        localStorage.setItem("clientes", JSON.stringify(dados));
+      }
 
-      Object.keys(dados).sort().forEach(cliente => {
-        // Para select de criação
-        const option1 = document.createElement('option');
-        option1.value = cliente;
-        option1.textContent = cliente;
-        selectCriacao.appendChild(option1);
+      function toggleDark() {
+        const body = document.body;
+        body.classList.toggle("dark");
+        const isDark = body.classList.contains("dark");
+        localStorage.setItem("dark", isDark);
+        atualizarTemaIcone(isDark);
+      }
 
-        // Para select de visualização (filtro por cliente)
-        const option2 = document.createElement('option');
-        option2.value = cliente;
-        option2.textContent = cliente;
-        selectClienteCards.appendChild(option2);
-      });
-    }
+      function atualizarTemaIcone(isDark) {
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
 
-    function renderClientesList() {
-      const container = document.getElementById('clientsList');
-      const clientes = Object.keys(dados);
+        if (isDark) {
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Tema Claro';
+        } else {
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Tema Escuro';
+        }
+      }
 
-      if (clientes.length === 0) {
-        container.innerHTML = `
+      function atualizarSelects() {
+        // Atualizar select da seção de criação
+        const selectCriacao = document.getElementById('clienteSelect');
+        selectCriacao.innerHTML = '<option value="">Selecione um cliente</option>';
+
+        // Atualizar select da seção de cards (filtro por cliente)
+        const selectClienteCards = document.getElementById('clienteSelectCards');
+        selectClienteCards.innerHTML = '<option value="">Todos</option>';
+
+        Object.keys(dados).sort().forEach(cliente => {
+          // Para select de criação
+          const option1 = document.createElement('option');
+          option1.value = cliente;
+          option1.textContent = cliente;
+          selectCriacao.appendChild(option1);
+
+          // Para select de visualização (filtro por cliente)
+          const option2 = document.createElement('option');
+          option2.value = cliente;
+          option2.textContent = cliente;
+          selectClienteCards.appendChild(option2);
+        });
+      }
+
+      function renderClientesList() {
+        const container = document.getElementById('clientsList');
+        const clientes = Object.keys(dados);
+
+        if (clientes.length === 0) {
+          container.innerHTML = `
           <h3>Clientes Cadastrados</h3>
           <div class="empty-state" style="padding: 20px; margin-top: 10px;">
             <p>Nenhum cliente cadastrado ainda.</p>
           </div>
         `;
-        return;
-      }
+          return;
+        }
 
-      let html = '<h3>Clientes Cadastrados</h3>';
+        let html = '<h3>Clientes Cadastrados</h3>';
 
-      clientes.sort().forEach(cliente => {
-        const numHistorias = dados[cliente].length;
-        html += `
+        clientes.sort().forEach(cliente => {
+          const numHistorias = dados[cliente].length;
+          html += `
           <div class="client-item">
             <span>${cliente} <small style="color: var(--text-light);">(${numHistorias} histórias)</small></span>
             <div class="client-item-actions">
@@ -1565,177 +1746,184 @@
             </div>
           </div>
         `;
-      });
-
-      container.innerHTML = html;
-    }
-
-    function addCliente() {
-      const nomeInput = document.getElementById('clienteNome');
-      const nome = nomeInput.value.trim();
-
-      if (!nome) {
-        alert('Por favor, digite um nome para o cliente.');
-        nomeInput.focus();
-        return;
-      }
-
-      if (dados[nome]) {
-        alert('Já existe um cliente com esse nome.');
-        nomeInput.focus();
-        return;
-      }
-
-      dados[nome] = [];
-      salvar();
-      atualizarSelects();
-      renderClientesList();
-      nomeInput.value = "";
-      nomeInput.focus();
-    }
-
-    function editarCliente(cliente) {
-      editClienteNome = cliente;
-      document.getElementById('editClienteNome').value = cliente;
-      document.getElementById('modalCliente').classList.add('active');
-      document.getElementById('editClienteNome').focus();
-    }
-
-    function fecharModalCliente() {
-      document.getElementById('modalCliente').classList.remove('active');
-      editClienteNome = null;
-    }
-
-    function salvarEdicaoCliente() {
-      const novoNome = document.getElementById('editClienteNome').value.trim();
-
-      if (!novoNome) {
-        alert('O nome do cliente não pode estar vazio.');
-        document.getElementById('editClienteNome').focus();
-        return;
-      }
-
-      if (novoNome !== editClienteNome && dados[novoNome]) {
-        alert('Já existe um cliente com esse nome.');
-        document.getElementById('editClienteNome').focus();
-        return;
-      }
-
-      if (novoNome !== editClienteNome) {
-        // Renomear o cliente
-        dados[novoNome] = dados[editClienteNome];
-        delete dados[editClienteNome];
-
-        // Atualizar o nome do cliente em todas as histórias
-        dados[novoNome].forEach(historia => {
-          historia.cliente = novoNome;
         });
+
+        container.innerHTML = html;
       }
 
-      salvar();
-      atualizarSelects();
-      renderCards();
-      renderClientesList();
-      fecharModalCliente();
-    }
+      function addCliente() {
+        const nomeInput = document.getElementById('clienteNome');
+        const nome = nomeInput.value.trim();
 
-    function excluirCliente(cliente) {
-      if (dados[cliente].length > 0) {
-        if (!confirm(`O cliente "${cliente}" tem ${dados[cliente].length} histórias. Tem certeza que deseja excluir o cliente e todas as suas histórias?`)) {
+        if (!nome) {
+          alert('Por favor, digite um nome para o cliente.');
+          nomeInput.focus();
           return;
         }
-      } else {
-        if (!confirm(`Tem certeza que deseja excluir o cliente "${cliente}"?`)) {
+
+        if (dados[nome]) {
+          alert('Já existe um cliente com esse nome.');
+          nomeInput.focus();
           return;
         }
+
+        dados[nome] = [];
+        salvar();
+        atualizarSelects();
+        renderClientesList();
+        nomeInput.value = "";
+        nomeInput.focus();
       }
 
-      delete dados[cliente];
-      salvar();
-      atualizarSelects();
-      renderCards();
-      renderClientesList();
-    }
-
-    function addCard() {
-      const cliente = document.getElementById('clienteSelect').value;
-      if (!cliente) {
-        alert('Selecione um cliente primeiro.');
-        return;
+      function editarCliente(cliente) {
+        editClienteNome = cliente;
+        document.getElementById('editClienteNome').value = cliente;
+        document.getElementById('modalCliente').classList.add('active');
+        document.getElementById('editClienteNome').focus();
       }
 
-      const titulo = document.getElementById('titulo').value.trim();
-      const texto = document.getElementById('texto').value;
-      const status = document.getElementById('status').value;
-
-      if (!titulo) {
-        alert('Por favor, digite um título para a história.');
-        document.getElementById('titulo').focus();
-        return;
+      function fecharModalCliente() {
+        document.getElementById('modalCliente').classList.remove('active');
+        editClienteNome = null;
       }
 
-      const dataAtual = new Date().toISOString().split('T')[0];
-      const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      function salvarEdicaoCliente() {
+        const novoNome = document.getElementById('editClienteNome').value.trim();
 
-      dados[cliente].push({
-        titulo: titulo,
-        texto: texto,
-        status: status,
-        dataCriacao: dataAtual,
-        horaCriacao: horaAtual,
-        dataEdicao: dataAtual,
-        horaEdicao: horaAtual,
-        cliente: cliente
-      });
+        if (!novoNome) {
+          alert('O nome do cliente não pode estar vazio.');
+          document.getElementById('editClienteNome').focus();
+          return;
+        }
 
-      salvar();
-      renderCards();
+        if (novoNome !== editClienteNome && dados[novoNome]) {
+          alert('Já existe um cliente com esse nome.');
+          document.getElementById('editClienteNome').focus();
+          return;
+        }
 
-      // Limpar os campos, mas manter o cliente selecionado
-      document.getElementById('titulo').value = '';
-      document.getElementById('texto').value = '';
+        if (novoNome !== editClienteNome) {
+          // Renomear o cliente
+          dados[novoNome] = dados[editClienteNome];
+          delete dados[editClienteNome];
 
-      // Foco no campo de texto para próxima história
-      document.getElementById('texto').focus();
+          // Atualizar o nome do cliente em todas as histórias
+          dados[novoNome].forEach(historia => {
+            historia.cliente = novoNome;
+          });
+        }
 
-      // Voltar para a seção de histórias salvas após criar
-      document.querySelector('.menu-item[data-section="historias-salvas"]').click();
-    }
+        salvar();
+        atualizarSelects();
+        renderCards();
+        renderClientesList();
+        fecharModalCliente();
+      }
 
-    function renderCards() {
-      const container = document.getElementById('cards');
-      const clienteSelecionado = document.getElementById('clienteSelectCards').value;
-      const statusSelecionado = document.getElementById('statusFilter').value;
+      function excluirCliente(cliente) {
+        if (dados[cliente].length > 0) {
+          if (!confirm(`O cliente "${cliente}" tem ${dados[cliente].length} histórias. Tem certeza que deseja excluir o cliente e todas as suas histórias?`)) {
+            return;
+          }
+        } else {
+          if (!confirm(`Tem certeza que deseja excluir o cliente "${cliente}"?`)) {
+            return;
+          }
+        }
 
-      // Verificar se há dados
-      const totalHistorias = Object.values(dados).reduce((total, arr) => total + arr.length, 0);
+        delete dados[cliente];
+        salvar();
+        atualizarSelects();
+        renderCards();
+        renderClientesList();
+      }
 
-      if (totalHistorias === 0) {
-        container.innerHTML = `
+      function addCard() {
+        const cliente = document.getElementById('clienteSelect').value;
+        if (!cliente) {
+          alert('Selecione um cliente primeiro.');
+          return;
+        }
+
+        const titulo = document.getElementById('titulo').value.trim();
+        const texto = document.getElementById('texto').value;
+        const status = document.getElementById('status').value;
+
+        if (!titulo) {
+          alert('Por favor, digite um título para a história.');
+          document.getElementById('titulo').focus();
+          return;
+        }
+
+        const dataAtual = new Date().toISOString().split('T')[0];
+        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        // Criar a primeira anotação com o conteúdo da história
+        const primeiraAnotacao = {
+          texto: texto,
+          data: dataAtual,
+          hora: horaAtual
+        };
+
+        dados[cliente].push({
+          titulo: titulo,
+          status: status,
+          dataCriacao: dataAtual,
+          horaCriacao: horaAtual,
+          dataEdicao: dataAtual,
+          horaEdicao: horaAtual,
+          cliente: cliente,
+          notas: [primeiraAnotacao] // O conteúdo agora é a primeira anotação
+        });
+
+        salvar();
+        renderCards();
+
+        // Limpar os campos, mas manter o cliente selecionado
+        document.getElementById('titulo').value = '';
+        document.getElementById('texto').value = '';
+
+        // Foco no campo de texto para próxima história
+        document.getElementById('texto').focus();
+
+        // Voltar para a seção de histórias salvas após criar
+        document.querySelector('.menu-item[data-section="historias-salvas"]').click();
+      }
+
+      function renderCards() {
+        const container = document.getElementById('cards');
+        const clienteSelecionado = document.getElementById('clienteSelectCards').value;
+        const statusSelecionado = document.getElementById('statusFilter').value;
+
+        // Verificar se há dados
+        const totalHistorias = Object.values(dados).reduce((total, arr) => total + arr.length, 0);
+
+        if (totalHistorias === 0) {
+          container.innerHTML = `
           <div class="empty-state">
             <h3>Nenhuma história encontrada</h3>
             <p>Adicione clientes e crie histórias usando o menu.</p>
           </div>
         `;
-        return;
+          return;
+        }
+
+        // Se há dados mas nenhum filtro selecionado, mostrar todos
+        if (!clienteSelecionado && !statusSelecionado) {
+          mostrarTodasHistorias(container);
+        } else {
+          mostrarHistoriasFiltradas(container, clienteSelecionado, statusSelecionado);
+        }
       }
 
-      // Se há dados mas nenhum filtro selecionado, mostrar todos
-      if (!clienteSelecionado && !statusSelecionado) {
-        mostrarTodasHistorias(container);
-      } else {
-        mostrarHistoriasFiltradas(container, clienteSelecionado, statusSelecionado);
-      }
-    }
+      function mostrarTodasHistorias(container) {
+        container.innerHTML = '';
 
-    function mostrarTodasHistorias(container) {
-      container.innerHTML = '';
-
-      Object.keys(dados).forEach(cliente => {
-        if (dados[cliente].length > 0) {
-          // Adicionar título do cliente
-          const clienteTitle = document.createElement('div');
-          clienteTitle.style.cssText = `
+        Object.keys(dados).forEach(cliente => {
+          if (dados[cliente].length > 0) {
+            // Adicionar título do cliente
+            const clienteTitle = document.createElement('div');
+            clienteTitle.style.cssText = `
             grid-column: 1 / -1;
             font-size: 16px;
             font-weight: 600;
@@ -1744,115 +1932,115 @@
             padding-bottom: 8px;
             border-bottom: 2px solid var(--primary);
           `;
-          clienteTitle.textContent = `Cliente: ${cliente}`;
-          container.appendChild(clienteTitle);
+            clienteTitle.textContent = `Cliente: ${cliente}`;
+            container.appendChild(clienteTitle);
 
-          // Adicionar cards do cliente
-          dados[cliente].forEach((historia, index) => {
-            container.appendChild(criarCardElement(cliente, historia, index));
-          });
-        }
-      });
-    }
+            // Adicionar cards do cliente
+            dados[cliente].forEach((historia, index) => {
+              container.appendChild(criarCardElement(cliente, historia, index));
+            });
+          }
+        });
+      }
 
-    function mostrarHistoriasFiltradas(container, clienteFiltro, statusFiltro) {
-      container.innerHTML = '';
+      function mostrarHistoriasFiltradas(container, clienteFiltro, statusFiltro) {
+        container.innerHTML = '';
 
-      let historiasFiltradas = [];
-      let clientesComHistorias = [];
+        let historiasFiltradas = [];
+        let clientesComHistorias = [];
 
-      // Coletar todas as histórias que correspondem aos filtros
-      Object.keys(dados).forEach(cliente => {
-        if (!clienteFiltro || cliente === clienteFiltro) {
-          dados[cliente].forEach(historia => {
-            if (!statusFiltro || historia.status === statusFiltro) {
-              historiasFiltradas.push({
-                cliente: cliente,
-                historia: historia,
-                index: dados[cliente].indexOf(historia)
-              });
+        // Coletar todas as histórias que correspondem aos filtros
+        Object.keys(dados).forEach(cliente => {
+          if (!clienteFiltro || cliente === clienteFiltro) {
+            dados[cliente].forEach(historia => {
+              if (!statusFiltro || historia.status === statusFiltro) {
+                historiasFiltradas.push({
+                  cliente: cliente,
+                  historia: historia,
+                  index: dados[cliente].indexOf(historia)
+                });
 
-              if (!clientesComHistorias.includes(cliente)) {
-                clientesComHistorias.push(cliente);
+                if (!clientesComHistorias.includes(cliente)) {
+                  clientesComHistorias.push(cliente);
+                }
               }
-            }
-          });
-        }
-      });
+            });
+          }
+        });
 
-      if (historiasFiltradas.length === 0) {
-        container.innerHTML = `
+        if (historiasFiltradas.length === 0) {
+          container.innerHTML = `
           <div class="empty-state">
             <h3>Nenhuma história encontrada</h3>
             <p>Não há histórias que correspondam aos filtros selecionados.</p>
           </div>
         `;
-        return;
-      }
-
-      // Mostrar por cliente ou todas juntas dependendo dos filtros
-      if (clienteFiltro) {
-        // Filtro por cliente específico
-        const clienteTitle = document.createElement('div');
-        clienteTitle.style.cssText = `
-          grid-column: 1 / -1;
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--text);
-          margin-bottom: 16px;
-          padding-bottom: 8px;
-          border-bottom: 2px solid var(--primary);
-        `;
-
-        let titulo = `Cliente: ${clienteFiltro}`;
-        if (statusFiltro) {
-          titulo += ` (Filtrado por status: ${statusFiltro})`;
+          return;
         }
-        titulo += ` (${historiasFiltradas.length} histórias)`;
 
-        clienteTitle.textContent = titulo;
-        container.appendChild(clienteTitle);
-
-        // Adicionar cards filtrados
-        historiasFiltradas.forEach(item => {
-          container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
-        });
-      } else {
-        // Filtro apenas por status (ou nenhum filtro)
-        const filtroTitle = document.createElement('div');
-        filtroTitle.style.cssText = `
-          grid-column: 1 / -1;
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--text);
-          margin-bottom: 16px;
-          padding-bottom: 8px;
-          border-bottom: 2px solid var(--primary);
-        `;
-
-        let titulo = 'Todas as histórias';
-        if (statusFiltro) {
-          titulo = `Histórias com status: ${statusFiltro}`;
-        }
-        titulo += ` (${historiasFiltradas.length} histórias)`;
-
-        filtroTitle.textContent = titulo;
-        container.appendChild(filtroTitle);
-
-        // Agrupar por cliente para melhor organização
-        const historiasPorCliente = {};
-
-        historiasFiltradas.forEach(item => {
-          if (!historiasPorCliente[item.cliente]) {
-            historiasPorCliente[item.cliente] = [];
-          }
-          historiasPorCliente[item.cliente].push(item);
-        });
-
-        // Adicionar cards agrupados por cliente
-        Object.keys(historiasPorCliente).forEach(cliente => {
+        // Mostrar por cliente ou todas juntas dependendo dos filtros
+        if (clienteFiltro) {
+          // Filtro por cliente específico
           const clienteTitle = document.createElement('div');
           clienteTitle.style.cssText = `
+          grid-column: 1 / -1;
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 2px solid var(--primary);
+        `;
+
+          let titulo = `Cliente: ${clienteFiltro}`;
+          if (statusFiltro) {
+            titulo += ` (Filtrado por status: ${statusFiltro})`;
+          }
+          titulo += ` (${historiasFiltradas.length} histórias)`;
+
+          clienteTitle.textContent = titulo;
+          container.appendChild(clienteTitle);
+
+          // Adicionar cards filtrados
+          historiasFiltradas.forEach(item => {
+            container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
+          });
+        } else {
+          // Filtro apenas por status (ou nenhum filtro)
+          const filtroTitle = document.createElement('div');
+          filtroTitle.style.cssText = `
+          grid-column: 1 / -1;
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 16px;
+          padding-bottom: 8px;
+          border-bottom: 2px solid var(--primary);
+        `;
+
+          let titulo = 'Todas as histórias';
+          if (statusFiltro) {
+            titulo = `Histórias com status: ${statusFiltro}`;
+          }
+          titulo += ` (${historiasFiltradas.length} histórias)`;
+
+          filtroTitle.textContent = titulo;
+          container.appendChild(filtroTitle);
+
+          // Agrupar por cliente para melhor organização
+          const historiasPorCliente = {};
+
+          historiasFiltradas.forEach(item => {
+            if (!historiasPorCliente[item.cliente]) {
+              historiasPorCliente[item.cliente] = [];
+            }
+            historiasPorCliente[item.cliente].push(item);
+          });
+
+          // Adicionar cards agrupados por cliente
+          Object.keys(historiasPorCliente).forEach(cliente => {
+            const clienteTitle = document.createElement('div');
+            clienteTitle.style.cssText = `
             grid-column: 1 / -1;
             font-size: 15px;
             font-weight: 600;
@@ -1861,28 +2049,31 @@
             padding-bottom: 6px;
             border-bottom: 1px solid var(--border);
           `;
-          clienteTitle.textContent = `Cliente: ${cliente}`;
-          container.appendChild(clienteTitle);
+            clienteTitle.textContent = `Cliente: ${cliente}`;
+            container.appendChild(clienteTitle);
 
-          historiasPorCliente[cliente].forEach(item => {
-            container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
+            historiasPorCliente[cliente].forEach(item => {
+              container.appendChild(criarCardElement(item.cliente, item.historia, item.index));
+            });
           });
-        });
+        }
       }
-    }
 
-    function criarCardElement(cliente, historia, index) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.dataset.status = historia.status;
+      function criarCardElement(cliente, historia, index) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.status = historia.status;
 
-      // Formatar data para exibição
-      const dataCriacao = historia.dataCriacao || 'Não informado';
-      const horaCriacao = historia.horaCriacao || '';
-      const dataEdicao = historia.dataEdicao || dataCriacao;
-      const horaEdicao = historia.horaEdicao || horaCriacao;
+        // Formatar data para exibição
+        const dataCriacao = historia.dataCriacao || 'Não informado';
+        const horaCriacao = historia.horaCriacao || '';
+        const dataEdicao = historia.dataEdicao || dataCriacao;
+        const horaEdicao = historia.horaEdicao || horaCriacao;
 
-      card.innerHTML = `
+        // Verificar quantas anotações existem
+        const numAnotacoes = historia.notas ? historia.notas.length : 0;
+
+        card.innerHTML = `
         <div class="card-header">
           <h3>${historia.titulo}</h3>
           <span class="status" data-status="${historia.status}">${historia.status}</span>
@@ -1897,6 +2088,10 @@
             <span class="label">Editado em:</span>
             <span class="value">${dataEdicao} ${horaEdicao ? `às ${horaEdicao}` : ''}</span>
           </div>
+          <div class="date-info">
+            <span class="label">Anotações:</span>
+            <span class="value">${numAnotacoes} anotações</span>
+          </div>
         </div>
         
         <div class="card-footer">
@@ -1907,182 +2102,324 @@
         </div>
       `;
 
-      return card;
-    }
-
-    function excluir(cliente, index) {
-      if (!confirm("Tem certeza que deseja excluir esta história?")) return;
-
-      dados[cliente].splice(index, 1);
-      salvar();
-      renderCards();
-
-      // Atualizar selects se o cliente ficou sem histórias
-      if (dados[cliente].length === 0) {
-        atualizarSelects();
-      }
-    }
-
-    function abrirModal(cliente, index) {
-      editCliente = cliente;
-      editIndex = index;
-
-      const historia = dados[cliente][index];
-      document.getElementById('editTitulo').value = historia.titulo;
-      document.getElementById('editTexto').innerHTML = historia.texto || '';
-      document.getElementById('editStatus').value = historia.status;
-      document.getElementById('currentClienteName').textContent = cliente;
-
-      document.getElementById('modal').classList.add('active');
-
-      // Foco no conteúdo (área editável) ao abrir o modal
-      setTimeout(() => {
-        document.getElementById('editTexto').focus();
-      }, 100);
-    }
-
-    function fecharModal() {
-      document.getElementById('modal').classList.remove('active');
-      editCliente = null;
-      editIndex = null;
-    }
-
-    function salvarEdicao() {
-      const titulo = document.getElementById('editTitulo').value.trim();
-
-      if (!titulo) {
-        alert('O título é obrigatório.');
-        document.getElementById('editTitulo').focus();
-        return;
+        return card;
       }
 
-      const texto = document.getElementById('editTexto').innerHTML;
-      const dataAtual = new Date().toISOString().split('T')[0];
-      const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      function excluir(cliente, index) {
+        if (!confirm("Tem certeza que deseja excluir esta história?")) return;
 
-      // Preservar dados existentes e atualizar
-      const historiaExistente = dados[editCliente][editIndex];
+        dados[cliente].splice(index, 1);
+        salvar();
+        renderCards();
 
-      dados[editCliente][editIndex] = {
-        titulo: titulo,
-        texto: texto,
-        status: document.getElementById('editStatus').value,
-        dataCriacao: historiaExistente.dataCriacao || dataAtual,
-        horaCriacao: historiaExistente.horaCriacao || horaAtual,
-        dataEdicao: dataAtual,
-        horaEdicao: horaAtual,
-        cliente: editCliente
-      };
-
-      salvar();
-      fecharModal();
-      renderCards();
-    }
-
-    // FUNÇÕES PARA IMPORTAR/EXPORTAR DADOS
-    function exportarDados() {
-      // Obter todos os dados do localStorage
-      const dadosCompletos = {
-        clientes: dados,
-        exportadoEm: new Date().toISOString(),
-        versao: '1.0'
-      };
-
-      // Converter para JSON
-      const jsonDados = JSON.stringify(dadosCompletos, null, 2);
-
-      // Criar um blob e fazer download
-      const blob = new Blob([jsonDados], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `historias-clientes-backup-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      alert('Dados exportados com sucesso!');
-    }
-
-    function importarDados() {
-      const fileInput = document.getElementById('jsonFile');
-      const file = fileInput.files[0];
-
-      if (!file) {
-        alert('Por favor, selecione um arquivo JSON para importar.');
-        return;
-      }
-
-      if (!confirm('ATENÇÃO: Isso irá substituir todos os dados atuais. Tem certeza que deseja continuar?')) {
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        try {
-          const dadosImportados = JSON.parse(e.target.result);
-
-          // Verificar se é um formato válido
-          if (!dadosImportados.clientes) {
-            throw new Error('Formato de arquivo inválido. O arquivo deve conter dados de clientes.');
-          }
-
-          // Atualizar os dados
-          dados = dadosImportados.clientes;
-          salvar();
-
-          // Atualizar a interface
+        // Atualizar selects se o cliente ficou sem histórias
+        if (dados[cliente].length === 0) {
           atualizarSelects();
-          renderCards();
-          renderClientesList();
-
-          // Limpar o input de arquivo
-          fileInput.value = '';
-
-          alert('Dados importados com sucesso!');
-        } catch (error) {
-          alert(`Erro ao importar dados: ${error.message}`);
-          console.error('Erro na importação:', error);
         }
-      };
-
-      reader.onerror = function () {
-        alert('Erro ao ler o arquivo. Por favor, tente novamente.');
-      };
-
-      reader.readAsText(file);
-    }
-
-    function excluirTodosDados() {
-      if (!confirm('ATENÇÃO: Esta ação excluirá permanentemente TODOS os dados (clientes, histórias, cards e anotações). Esta ação NÃO pode ser desfeita.\n\nTem certeza absoluta que deseja continuar?')) {
-        return;
       }
 
-      if (!confirm('ÚLTIMO AVISO: Todos os seus dados serão PERDIDOS para sempre. Clique em OK apenas se tiver certeza absoluta.')) {
-        return;
+      function abrirModal(cliente, index) {
+        editCliente = cliente;
+        editIndex = index;
+
+        const historia = dados[cliente][index];
+        document.getElementById('editTitulo').value = historia.titulo;
+        document.getElementById('editStatus').value = historia.status;
+        document.getElementById('currentClienteName').textContent = cliente;
+
+        // Garantir que a propriedade notas exista
+        if (!historia.notas) {
+          historia.notas = [];
+        }
+
+        // Renderizar anotações
+        renderizarAnotacoes(historia.notas);
+
+        document.getElementById('modal').classList.add('active');
+
+        // Foco no título ao abrir o modal
+        setTimeout(() => {
+          document.getElementById('editTitulo').focus();
+        }, 100);
       }
 
-      dados = {};
-      salvar();
-      atualizarSelects();
-      renderCards();
-      renderClientesList();
+      function fecharModal() {
+        document.getElementById('modal').classList.remove('active');
+        editCliente = null;
+        editIndex = null;
+      }
 
-      alert('Todos os dados foram excluídos com sucesso.');
-    }
+      function salvarEdicao() {
+        const titulo = document.getElementById('editTitulo').value.trim();
 
-    // Fechar modal com ESC
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
+        if (!titulo) {
+          alert('O título é obrigatório.');
+          document.getElementById('editTitulo').focus();
+          return;
+        }
+
+        const dataAtual = new Date().toISOString().split('T')[0];
+        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        // Preservar dados existentes e atualizar
+        const historiaExistente = dados[editCliente][editIndex];
+
+        // Preservar anotações se existirem
+        const notas = historiaExistente.notas || [];
+
+        dados[editCliente][editIndex] = {
+          titulo: titulo,
+          status: document.getElementById('editStatus').value,
+          dataCriacao: historiaExistente.dataCriacao || dataAtual,
+          horaCriacao: historiaExistente.horaCriacao || horaAtual,
+          dataEdicao: dataAtual,
+          horaEdicao: horaAtual,
+          cliente: editCliente,
+          notas: notas // Preservar anotações
+        };
+
+        salvar();
         fecharModal();
+        renderCards();
       }
-      if (event.key === 'Escape' && document.getElementById('modalCliente').classList.contains('active')) {
-        fecharModalCliente();
+
+      // FUNÇÕES PARA ANOTAÇÕES
+      function renderizarAnotacoes(notas) {
+        const container = document.getElementById('notesContainer');
+
+        if (!notas || notas.length === 0) {
+          container.innerHTML = `
+          <div class="note-item">
+            <div class="note-content note-content-placeholder">
+              Nenhuma anotação ainda. Clique em "Nova Anotação" para adicionar.
+            </div>
+          </div>
+        `;
+          return;
+        }
+
+        container.innerHTML = '';
+
+        notas.forEach((nota, index) => {
+          const noteElement = document.createElement('div');
+          noteElement.className = 'note-item';
+          noteElement.innerHTML = `
+          <div class="note-header">
+            <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
+            <button class="note-expand-btn" onclick="alternarExpansaoAnotacao(${index})">+</button>
+          </div>
+          <div class="note-content" id="noteContent${index}">
+            ${nota.texto || ''}
+          </div>
+          <div class="note-actions">
+            <button class="secondary small" onclick="editarAnotacao(${index})">Editar</button>
+            <button class="danger small" onclick="excluirAnotacao(${index})">Excluir</button>
+          </div>
+        `;
+          container.appendChild(noteElement);
+        });
       }
-    });
-  </script>
+
+      function adicionarNovaAnotacao() {
+        const container = document.getElementById('notesContainer');
+
+        // Se estiver mostrando a mensagem de "nenhuma anotação", removê-la
+        if (container.innerHTML.includes('Nenhuma anotação')) {
+          container.innerHTML = '';
+        }
+
+        const dataAtual = new Date().toISOString().split('T')[0];
+        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        const novaNota = {
+          texto: '',
+          data: dataAtual,
+          hora: horaAtual,
+          editando: true
+        };
+
+        // Adicionar à array de anotações da história atual
+        if (!dados[editCliente][editIndex].notas) {
+          dados[editCliente][editIndex].notas = [];
+        }
+
+        dados[editCliente][editIndex].notas.push(novaNota);
+        salvar();
+
+        // Renderizar anotações novamente
+        renderizarAnotacoes(dados[editCliente][editIndex].notas);
+      }
+
+      function alternarExpansaoAnotacao(index) {
+        const noteContent = document.getElementById(`noteContent${index}`);
+        const expandBtn = document.querySelectorAll('.note-expand-btn')[index];
+
+        if (noteContent.classList.contains('expanded')) {
+          noteContent.classList.remove('expanded');
+          expandBtn.textContent = '+';
+        } else {
+          noteContent.classList.add('expanded');
+          expandBtn.textContent = '-';
+        }
+      }
+
+      function editarAnotacao(index) {
+        const notas = dados[editCliente][editIndex].notas;
+        const nota = notas[index];
+
+        // Criar input de edição
+        const noteItem = document.querySelectorAll('.note-item')[index];
+        noteItem.innerHTML = `
+        <div class="note-header">
+          <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
+        </div>
+        <textarea class="note-edit-input" id="editNoteInput${index}">${nota.texto || ''}</textarea>
+        <div class="note-actions">
+          <button class="secondary small" onclick="cancelarEdicaoAnotacao(${index})">Cancelar</button>
+          <button class="primary small" onclick="salvarEdicaoAnotacao(${index})">Salvar</button>
+        </div>
+      `;
+
+        // Focar no input de edição
+        setTimeout(() => {
+          document.getElementById(`editNoteInput${index}`).focus();
+        }, 100);
+      }
+
+      function salvarEdicaoAnotacao(index) {
+        const notas = dados[editCliente][editIndex].notas;
+        const nota = notas[index];
+        const novoTexto = document.getElementById(`editNoteInput${index}`).value.trim();
+
+        if (novoTexto) {
+          nota.texto = novoTexto;
+          nota.data = new Date().toISOString().split('T')[0];
+          nota.hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+          salvar();
+          renderizarAnotacoes(notas);
+        } else {
+          alert('A anotação não pode estar vazia.');
+          document.getElementById(`editNoteInput${index}`).focus();
+        }
+      }
+
+      function cancelarEdicaoAnotacao(index) {
+        renderizarAnotacoes(dados[editCliente][editIndex].notas);
+      }
+
+      function excluirAnotacao(index) {
+        if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
+
+        dados[editCliente][editIndex].notas.splice(index, 1);
+        salvar();
+        renderizarAnotacoes(dados[editCliente][editIndex].notas);
+      }
+
+      // FUNÇÕES PARA IMPORTAR/EXPORTAR DADOS
+      function exportarDados() {
+        // Obter todos os dados do localStorage
+        const dadosCompletos = {
+          clientes: dados,
+          exportadoEm: new Date().toISOString(),
+          versao: '1.1' // Atualizado para incluir anotações
+        };
+
+        // Converter para JSON
+        const jsonDados = JSON.stringify(dadosCompletos, null, 2);
+
+        // Criar um blob e fazer download
+        const blob = new Blob([jsonDados], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `historias-clientes-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert('Dados exportados com sucesso!');
+      }
+
+      function importarDados() {
+        const fileInput = document.getElementById('jsonFile');
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert('Por favor, selecione um arquivo JSON para importar.');
+          return;
+        }
+
+        if (!confirm('ATENÇÃO: Isso irá substituir todos os dados atuais. Tem certeza que deseja continuar?')) {
+          return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          try {
+            const dadosImportados = JSON.parse(e.target.result);
+
+            // Verificar se é um formato válido
+            if (!dadosImportados.clientes) {
+              throw new Error('Formato de arquivo inválido. O arquivo deve conter dados de clientes.');
+            }
+
+            // Atualizar os dados
+            dados = dadosImportados.clientes;
+            salvar();
+
+            // Atualizar a interface
+            atualizarSelects();
+            renderCards();
+            renderClientesList();
+
+            // Limpar o input de arquivo
+            fileInput.value = '';
+
+            alert('Dados importados com sucesso!');
+          } catch (error) {
+            alert(`Erro ao importar dados: ${error.message}`);
+            console.error('Erro na importação:', error);
+          }
+        };
+
+        reader.onerror = function () {
+          alert('Erro ao ler o arquivo. Por favor, tente novamente.');
+        };
+
+        reader.readAsText(file);
+      }
+
+      function excluirTodosDados() {
+        if (!confirm('ATENÇÃO: Esta ação excluirá permanentemente TODOS os dados (clientes, histórias, cards e anotações). Esta ação NÃO pode ser desfeita.\n\nTem certeza absoluta que deseja continuar?')) {
+          return;
+        }
+
+        if (!confirm('ÚLTIMO AVISO: Todos os seus dados serão PERDIDOS para sempre. Clique em OK apenas se tiver certeza absoluta.')) {
+          return;
+        }
+
+        dados = {};
+        salvar();
+        atualizarSelects();
+        renderCards();
+        renderClientesList();
+
+        alert('Todos os dados foram excluídos com sucesso.');
+      }
+
+      // Fechar modal com ESC
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
+          fecharModal();
+        }
+        if (event.key === 'Escape' && document.getElementById('modalCliente').classList.contains('active')) {
+          fecharModalCliente();
+        }
+      });
+    </script>
 
 </body>
 
