@@ -22,9 +22,9 @@
       --danger: #ef4444;
       --api-color: #8b5cf6;
       --danger-hover: #dc2626;
-      --radius: 12px;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+      --radius: 8px;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
     body.dark {
@@ -62,9 +62,9 @@
 
     /* Cabeçalho com menu hambúrguer */
     .header {
-      padding: 20px 0;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border-light);
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     .header-content {
@@ -80,8 +80,8 @@
     }
 
     .header h1 {
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 600;
       color: var(--text);
     }
 
@@ -164,7 +164,7 @@
     }
 
     .menu-header {
-      padding: 24px;
+      padding: 20px;
       border-bottom: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
@@ -172,8 +172,8 @@
     }
 
     .menu-header h2 {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text);
     }
 
@@ -198,17 +198,17 @@
     }
 
     .menu-items {
-      padding: 16px 0;
+      padding: 12px 0;
     }
 
     .menu-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 24px;
+      padding: 14px 20px;
       color: var(--text);
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
       transition: all 0.2s ease;
       cursor: pointer;
@@ -228,8 +228,8 @@
     }
 
     .menu-item-icon {
-      font-size: 18px;
-      width: 24px;
+      font-size: 16px;
+      width: 20px;
       text-align: center;
     }
 
@@ -237,25 +237,6 @@
       display: flex;
       align-items: center;
       gap: 16px;
-    }
-
-    .toggle {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 18px;
-    }
-
-    .toggle:hover {
-      transform: rotate(15deg);
-      box-shadow: var(--shadow);
     }
 
     /* Conteúdo Principal */
@@ -278,64 +259,81 @@
       }
     }
 
-    /* SEÇÃO: Criar Nova História */
+    /* SEÇÃO: Criar Nova História - LAYOUT SIMPLIFICADO */
     .section-creation {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 24px;
       box-shadow: var(--shadow);
       height: fit-content;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .section-title {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text);
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 2px solid var(--primary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-light);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .section-title::before {
       content: "✏️";
-      font-size: 18px;
+      font-size: 16px;
     }
 
     /* SEÇÃO: Adicionar Cliente */
     .section-add-client {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 32px;
+      padding: 24px;
       box-shadow: var(--shadow);
       height: fit-content;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .section-add-client .section-title::before {
       content: "👤";
-      font-size: 18px;
+      font-size: 16px;
+    }
+
+    /* SEÇÃO: Gerenciar Dados */
+    .section-data-management {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      height: fit-content;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section-data-management .section-title::before {
+      content: "💾";
+      font-size: 16px;
     }
 
     /* Formulário de cliente */
     .client-form {
       display: flex;
       flex-direction: column;
-      gap: 24px;
-      margin-bottom: 32px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--border-light);
+      gap: 20px;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .form-group label {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text);
       display: flex;
@@ -347,6 +345,7 @@
       content: "→";
       color: var(--primary);
       font-weight: bold;
+      font-size: 12px;
     }
 
     input,
@@ -354,8 +353,8 @@
     select,
     button {
       font-family: inherit;
-      font-size: 15px;
-      border-radius: 8px;
+      font-size: 14px;
+      border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--card);
       color: var(--text);
@@ -367,92 +366,38 @@
     select:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
     input,
     select {
-      padding: 12px 16px;
-      height: 46px;
+      padding: 10px 12px;
+      height: 42px;
     }
 
-    /* Área de criação de histórias */
+    /* Área de criação de histórias - LAYOUT SIMPLIFICADO */
     .story-creation {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-    }
-
-    .story-form-header {
-      display: grid;
-      grid-template-columns: 1fr;
       gap: 16px;
     }
 
-    /* Barra de ferramentas de formatação */
-    .formatting-toolbar {
-      display: flex;
-      gap: 8px;
-      padding: 12px;
-      background: var(--border-light);
-      border-radius: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+    /* REMOVIDA a barra de ferramentas de formatação */
 
-    .format-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-      transition: all 0.2s ease;
-    }
-
-    .format-btn:hover {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .format-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .format-btn.list-btn {
-      width: auto;
-      padding: 0 12px;
-      font-size: 13px;
-    }
-
-    .divider {
-      width: 1px;
-      height: 20px;
-      background: var(--border);
-      margin: 0 4px;
-    }
-
-    /* Área de texto grande */
+    /* Área de texto grande - PRIMEIRO no layout */
     .story-textarea-container {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      margin-bottom: 16px;
     }
 
     #texto {
       width: 100%;
-      min-height: 300px;
-      padding: 20px;
+      min-height: 200px;
+      padding: 16px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -465,25 +410,41 @@
     #texto:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Campos de seleção - SEGUNDO no layout */
+    .story-selection-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .story-selection-fields {
+        grid-template-columns: 1fr;
+      }
     }
 
     .story-form-actions {
       display: flex;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 8px;
     }
 
     button {
-      padding: 12px 24px;
+      padding: 10px 20px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       border: none;
       transition: all 0.2s ease;
+      font-size: 14px;
+      border-radius: 6px;
     }
 
     button.primary {
@@ -493,7 +454,6 @@
 
     button.primary:hover {
       background: var(--primary-hover);
-      transform: translateY(-1px);
       box-shadow: var(--shadow);
     }
 
@@ -516,15 +476,15 @@
     }
 
     button.small {
-      padding: 8px 16px;
-      font-size: 14px;
+      padding: 6px 12px;
+      font-size: 12px;
     }
 
     button.full-width {
       width: 100%;
     }
 
-    /* SEÇÃO: Visualização dos Cards */
+    /* SEÇÃO: Visualização dos Cards - MANTIDO IGUAL */
     .section-cards {
       display: flex;
       flex-direction: column;
@@ -539,24 +499,18 @@
     }
 
     .cards-header h2 {
-      font-size: 24px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 600;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       margin: 0;
     }
 
     .cards-header h2::before {
       content: "📋";
-      font-size: 20px;
-    }
-
-    .client-selector {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      font-size: 18px;
     }
 
     /* ===== FILTROS MODIFICADOS - LADO DO TÍTULO ===== */
@@ -616,14 +570,14 @@
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 24px;
+      gap: 20px;
     }
 
     /* CARD MODIFICADO - Sem prévia do conteúdo */
     .card {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 20px;
       box-shadow: var(--shadow);
       border-top: 4px solid var(--border);
       transition: all 0.3s ease;
@@ -633,7 +587,7 @@
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 
@@ -657,11 +611,11 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .card h3 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text);
       flex: 1;
@@ -672,9 +626,9 @@
     .status {
       display: inline-flex;
       align-items: center;
-      padding: 4px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       background: var(--border-light);
       white-space: nowrap;
@@ -705,11 +659,11 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin-bottom: 20px;
-      padding: 12px;
+      margin-bottom: 16px;
+      padding: 10px;
       background: var(--border-light);
-      border-radius: 8px;
-      font-size: 13px;
+      border-radius: 6px;
+      font-size: 12px;
     }
 
     .date-info {
@@ -744,10 +698,39 @@
       gap: 8px;
     }
 
-    /* Estado vazio */
+    /* Lista de clientes */
+    .clients-list {
+      margin-top: 20px;
+      border-top: 1px solid var(--border-light);
+      padding-top: 20px;
+    }
+
+    .clients-list h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .client-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--border-light);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .client-item-actions {
+      display: flex;
+      gap: 8px;
+    }
+
     .empty-state {
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
       color: var(--text-light);
       background: var(--card);
       border-radius: var(--radius);
@@ -755,17 +738,49 @@
     }
 
     .empty-state h3 {
-      font-size: 20px;
-      margin-bottom: 12px;
+      font-size: 18px;
+      margin-bottom: 10px;
       color: var(--text);
     }
 
     .empty-state p {
       max-width: 400px;
       margin: 0 auto;
+      font-size: 14px;
     }
 
-    /* ===== MODAL DE EDIÇÃO MODIFICADO ===== */
+    /* Opções de gerenciamento de dados */
+    .data-options {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .data-option {
+      padding: 16px;
+      background: var(--border-light);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .data-option h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .data-option p {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    /* ===== MODAL DE EDIÇÃO ===== */
     .modal {
       position: fixed;
       top: 0;
@@ -782,16 +797,6 @@
       animation: fadeIn 0.3s ease;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
     .modal.active {
       display: flex;
     }
@@ -800,7 +805,7 @@
       background: var(--card);
       border-radius: var(--radius);
       width: 100%;
-      max-width: 900px;
+      max-width: 600px;
       max-height: 90vh;
       display: flex;
       flex-direction: column;
@@ -822,7 +827,7 @@
     }
 
     .modal-header {
-      padding: 20px 32px;
+      padding: 16px 24px;
       border-bottom: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
@@ -831,17 +836,17 @@
     }
 
     .modal-header h2 {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .modal-header h2::before {
       content: "📝";
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .modal-close {
@@ -850,8 +855,8 @@
       font-size: 24px;
       color: var(--text-light);
       cursor: pointer;
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -865,49 +870,24 @@
     }
 
     .modal-body {
-      padding: 24px 32px;
+      padding: 20px 24px;
       flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
-    }
-
-    .modal-main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
+      gap: 16px;
     }
 
     .modal-form {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
-    .form-section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .form-section-header h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      text-transform: none;
-      letter-spacing: normal;
-      margin: 0;
-    }
-
-    /* Status no modal - minimalista na mesma linha */
     .modal-status-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .modal-status-label {
@@ -917,15 +897,15 @@
     }
 
     #editStatus {
-      padding: 4px 10px;
+      padding: 4px 8px;
       font-size: 13px;
-      height: 30px;
+      height: 28px;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--card);
       color: var(--text);
       font-weight: 500;
-      min-width: 120px;
+      min-width: 100px;
       transition: all 0.2s ease;
     }
 
@@ -939,22 +919,15 @@
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
-    .form-section {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Área de texto editável no modal - sem barra de formatação */
     .modal-editable-content {
       width: 100%;
-      min-height: 300px;
-      padding: 16px;
+      min-height: 200px;
+      padding: 12px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 6px;
       background: var(--card);
       color: var(--text);
       resize: vertical;
@@ -968,47 +941,11 @@
     .modal-editable-content:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Estilos para conteúdo formatado dentro da área editável */
-    .modal-editable-content strong {
-      font-weight: bold;
-    }
-
-    .modal-editable-content em {
-      font-style: italic;
-    }
-
-    .modal-editable-content del {
-      text-decoration: line-through;
-    }
-
-    .modal-editable-content ul {
-      list-style-type: disc;
-      padding-left: 20px;
-      margin: 8px 0;
-    }
-
-    .modal-editable-content ol {
-      list-style-type: decimal;
-      padding-left: 20px;
-      margin: 8px 0;
-    }
-
-    .modal-editable-content li {
-      margin-bottom: 4px;
-    }
-
-    /* Garantir que as quebras de linha sejam visíveis */
-    .modal-editable-content br {
-      display: block;
-      content: "";
-      margin-top: 0;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
     .modal-footer {
-      padding: 16px 32px;
+      padding: 16px 24px;
       border-top: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
@@ -1021,7 +958,7 @@
       font-size: 13px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .client-info strong {
@@ -1031,17 +968,17 @@
 
     .modal-footer-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .modal-footer-actions button {
-      padding: 8px 20px;
+      padding: 8px 16px;
       font-size: 13px;
       border-radius: 6px;
       font-weight: 600;
     }
 
-    /* Responsividade para os filtros */
+    /* Responsividade */
     @media (max-width: 1024px) {
       .cards-header {
         flex-direction: column;
@@ -1072,7 +1009,7 @@
       .header-content {
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: 12px;
       }
 
       .cards-header {
@@ -1124,7 +1061,7 @@
       }
 
       .menu-item {
-        padding: 14px 20px;
+        padding: 12px 16px;
       }
 
       .card-header {
@@ -1142,7 +1079,7 @@
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       .cards-grid {
         grid-template-columns: 1fr;
       }
@@ -1156,11 +1093,11 @@
       }
 
       .header h1 {
-        font-size: 24px;
+        font-size: 20px;
       }
 
       .cards-header h2 {
-        font-size: 20px;
+        font-size: 18px;
       }
 
       .filter-group label {
@@ -1175,7 +1112,7 @@
       }
 
       .modal-editable-content {
-        min-height: 250px;
+        min-height: 180px;
       }
     }
 
@@ -1211,6 +1148,14 @@
         <span class="menu-item-icon">👤</span>
         <span>Adicionar Cliente</span>
       </div>
+      <div class="menu-item" data-section="gerenciar-dados">
+        <span class="menu-item-icon">💾</span>
+        <span>Gerenciar Dados</span>
+      </div>
+      <div class="menu-item" id="themeToggle">
+        <span class="menu-item-icon" id="themeIcon">🌙</span>
+        <span id="themeText">Tema Claro</span>
+      </div>
     </div>
   </div>
 
@@ -1225,13 +1170,10 @@
           </button>
           <h1>Histórias por Cliente</h1>
         </div>
-        <div class="header-right">
-          <button class="toggle" onclick="toggleDark()" title="Alternar tema">🌙</button>
-        </div>
       </div>
     </div>
 
-    <!-- Conteúdo: Histórias Salvas (visível por padrão) -->
+    <!-- Conteúdo: Histórias Salvas (visível por padrão) - MANTIDO IGUAL -->
     <div class="main-content active" id="historias-salvas">
       <div class="section-cards">
         <div class="cards-header">
@@ -1267,24 +1209,26 @@
       </div>
     </div>
 
-    <!-- Conteúdo: Criar Nova História (oculto por padrão) -->
+    <!-- Conteúdo: Criar Nova História - LAYOUT SIMPLIFICADO -->
     <div class="main-content" id="criar-historia">
       <div class="section-creation">
         <h2 class="section-title">Criar Nova História</h2>
 
-        <!-- Formulário de Criar Histórias -->
+        <!-- Formulário de Criar Histórias - ORDEM ALTERADA -->
         <div class="story-creation">
-          <div class="story-form-header">
+          <!-- 1. Área de texto grande (PRIMEIRO) -->
+          <div class="story-textarea-container">
+            <label for="texto">Detalhes da História</label>
+            <textarea id="texto" placeholder="Digite os detalhes da história aqui..."></textarea>
+          </div>
+
+          <!-- 2. Campos de seleção (SEGUNDO) -->
+          <div class="story-selection-fields">
             <div class="form-group">
               <label for="clienteSelect">Cliente</label>
               <select id="clienteSelect">
                 <option value="">Selecione um cliente</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label for="titulo">Título da História</label>
-              <input id="titulo" placeholder="Digite o título">
             </div>
 
             <div class="form-group">
@@ -1298,23 +1242,13 @@
             </div>
           </div>
 
-          <div class="story-form-content">
-            <!-- Barra de ferramentas de formatação -->
-            <div class="formatting-toolbar">
-              <button class="format-btn" data-format="bold" title="Negrito">B</button>
-              <button class="format-btn" data-format="italic" title="Itálico">I</button>
-              <button class="format-btn" data-format="strike" title="Tachado">S</button>
-              <div class="divider"></div>
-              <button class="format-btn list-btn" data-format="ul" title="Lista com marcadores">• Lista</button>
-              <button class="format-btn list-btn" data-format="ol" title="Lista numerada">1. Lista</button>
-            </div>
-
-            <!-- Área de texto grande -->
-            <div class="story-textarea-container">
-              <textarea id="texto" placeholder="Detalhes da história... (Use os botões acima para formatar o texto)"></textarea>
-            </div>
+          <!-- 3. Título (TERCEIRO) -->
+          <div class="form-group">
+            <label for="titulo">Título da História</label>
+            <input id="titulo" placeholder="Digite um título para a história">
           </div>
 
+          <!-- 4. Ações -->
           <div class="story-form-actions">
             <button class="primary full-width" onclick="addCard()">Salvar História</button>
           </div>
@@ -1322,7 +1256,7 @@
       </div>
     </div>
 
-    <!-- Conteúdo: Adicionar Cliente (nova seção) -->
+    <!-- Conteúdo: Adicionar Cliente - COM EDIÇÃO/EXCLUSÃO -->
     <div class="main-content" id="adicionar-cliente">
       <div class="section-add-client">
         <h2 class="section-title">Adicionar Cliente</h2>
@@ -1336,15 +1270,49 @@
               <button class="primary" onclick="addCliente()" style="white-space: nowrap;">Adicionar Cliente</button>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--text-light); margin-top: 8px;">
-            ⓘ Após adicionar um cliente, você poderá selecioná-lo na seção "Criar Nova História".
-          </p>
+
+          <!-- Lista de clientes cadastrados -->
+          <div class="clients-list" id="clientsList">
+            <h3>Clientes Cadastrados</h3>
+            <!-- Clientes serão listados aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo: Gerenciar Dados - LAYOUT SIMPLIFICADO -->
+    <div class="main-content" id="gerenciar-dados">
+      <div class="section-data-management">
+        <h2 class="section-title">Gerenciar Dados</h2>
+
+        <!-- Opções de gerenciamento -->
+        <div class="data-options">
+          <div class="data-option">
+            <h3>📥 Exportar Dados</h3>
+            <p>Exporta todos os dados (clientes, histórias, cards e anotações) para um arquivo JSON.</p>
+            <button class="primary full-width" onclick="exportarDados()">Exportar para JSON</button>
+          </div>
+
+          <div class="data-option">
+            <h3>📤 Importar Dados</h3>
+            <p>Importa dados de um arquivo JSON. Substituirá todos os dados atuais.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <input type="file" id="jsonFile" accept=".json" style="padding: 8px; font-size: 14px;">
+              <button class="secondary full-width" onclick="importarDados()">Importar do JSON</button>
+            </div>
+          </div>
+
+          <div class="data-option">
+            <h3>🗑️ Excluir Todos os Dados</h3>
+            <p style="color: var(--danger);">ATENÇÃO: Esta ação excluirá permanentemente todos os clientes, histórias, cards e anotações. Não é possível desfazer.</p>
+            <button class="danger full-width" onclick="excluirTodosDados()">Excluir Todos os Dados</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL DE EDIÇÃO MODIFICADO -->
+  <!-- MODAL DE EDIÇÃO DE HISTÓRIA -->
   <div class="modal" id="modal">
     <div class="modal-box">
       <div class="modal-header">
@@ -1353,33 +1321,25 @@
       </div>
 
       <div class="modal-body">
-        <div class="modal-main-content">
-          <div class="modal-form">
-            <div class="form-section">
-              <div class="form-section-header">
-                <h3>Informações da História</h3>
-                <div class="modal-status-container">
-                  <span class="modal-status-label">Status:</span>
-                  <select id="editStatus">
-                    <option value="Pendente">Pendente</option>
-                    <option value="Resolvido">Resolvido</option>
-                    <option value="Importante">Importante</option>
-                    <option value="API">API</option>
-                  </select>
-                </div>
-              </div>
+        <div class="modal-form">
+          <div class="form-group">
+            <label for="editTitulo">Título</label>
+            <input id="editTitulo" placeholder="Digite o título da história">
+          </div>
 
-              <div class="form-group">
-                <label for="editTitulo">Título</label>
-                <input id="editTitulo" placeholder="Digite o título da história">
-              </div>
+          <div class="form-group">
+            <label for="editTexto">Conteúdo</label>
+            <div id="editTexto" class="modal-editable-content" contenteditable="true" placeholder="Descreva os detalhes da história..."></div>
+          </div>
 
-              <div class="form-group">
-                <label for="editTexto">Conteúdo</label>
-                <!-- Área editável - sem barra de formatação -->
-                <div id="editTexto" class="modal-editable-content" contenteditable="true" placeholder="Descreva os detalhes da história..."></div>
-              </div>
-            </div>
+          <div class="modal-status-container">
+            <span class="modal-status-label">Status:</span>
+            <select id="editStatus">
+              <option value="Pendente">Pendente</option>
+              <option value="Resolvido">Resolvido</option>
+              <option value="Importante">Importante</option>
+              <option value="API">API</option>
+            </select>
           </div>
         </div>
       </div>
@@ -1392,7 +1352,33 @@
 
         <div class="modal-footer-actions">
           <button class="secondary" onclick="fecharModal()">Cancelar</button>
-          <button class="primary" onclick="salvarEdicao()">Salvar Alterações</button>
+          <button class="primary" onclick="salvarEdicao()">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EDIÇÃO DE CLIENTE -->
+  <div class="modal" id="modalCliente">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>Editar Cliente</h2>
+        <button class="modal-close" onclick="fecharModalCliente()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-form">
+          <div class="form-group">
+            <label for="editClienteNome">Nome do Cliente</label>
+            <input id="editClienteNome" placeholder="Digite o nome do cliente">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-footer-actions">
+          <button class="secondary" onclick="fecharModalCliente()">Cancelar</button>
+          <button class="primary" onclick="salvarEdicaoCliente()">Salvar</button>
         </div>
       </div>
     </div>
@@ -1402,18 +1388,29 @@
     let dados = JSON.parse(localStorage.getItem("clientes")) || {};
     let editCliente = null;
     let editIndex = null;
+    let editClienteNome = null;
 
     // Inicialização
     document.addEventListener('DOMContentLoaded', function () {
-      if (localStorage.getItem("dark") === "true") {
+      // Configurar tema
+      const isDark = localStorage.getItem("dark") === "true" ||
+        (localStorage.getItem("dark") === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+      if (isDark) {
         document.body.classList.add("dark");
-        document.querySelector('.toggle').textContent = '☀️';
       }
+      atualizarTemaIcone(isDark);
+
+      // Configurar menu
+      setupMenu();
+
+      // Configurar eventos
+      setupModalEvents();
+
+      // Inicializar dados
       atualizarSelects();
       renderCards();
-      setupFormattingButtons();
-      setupMenu();
-      setupModalEvents();
+      renderClientesList();
     });
 
     // Configurar menu hambúrguer
@@ -1424,6 +1421,7 @@
       const menuSidebar = document.getElementById('menuSidebar');
       const menuItems = document.querySelectorAll('.menu-item');
       const sections = document.querySelectorAll('.main-content');
+      const themeToggle = document.getElementById('themeToggle');
 
       // Abrir menu
       menuToggle.addEventListener('click', function () {
@@ -1442,13 +1440,25 @@
       menuClose.addEventListener('click', closeMenu);
       menuOverlay.addEventListener('click', closeMenu);
 
+      // Alternar tema
+      themeToggle.addEventListener('click', function () {
+        toggleDark();
+        closeMenu();
+      });
+
       // Navegar entre seções
       menuItems.forEach(item => {
+        if (item === themeToggle) return; // Pular o botão de tema
+
         item.addEventListener('click', function () {
           const sectionId = this.dataset.section;
 
           // Atualizar item ativo no menu
-          menuItems.forEach(i => i.classList.remove('active'));
+          menuItems.forEach(i => {
+            if (i.dataset.section) {
+              i.classList.remove('active');
+            }
+          });
           this.classList.add('active');
 
           // Mostrar seção correspondente
@@ -1465,217 +1475,17 @@
       });
     }
 
-    function setupFormattingButtons() {
-      const formatButtons = document.querySelectorAll('.format-btn');
-      const textarea = document.getElementById('texto');
-
-      formatButtons.forEach(button => {
-        button.addEventListener('click', function () {
-          const format = this.dataset.format;
-          applyFormatting(format, textarea);
-
-          // Feedback visual
-          formatButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          setTimeout(() => {
-            this.classList.remove('active');
-          }, 200);
-        });
-      });
-    }
-
-    function applyFormatting(format, textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const selectedText = textarea.value.substring(start, end);
-      let formattedText = '';
-
-      switch (format) {
-        case 'bold':
-          formattedText = `**${selectedText}**`;
-          break;
-        case 'italic':
-          formattedText = `*${selectedText}*`;
-          break;
-        case 'strike':
-          formattedText = `~~${selectedText}~~`;
-          break;
-        case 'ul':
-          formattedText = selectedText.split('\n').map(line => `• ${line}`).join('\n');
-          break;
-        case 'ol':
-          formattedText = selectedText.split('\n').map((line, i) => `${i + 1}. ${line}`).join('\n');
-          break;
-      }
-
-      // Substituir o texto selecionado
-      textarea.value = textarea.value.substring(0, start) +
-        formattedText +
-        textarea.value.substring(end);
-
-      // Restaurar o foco e seleção
-      textarea.focus();
-      textarea.setSelectionRange(start, start + formattedText.length);
-    }
-
-    // Função para converter HTML para markdown preservando formatação
-    function htmlToMarkdown(html) {
-      // Criar um elemento temporário para manipulação
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-
-      // Função recursiva para converter elementos
-      function convertNode(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          return node.textContent;
-        }
-
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          const tagName = node.tagName.toLowerCase();
-          const children = Array.from(node.childNodes);
-          const content = children.map(convertNode).join('');
-
-          switch (tagName) {
-            case 'strong':
-            case 'b':
-              return `**${content}**`;
-            case 'em':
-            case 'i':
-              return `*${content}*`;
-            case 'del':
-            case 'strike':
-              return `~~${content}~~`;
-            case 'ul':
-              const listItems = Array.from(node.querySelectorAll('li'));
-              return listItems.map(li => `• ${convertNode(li)}`).join('\n') + '\n';
-            case 'ol':
-              const olItems = Array.from(node.querySelectorAll('li'));
-              return olItems.map((li, i) => `${i + 1}. ${convertNode(li)}`).join('\n') + '\n';
-            case 'li':
-              return Array.from(node.childNodes).map(convertNode).join('');
-            case 'br':
-              return '\n';
-            case 'div':
-            case 'p':
-              return content + '\n\n';
-            default:
-              return content;
-          }
-        }
-
-        return '';
-      }
-
-      let markdown = convertNode(tempDiv);
-
-      // Limpar múltiplas quebras de linha
-      markdown = markdown.replace(/\n\s*\n\s*\n/g, '\n\n');
-      markdown = markdown.trim();
-
-      return markdown;
-    }
-
-    // Função para converter markdown para HTML preservando formatação
-    function markdownToHtml(markdown) {
-      let html = markdown;
-
-      // Primeiro, converter quebras de linha para <br>
-      html = html.replace(/\n/g, '<br>');
-
-      // Converter formatação - usando regex mais robustos
-      // Negrito: **texto** ou __texto__
-      html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
-
-      // Itálico: *texto* ou _texto_
-      html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-      html = html.replace(/_(.*?)_/g, '<em>$1</em>');
-
-      // Tachado: ~~texto~~
-      html = html.replace(/~~(.*?)~~/g, '<del>$1</del>');
-
-      // Listas com marcadores
-      html = html.replace(/^• (.*?)$/gm, '<li>$1</li>');
-      html = html.replace(/^\* (.*?)$/gm, '<li>$1</li>');
-      html = html.replace(/^- (.*?)$/gm, '<li>$1</li>');
-
-      // Listas numeradas
-      html = html.replace(/^(\d+)\. (.*?)$/gm, '<li>$2</li>');
-
-      // Adicionar tags de lista se houver itens de lista
-      if (html.includes('<li>')) {
-        // Encontrar onde começa e termina as listas
-        const lines = html.split('<br>');
-        let inList = false;
-        let result = [];
-
-        for (let i = 0; i < lines.length; i++) {
-          if (lines[i].includes('<li>')) {
-            if (!inList) {
-              result.push('<ul>');
-              inList = true;
-            }
-            result.push(lines[i]);
-          } else {
-            if (inList) {
-              result.push('</ul>');
-              inList = false;
-            }
-            result.push(lines[i]);
-          }
-        }
-
-        if (inList) {
-          result.push('</ul>');
-        }
-
-        html = result.join('<br>');
-      }
-
-      return html;
-    }
-
-    // Função para limpar e preservar HTML para área editável
-    function prepareHtmlForEditable(html) {
-      // Garantir que as quebras de linha sejam preservadas
-      let cleanHtml = html;
-
-      // Converter múltiplos <br> seguidos para um único <br>
-      cleanHtml = cleanHtml.replace(/(<br\s*\/?>\s*){2,}/gi, '<br><br>');
-
-      // Garantir formatação consistente
-      cleanHtml = cleanHtml.replace(/<b>/g, '<strong>').replace(/<\/b>/g, '</strong>');
-      cleanHtml = cleanHtml.replace(/<i>/g, '<em>').replace(/<\/i>/g, '</em>');
-      cleanHtml = cleanHtml.replace(/<strike>/g, '<del>').replace(/<\/strike>/g, '</del>');
-
-      return cleanHtml;
-    }
-
     function setupModalEvents() {
-      const modal = document.getElementById('modal');
-      const modalBox = modal.querySelector('.modal-box');
-      const closeBtn = modal.querySelector('.modal-close');
-
-      // Fechar com botão X
-      closeBtn.addEventListener('click', fecharModal);
-
       // Fechar com ESC
       document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && modal.classList.contains('active')) {
-          fecharModal();
+        if (event.key === 'Escape') {
+          if (document.getElementById('modal').classList.contains('active')) {
+            fecharModal();
+          }
+          if (document.getElementById('modalCliente').classList.contains('active')) {
+            fecharModalCliente();
+          }
         }
-      });
-
-      // PREVENIR fechamento ao clicar fora do modal
-      modal.addEventListener('click', function (event) {
-        if (event.target === modal) {
-          event.stopPropagation();
-        }
-      });
-
-      // Permitir interação dentro do modal
-      modalBox.addEventListener('click', function (event) {
-        event.stopPropagation();
       });
     }
 
@@ -1685,11 +1495,23 @@
 
     function toggleDark() {
       const body = document.body;
-      const toggleBtn = document.querySelector('.toggle');
-
       body.classList.toggle("dark");
-      toggleBtn.textContent = body.classList.contains("dark") ? '☀️' : '🌙';
-      localStorage.setItem("dark", body.classList.contains("dark"));
+      const isDark = body.classList.contains("dark");
+      localStorage.setItem("dark", isDark);
+      atualizarTemaIcone(isDark);
+    }
+
+    function atualizarTemaIcone(isDark) {
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+
+      if (isDark) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Tema Claro';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Tema Escuro';
+      }
     }
 
     function atualizarSelects() {
@@ -1714,8 +1536,38 @@
         option2.textContent = cliente;
         selectClienteCards.appendChild(option2);
       });
+    }
 
-      // O filtro por status já está configurado no HTML
+    function renderClientesList() {
+      const container = document.getElementById('clientsList');
+      const clientes = Object.keys(dados);
+
+      if (clientes.length === 0) {
+        container.innerHTML = `
+          <h3>Clientes Cadastrados</h3>
+          <div class="empty-state" style="padding: 20px; margin-top: 10px;">
+            <p>Nenhum cliente cadastrado ainda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '<h3>Clientes Cadastrados</h3>';
+
+      clientes.sort().forEach(cliente => {
+        const numHistorias = dados[cliente].length;
+        html += `
+          <div class="client-item">
+            <span>${cliente} <small style="color: var(--text-light);">(${numHistorias} histórias)</small></span>
+            <div class="client-item-actions">
+              <button class="secondary small" onclick="editarCliente('${cliente}')">Editar</button>
+              <button class="danger small" onclick="excluirCliente('${cliente}')">Excluir</button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
     }
 
     function addCliente() {
@@ -1737,13 +1589,72 @@
       dados[nome] = [];
       salvar();
       atualizarSelects();
+      renderClientesList();
       nomeInput.value = "";
-
-      // Focar novamente no campo após adicionar
       nomeInput.focus();
+    }
 
-      // Mostrar mensagem de sucesso
-      alert(`Cliente "${nome}" adicionado com sucesso!`);
+    function editarCliente(cliente) {
+      editClienteNome = cliente;
+      document.getElementById('editClienteNome').value = cliente;
+      document.getElementById('modalCliente').classList.add('active');
+      document.getElementById('editClienteNome').focus();
+    }
+
+    function fecharModalCliente() {
+      document.getElementById('modalCliente').classList.remove('active');
+      editClienteNome = null;
+    }
+
+    function salvarEdicaoCliente() {
+      const novoNome = document.getElementById('editClienteNome').value.trim();
+
+      if (!novoNome) {
+        alert('O nome do cliente não pode estar vazio.');
+        document.getElementById('editClienteNome').focus();
+        return;
+      }
+
+      if (novoNome !== editClienteNome && dados[novoNome]) {
+        alert('Já existe um cliente com esse nome.');
+        document.getElementById('editClienteNome').focus();
+        return;
+      }
+
+      if (novoNome !== editClienteNome) {
+        // Renomear o cliente
+        dados[novoNome] = dados[editClienteNome];
+        delete dados[editClienteNome];
+
+        // Atualizar o nome do cliente em todas as histórias
+        dados[novoNome].forEach(historia => {
+          historia.cliente = novoNome;
+        });
+      }
+
+      salvar();
+      atualizarSelects();
+      renderCards();
+      renderClientesList();
+      fecharModalCliente();
+    }
+
+    function excluirCliente(cliente) {
+      if (dados[cliente].length > 0) {
+        if (!confirm(`O cliente "${cliente}" tem ${dados[cliente].length} histórias. Tem certeza que deseja excluir o cliente e todas as suas histórias?`)) {
+          return;
+        }
+      } else {
+        if (!confirm(`Tem certeza que deseja excluir o cliente "${cliente}"?`)) {
+          return;
+        }
+      }
+
+      delete dados[cliente];
+      salvar();
+      atualizarSelects();
+      renderCards();
+      renderClientesList();
     }
 
     function addCard() {
@@ -1763,15 +1674,12 @@
         return;
       }
 
-      // Converter formatação markdown para HTML
-      const textoFormatado = formatText(texto);
       const dataAtual = new Date().toISOString().split('T')[0];
       const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
       dados[cliente].push({
         titulo: titulo,
-        texto: textoFormatado,
-        textoOriginal: texto,
+        texto: texto,
         status: status,
         dataCriacao: dataAtual,
         horaCriacao: horaAtual,
@@ -1783,35 +1691,15 @@
       salvar();
       renderCards();
 
-      // Limpa os campos, mas mantém o cliente selecionado
+      // Limpar os campos, mas manter o cliente selecionado
       document.getElementById('titulo').value = '';
       document.getElementById('texto').value = '';
 
-      // Foco no título para próxima história
-      document.getElementById('titulo').focus();
+      // Foco no campo de texto para próxima história
+      document.getElementById('texto').focus();
 
       // Voltar para a seção de histórias salvas após criar
       document.querySelector('.menu-item[data-section="historias-salvas"]').click();
-    }
-
-    function formatText(text) {
-      // Converter markdown simples para HTML
-      let formatted = text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/~~(.*?)~~/g, '<del>$1</del>')
-        .replace(/^• (.*?)$/gm, '<li>$1</li>')
-        .replace(/^(\d+)\. (.*?)$/gm, '<li>$2</li>');
-
-      // Adicionar tags de lista
-      if (formatted.includes('<li>')) {
-        formatted = '<ul>' + formatted.replace(/<\/li>\s*<li>/g, '</li><li>') + '</ul>';
-      }
-
-      // Manter quebras de linha
-      formatted = formatted.replace(/\n/g, '<br>');
-
-      return formatted;
     }
 
     function renderCards() {
@@ -1849,7 +1737,7 @@
           const clienteTitle = document.createElement('div');
           clienteTitle.style.cssText = `
             grid-column: 1 / -1;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text);
             margin: 16px 0 8px 0;
@@ -1908,7 +1796,7 @@
         const clienteTitle = document.createElement('div');
         clienteTitle.style.cssText = `
           grid-column: 1 / -1;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 600;
           color: var(--text);
           margin-bottom: 16px;
@@ -1934,7 +1822,7 @@
         const filtroTitle = document.createElement('div');
         filtroTitle.style.cssText = `
           grid-column: 1 / -1;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 600;
           color: var(--text);
           margin-bottom: 16px;
@@ -1966,7 +1854,7 @@
           const clienteTitle = document.createElement('div');
           clienteTitle.style.cssText = `
             grid-column: 1 / -1;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text);
             margin: 20px 0 8px 0;
@@ -2041,12 +1929,7 @@
 
       const historia = dados[cliente][index];
       document.getElementById('editTitulo').value = historia.titulo;
-
-      // Converter markdown para HTML e colocar na área editável
-      const htmlContent = markdownToHtml(historia.textoOriginal || historia.texto);
-      const cleanHtml = prepareHtmlForEditable(htmlContent);
-      document.getElementById('editTexto').innerHTML = cleanHtml;
-
+      document.getElementById('editTexto').innerHTML = historia.texto || '';
       document.getElementById('editStatus').value = historia.status;
       document.getElementById('currentClienteName').textContent = cliente;
 
@@ -2055,18 +1938,13 @@
       // Foco no conteúdo (área editável) ao abrir o modal
       setTimeout(() => {
         document.getElementById('editTexto').focus();
-        // Colocar o cursor no início do texto
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.setStart(document.getElementById('editTexto'), 0);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
       }, 100);
     }
 
     function fecharModal() {
       document.getElementById('modal').classList.remove('active');
+      editCliente = null;
+      editIndex = null;
     }
 
     function salvarEdicao() {
@@ -2078,11 +1956,7 @@
         return;
       }
 
-      // Obter HTML da área editável e converter para markdown
-      const htmlContent = document.getElementById('editTexto').innerHTML;
-      const markdownContent = htmlToMarkdown(htmlContent);
-      const textoFormatado = formatText(markdownContent);
-
+      const texto = document.getElementById('editTexto').innerHTML;
       const dataAtual = new Date().toISOString().split('T')[0];
       const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
@@ -2091,8 +1965,7 @@
 
       dados[editCliente][editIndex] = {
         titulo: titulo,
-        texto: textoFormatado,
-        textoOriginal: markdownContent, // Salvar em markdown para edição futura
+        texto: texto,
         status: document.getElementById('editStatus').value,
         dataCriacao: historiaExistente.dataCriacao || dataAtual,
         horaCriacao: historiaExistente.horaCriacao || horaAtual,
@@ -2106,21 +1979,109 @@
       renderCards();
     }
 
+    // FUNÇÕES PARA IMPORTAR/EXPORTAR DADOS
+    function exportarDados() {
+      // Obter todos os dados do localStorage
+      const dadosCompletos = {
+        clientes: dados,
+        exportadoEm: new Date().toISOString(),
+        versao: '1.0'
+      };
+
+      // Converter para JSON
+      const jsonDados = JSON.stringify(dadosCompletos, null, 2);
+
+      // Criar um blob e fazer download
+      const blob = new Blob([jsonDados], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `historias-clientes-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      alert('Dados exportados com sucesso!');
+    }
+
+    function importarDados() {
+      const fileInput = document.getElementById('jsonFile');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('Por favor, selecione um arquivo JSON para importar.');
+        return;
+      }
+
+      if (!confirm('ATENÇÃO: Isso irá substituir todos os dados atuais. Tem certeza que deseja continuar?')) {
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        try {
+          const dadosImportados = JSON.parse(e.target.result);
+
+          // Verificar se é um formato válido
+          if (!dadosImportados.clientes) {
+            throw new Error('Formato de arquivo inválido. O arquivo deve conter dados de clientes.');
+          }
+
+          // Atualizar os dados
+          dados = dadosImportados.clientes;
+          salvar();
+
+          // Atualizar a interface
+          atualizarSelects();
+          renderCards();
+          renderClientesList();
+
+          // Limpar o input de arquivo
+          fileInput.value = '';
+
+          alert('Dados importados com sucesso!');
+        } catch (error) {
+          alert(`Erro ao importar dados: ${error.message}`);
+          console.error('Erro na importação:', error);
+        }
+      };
+
+      reader.onerror = function () {
+        alert('Erro ao ler o arquivo. Por favor, tente novamente.');
+      };
+
+      reader.readAsText(file);
+    }
+
+    function excluirTodosDados() {
+      if (!confirm('ATENÇÃO: Esta ação excluirá permanentemente TODOS os dados (clientes, histórias, cards e anotações). Esta ação NÃO pode ser desfeita.\n\nTem certeza absoluta que deseja continuar?')) {
+        return;
+      }
+
+      if (!confirm('ÚLTIMO AVISO: Todos os seus dados serão PERDIDOS para sempre. Clique em OK apenas se tiver certeza absoluta.')) {
+        return;
+      }
+
+      dados = {};
+      salvar();
+      atualizarSelects();
+      renderCards();
+      renderClientesList();
+
+      alert('Todos os dados foram excluídos com sucesso.');
+    }
+
     // Fechar modal com ESC
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
         fecharModal();
       }
-    });
-
-    // PREVENIR fechamento ao clicar fora do modal
-    document.getElementById('modal').addEventListener('click', function (event) {
-      if (event.target === this) {
-        // Não faz nada - impede o fechamento
-        event.stopPropagation();
+      if (event.key === 'Escape' && document.getElementById('modalCliente').classList.contains('active')) {
+        fecharModalCliente();
       }
     });
-
   </script>
 
 </body>
