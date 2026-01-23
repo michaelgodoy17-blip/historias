@@ -869,7 +869,7 @@
       margin-bottom: 12px;
     }
 
-    /* ===== MODAL DE EDIÇÃO - MODIFICADO ===== */
+    /* ===== MODAL DE EDIÇÃO - LAYOUT MODIFICADO (MINIMALISTA) ===== */
     .modal {
       position: fixed;
       top: 0;
@@ -968,86 +968,81 @@
       gap: 20px;
     }
 
-    .modal-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .modal-status-container {
+    /* FORMULÁRIO SUPERIOR - UMA LINHA - MODIFICADO */
+    .modal-top-form {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+      flex-wrap: wrap;
     }
 
-    .modal-status-label {
-      font-size: 13px;
-      font-weight: 600;
+    .modal-top-form .form-group {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 0;
+    }
+
+    .modal-top-form .form-group:first-child {
+      flex: 2;
+      min-width: 300px;
+    }
+
+    .modal-top-form .form-group label {
+      margin-bottom: 4px;
+      font-size: 12px;
       color: var(--text-light);
     }
 
-    #editStatus {
-      padding: 4px 8px;
-      font-size: 13px;
-      height: 28px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--card);
-      color: var(--text);
-      font-weight: 500;
-      min-width: 100px;
-      transition: all 0.2s ease;
+    .modal-top-form input,
+    .modal-top-form select {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 14px;
+      height: 36px;
     }
 
-    #editStatus:hover {
-      border-color: var(--primary);
-    }
-
-    #editStatus:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Configuração de prazo de revisão */
-    .review-config {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border-light);
-    }
-
-    .review-checkbox {
+    /* Configuração de prazo de revisão - LADO A LADO */
+    .review-config-compact {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-top: 0;
+      padding: 0;
+      border: none;
+      min-width: 250px;
     }
 
-    .review-checkbox input[type="checkbox"] {
+    .review-checkbox-compact {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .review-checkbox-compact input[type="checkbox"] {
       width: 16px;
       height: 16px;
       cursor: pointer;
     }
 
-    .review-checkbox label {
-      font-size: 13px;
+    .review-checkbox-compact label {
+      font-size: 12px;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
+      white-space: nowrap;
     }
 
-    .review-fields {
+    .review-fields-compact {
       display: flex;
-      gap: 10px;
+      gap: 6px;
       align-items: center;
-      margin-left: 24px;
       animation: fadeIn 0.3s ease;
     }
 
-    .review-fields.hidden {
+    .review-fields-compact.hidden {
       display: none;
     }
 
@@ -1063,8 +1058,8 @@
       text-align: center;
     }
 
-    .review-fields span {
-      font-size: 13px;
+    .review-fields-compact span {
+      font-size: 12px;
       color: var(--text-light);
       white-space: nowrap;
     }
@@ -1104,11 +1099,12 @@
       font-weight: 600;
     }
 
-    /* ===== SEÇÃO DE ANOTAÇÕES ===== */
+    /* ===== SEÇÃO DE ANOTAÇÕES - ABAIXO DO FORMULÁRIO ===== */
     .modal-notes-section {
       flex: 1;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .modal-notes-header {
@@ -1158,7 +1154,7 @@
       flex: 1;
       overflow-y: auto;
       padding-right: 4px;
-      min-height: 300px;
+      min-height: 0;
     }
 
     .note-item {
@@ -1258,7 +1254,7 @@
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
-    /* Responsividade */
+    /* Responsividade para o modal */
     @media (max-width: 1024px) {
       .cards-header {
         flex-direction: column;
@@ -1332,13 +1328,19 @@
         height: 98%;
       }
 
-      .form-section-header {
+      .modal-top-form {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        align-items: stretch;
+        gap: 12px;
       }
 
-      .modal-status-container {
+      .modal-top-form .form-group,
+      .modal-top-form .form-group:first-child {
+        min-width: 100%;
+        width: 100%;
+      }
+
+      .review-config-compact {
         width: 100%;
         justify-content: space-between;
       }
@@ -1375,7 +1377,7 @@
         align-self: flex-end;
       }
 
-      .review-fields {
+      .review-fields-compact {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
@@ -1454,6 +1456,16 @@
       .date-info .label {
         min-width: auto;
         font-size: 11px;
+      }
+
+      .review-config-compact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .review-checkbox-compact {
+        width: 100%;
       }
     }
 
@@ -1658,7 +1670,7 @@
       </div>
     </div>
 
-    <!-- MODAL DE EDIÇÃO DE HISTÓRIA - COM CONFIGURAÇÃO DE PRAZO -->
+    <!-- MODAL DE EDIÇÃO DE HISTÓRIA - LAYOUT MINIMALISTA MODIFICADO -->
     <div class="modal" id="modal">
       <div class="modal-box">
         <div class="modal-header">
@@ -1667,15 +1679,17 @@
         </div>
 
         <div class="modal-body">
-          <!-- Formulário básico para título e status -->
-          <div class="modal-form">
+          <!-- FORMULÁRIO SUPERIOR - UMA LINHA (TÍTULO, STATUS, PRAZO) -->
+          <div class="modal-top-form">
+            <!-- Título -->
             <div class="form-group">
               <label for="editTitulo">Título</label>
               <input id="editTitulo" placeholder="Digite o título da história">
             </div>
 
-            <div class="modal-status-container">
-              <span class="modal-status-label">Status:</span>
+            <!-- Status -->
+            <div class="form-group">
+              <label for="editStatus">Status</label>
               <select id="editStatus">
                 <option value="Pendente">Pendente</option>
                 <option value="Resolvido">Resolvido</option>
@@ -1684,21 +1698,21 @@
               </select>
             </div>
 
-            <!-- Configuração de prazo de revisão -->
-            <div class="review-config">
-              <div class="review-checkbox">
+            <!-- Prazo de Revisão - Compacto -->
+            <div class="review-config-compact">
+              <div class="review-checkbox-compact">
                 <input type="checkbox" id="editReviewCheckbox" onchange="toggleReviewFields()">
-                <label for="editReviewCheckbox">Definir prazo de revisão</label>
+                <label for="editReviewCheckbox">Prazo de Revisão</label>
               </div>
 
-              <div class="review-fields hidden" id="reviewFields">
+              <div class="review-fields-compact hidden" id="reviewFields">
                 <input type="number" id="editReviewDays" min="1" max="365" value="7" style="width: 60px;">
                 <span>dias</span>
               </div>
             </div>
           </div>
 
-          <!-- SEÇÃO DE ANOTAÇÕES -->
+          <!-- SEÇÃO DE ANOTAÇÕES - ABAIXO DO FORMULÁRIO -->
           <div class="modal-notes-section" id="notesSection">
             <div class="modal-notes-header">
               <h3 class="modal-notes-title">Anotações da História</h3>
@@ -1911,7 +1925,7 @@
         });
       }
 
-      // Função para contar histórias vencidas - NOVA
+      // Função para contar histórias vencidas
       function contarHistoriasVencidas() {
         let contador = 0;
         const hoje = new Date();
@@ -1937,7 +1951,7 @@
         return contador;
       }
 
-      // Atualizar contador de vencidas no botão - NOVA
+      // Atualizar contador de vencidas no botão
       function atualizarContadorVencidas() {
         const contador = contarHistoriasVencidas();
         const badgeElement = document.getElementById('vencidasCount');
@@ -1958,7 +1972,7 @@
         }
       }
 
-      // Alternar filtro de vencidas - NOVA
+      // Alternar filtro de vencidas
       function toggleFiltroVencidas() {
         const botaoElement = document.getElementById('filterVencidasBtn');
         filtroVencidasAtivo = !filtroVencidasAtivo;
@@ -1976,7 +1990,7 @@
         renderCards(); // Re-renderizar os cards com o filtro aplicado
       }
 
-      // Verificar se uma história está vencida - NOVA
+      // Verificar se uma história está vencida
       function historiaEstaVencida(historia) {
         if (!historia.prazoRevisao || !historia.dataConfiguracaoRevisao) {
           return false;
