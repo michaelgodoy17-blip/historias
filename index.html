@@ -303,7 +303,7 @@
       font-size: 16px;
     }
 
-    /* SEÇÃO: Adicionar Cliente */
+    /* SEÇÃO: Adicionar Pessoas */
     .section-add-client {
       background: var(--card);
       border-radius: var(--radius);
@@ -315,8 +315,71 @@
     }
 
     .section-add-client .section-title::before {
-      content: "👤";
+      content: "👥";
       font-size: 16px;
+    }
+
+    /* Estilos para as abas de Adicionar Pessoas */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background: var(--border-light);
+      color: var(--text);
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      background: var(--border);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Layout para as duas abas lado a lado em telas grandes */
+    @media (min-width: 768px) {
+      .people-options {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .tabs {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab-btn {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     /* SEÇÃO: Gerenciar Dados */
@@ -336,7 +399,8 @@
     }
 
     /* Formulário de cliente */
-    .client-form {
+    .client-form,
+    .team-form {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -787,21 +851,24 @@
       gap: 8px;
     }
 
-    /* Lista de clientes */
-    .clients-list {
+    /* Lista de clientes e equipes */
+    .clients-list,
+    .teams-list {
       margin-top: 20px;
       border-top: 1px solid var(--border-light);
       padding-top: 20px;
     }
 
-    .clients-list h3 {
+    .clients-list h3,
+    .teams-list h3 {
       font-size: 15px;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 12px;
     }
 
-    .client-item {
+    .client-item,
+    .team-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -812,7 +879,8 @@
       font-size: 14px;
     }
 
-    .client-item-actions {
+    .client-item-actions,
+    .team-item-actions {
       display: flex;
       gap: 8px;
     }
@@ -1498,8 +1566,8 @@
         <span>Criar Nova História</span>
       </div>
       <div class="menu-item" data-section="adicionar-cliente">
-        <span class="menu-item-icon">👤</span>
-        <span>Adicionar Cliente</span>
+        <span class="menu-item-icon">👥</span>
+        <span>Adicionar Pessoas</span>
       </div>
       <div class="menu-item" data-section="gerenciar-dados">
         <span class="menu-item-icon">💾</span>
@@ -1615,25 +1683,58 @@
       </div>
     </div>
 
-    <!-- Conteúdo: Adicionar Cliente - COM EDIÇÃO/EXCLUSÃO -->
+    <!-- Conteúdo: Adicionar Pessoas - COM EDIÇÃO/EXCLUSÃO -->
     <div class="main-content" id="adicionar-cliente">
       <div class="section-add-client">
-        <h2 class="section-title">Adicionar Cliente</h2>
+        <h2 class="section-title">Adicionar Pessoas</h2>
 
-        <!-- Formulário de Adicionar Cliente -->
-        <div class="client-form">
-          <div class="form-group">
-            <label for="clienteNome">Nome do Cliente</label>
-            <div style="display: flex; gap: 12px;">
-              <input id="clienteNome" placeholder="Digite o nome do cliente">
-              <button class="primary" onclick="addCliente()" style="white-space: nowrap;">Adicionar Cliente</button>
+        <!-- Abas de seleção -->
+        <div class="tabs">
+          <button class="tab-btn active" id="tabCliente" onclick="switchTab('cliente')">
+            👤 Cliente
+          </button>
+          <button class="tab-btn" id="tabEquipe" onclick="switchTab('equipe')">
+            👥 Equipe
+          </button>
+        </div>
+
+        <!-- Conteúdo da aba Cliente -->
+        <div class="tab-content active" id="contentCliente">
+          <!-- Formulário de Adicionar Cliente -->
+          <div class="client-form">
+            <div class="form-group">
+              <label for="clienteNome">Nome do Cliente</label>
+              <div style="display: flex; gap: 12px;">
+                <input id="clienteNome" placeholder="Digite o nome do cliente">
+                <button class="primary" onclick="addCliente()" style="white-space: nowrap;">Adicionar Cliente</button>
+              </div>
+            </div>
+
+            <!-- Lista de clientes cadastrados -->
+            <div class="clients-list" id="clientsList">
+              <h3>Clientes Cadastrados</h3>
+              <!-- Clientes serão listados aqui -->
             </div>
           </div>
+        </div>
 
-          <!-- Lista de clientes cadastrados -->
-          <div class="clients-list" id="clientsList">
-            <h3>Clientes Cadastrados</h3>
-            <!-- Clientes serão listados aqui -->
+        <!-- Conteúdo da aba Equipe -->
+        <div class="tab-content" id="contentEquipe">
+          <!-- Formulário de Adicionar Equipe -->
+          <div class="team-form">
+            <div class="form-group">
+              <label for="equipeNome">Nome da Equipe</label>
+              <div style="display: flex; gap: 12px;">
+                <input id="equipeNome" placeholder="Digite o nome da equipe">
+                <button class="primary" onclick="addEquipe()" style="white-space: nowrap;">Adicionar Equipe</button>
+              </div>
+            </div>
+
+            <!-- Lista de equipes cadastradas -->
+            <div class="teams-list" id="teamsList">
+              <h3>Equipes Cadastradas</h3>
+              <!-- Equipes serão listadas aqui -->
+            </div>
           </div>
         </div>
       </div>
@@ -1659,12 +1760,12 @@
               <input type="file" id="jsonFile" accept=".json" style="padding: 8px; font-size: 14px;">
               <button class="secondary full-width" onclick="importarDados()">Importar do JSON</button>
             </div>
+          </div>
 
-            <div class="data-option">
-              <h3>🗑️ Excluir Todos os Dados</h3>
-              <p style="color: var(--danger);">ATENÇÃO: Esta ação excluirá permanentemente todos os clientes, histórias, cards e anotações. Não é possível desfazer.</p>
-              <button class="danger full-width" onclick="excluirTodosDados()">Excluir Todos os Dados</button>
-            </div>
+          <div class="data-option">
+            <h3>🗑️ Excluir Todos os Dados</h3>
+            <p style="color: var(--danger);">ATENÇÃO: Esta ação excluirá permanentemente todos os clientes, histórias, cards e anotações. Não é possível desfazer.</p>
+            <button class="danger full-width" onclick="excluirTodosDados()">Excluir Todos os Dados</button>
           </div>
         </div>
       </div>
@@ -1768,11 +1869,39 @@
       </div>
     </div>
 
+    <!-- MODAL DE EDIÇÃO DE EQUIPE -->
+    <div class="modal" id="modalEquipe">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2>Editar Equipe</h2>
+          <button class="modal-close" onclick="fecharModalEquipe()">×</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-form">
+            <div class="form-group">
+              <label for="editEquipeNome">Nome da Equipe</label>
+              <input id="editEquipeNome" placeholder="Digite o nome da equipe">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-footer-actions">
+            <button class="secondary" onclick="fecharModalEquipe()">Cancelar</button>
+            <button class="primary" onclick="salvarEdicaoEquipe()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       let dados = JSON.parse(localStorage.getItem("clientes")) || {};
+      let dadosEquipes = JSON.parse(localStorage.getItem("equipes")) || {};
       let editCliente = null;
       let editIndex = null;
       let editClienteNome = null;
+      let editEquipeNome = null;
       let filtroVencidasAtivo = false; // Estado do filtro de vencidas
 
       // Inicialização
@@ -1797,6 +1926,7 @@
         atualizarContadorVencidas(); // Atualizar contador
         renderCards();
         renderClientesList();
+        renderEquipesList();
       });
 
       // Configurar menu hambúrguer
@@ -1871,12 +2001,36 @@
             if (document.getElementById('modalCliente').classList.contains('active')) {
               fecharModalCliente();
             }
+            if (document.getElementById('modalEquipe').classList.contains('active')) {
+              fecharModalEquipe();
+            }
           }
         });
       }
 
+      // Função para alternar entre abas
+      function switchTab(tab) {
+        // Atualizar botões das abas
+        document.getElementById('tabCliente').classList.remove('active');
+        document.getElementById('tabEquipe').classList.remove('active');
+
+        // Ocultar todos os conteúdos
+        document.getElementById('contentCliente').classList.remove('active');
+        document.getElementById('contentEquipe').classList.remove('active');
+
+        // Ativar aba selecionada
+        if (tab === 'cliente') {
+          document.getElementById('tabCliente').classList.add('active');
+          document.getElementById('contentCliente').classList.add('active');
+        } else if (tab === 'equipe') {
+          document.getElementById('tabEquipe').classList.add('active');
+          document.getElementById('contentEquipe').classList.add('active');
+        }
+      }
+
       function salvar() {
         localStorage.setItem("clientes", JSON.stringify(dados));
+        localStorage.setItem("equipes", JSON.stringify(dadosEquipes));
         atualizarContadorVencidas(); // Atualizar contador após salvar
       }
 
@@ -2039,6 +2193,38 @@
         container.innerHTML = html;
       }
 
+      function renderEquipesList() {
+        const container = document.getElementById('teamsList');
+        const equipes = Object.keys(dadosEquipes);
+
+        if (equipes.length === 0) {
+          container.innerHTML = `
+          <h3>Equipes Cadastradas</h3>
+          <div class="empty-state" style="padding: 20px; margin-top: 10px;">
+            <p>Nenhuma equipe cadastrada ainda.</p>
+          </div>
+        `;
+          return;
+        }
+
+        let html = '<h3>Equipes Cadastradas</h3>';
+
+        equipes.sort().forEach(equipe => {
+          const numMembros = dadosEquipes[equipe] ? dadosEquipes[equipe].length : 0;
+          html += `
+          <div class="team-item">
+            <span>${equipe} <small style="color: var(--text-light);">(${numMembros} membros)</small></span>
+            <div class="team-item-actions">
+              <button class="secondary small" onclick="editarEquipe('${equipe}')">Editar</button>
+              <button class="danger small" onclick="excluirEquipe('${equipe}')">Excluir</button>
+            </div>
+          </div>
+        `;
+        });
+
+        container.innerHTML = html;
+      }
+
       function addCliente() {
         const nomeInput = document.getElementById('clienteNome');
         const nome = nomeInput.value.trim();
@@ -2063,6 +2249,29 @@
         nomeInput.focus();
       }
 
+      function addEquipe() {
+        const nomeInput = document.getElementById('equipeNome');
+        const nome = nomeInput.value.trim();
+
+        if (!nome) {
+          alert('Por favor, digite um nome para a equipe.');
+          nomeInput.focus();
+          return;
+        }
+
+        if (dadosEquipes[nome]) {
+          alert('Já existe uma equipe com esse nome.');
+          nomeInput.focus();
+          return;
+        }
+
+        dadosEquipes[nome] = [];
+        salvar();
+        renderEquipesList();
+        nomeInput.value = "";
+        nomeInput.focus();
+      }
+
       function editarCliente(cliente) {
         editClienteNome = cliente;
         document.getElementById('editClienteNome').value = cliente;
@@ -2070,9 +2279,21 @@
         document.getElementById('editClienteNome').focus();
       }
 
+      function editarEquipe(equipe) {
+        editEquipeNome = equipe;
+        document.getElementById('editEquipeNome').value = equipe;
+        document.getElementById('modalEquipe').classList.add('active');
+        document.getElementById('editEquipeNome').focus();
+      }
+
       function fecharModalCliente() {
         document.getElementById('modalCliente').classList.remove('active');
         editClienteNome = null;
+      }
+
+      function fecharModalEquipe() {
+        document.getElementById('modalEquipe').classList.remove('active');
+        editEquipeNome = null;
       }
 
       function salvarEdicaoCliente() {
@@ -2108,6 +2329,32 @@
         fecharModalCliente();
       }
 
+      function salvarEdicaoEquipe() {
+        const novoNome = document.getElementById('editEquipeNome').value.trim();
+
+        if (!novoNome) {
+          alert('O nome da equipe não pode estar vazio.');
+          document.getElementById('editEquipeNome').focus();
+          return;
+        }
+
+        if (novoNome !== editEquipeNome && dadosEquipes[novoNome]) {
+          alert('Já existe uma equipe com esse nome.');
+          document.getElementById('editEquipeNome').focus();
+          return;
+        }
+
+        if (novoNome !== editEquipeNome) {
+          // Renomear a equipe
+          dadosEquipes[novoNome] = dadosEquipes[editEquipeNome];
+          delete dadosEquipes[editEquipeNome];
+        }
+
+        salvar();
+        renderEquipesList();
+        fecharModalEquipe();
+      }
+
       function excluirCliente(cliente) {
         if (dados[cliente].length > 0) {
           if (!confirm(`O cliente "${cliente}" tem ${dados[cliente].length} histórias. Tem certeza que deseja excluir o cliente e todas as suas histórias?`)) {
@@ -2124,6 +2371,22 @@
         atualizarSelects();
         renderCards();
         renderClientesList();
+      }
+
+      function excluirEquipe(equipe) {
+        if (dadosEquipes[equipe].length > 0) {
+          if (!confirm(`A equipe "${equipe}" tem ${dadosEquipes[equipe].length} membros. Tem certeza que deseja excluir a equipe?`)) {
+            return;
+          }
+        } else {
+          if (!confirm(`Tem certeza que deseja excluir a equipe "${equipe}"?`)) {
+            return;
+          }
+        }
+
+        delete dadosEquipes[equipe];
+        salvar();
+        renderEquipesList();
       }
 
       function addCard() {
@@ -2782,8 +3045,9 @@
         // Obter todos os dados do localStorage
         const dadosCompletos = {
           clientes: dados,
+          equipes: dadosEquipes,
           exportadoEm: new Date().toISOString(),
-          versao: '1.2' // Atualizado para incluir prazos de revisão
+          versao: '1.3' // Atualizado para incluir equipes
         };
 
         // Converter para JSON
@@ -2829,6 +3093,7 @@
 
             // Atualizar os dados
             dados = dadosImportados.clientes;
+            dadosEquipes = dadosImportados.equipes || {};
             salvar();
 
             // Atualizar a interface
@@ -2836,6 +3101,7 @@
             atualizarContadorVencidas();
             renderCards();
             renderClientesList();
+            renderEquipesList();
 
             // Limpar o input de arquivo
             fileInput.value = '';
@@ -2855,7 +3121,7 @@
       }
 
       function excluirTodosDados() {
-        if (!confirm('ATENÇÃO: Esta ação excluirá permanentemente TODOS os dados (clientes, histórias, cards e anotações). Esta ação NÃO pode ser desfeita.\n\nTem certeza absoluta que deseja continuar?')) {
+        if (!confirm('ATENÇÃO: Esta ação excluirá permanentemente TODOS os dados (clientes, histórias, cards, anotações e equipes). Esta ação NÃO pode ser desfeita.\n\nTem certeza absoluta que deseja continuar?')) {
           return;
         }
 
@@ -2864,11 +3130,13 @@
         }
 
         dados = {};
+        dadosEquipes = {};
         salvar();
         atualizarSelects();
         atualizarContadorVencidas();
         renderCards();
         renderClientesList();
+        renderEquipesList();
 
         alert('Todos os dados foram excluídos com sucesso.');
       }
@@ -2880,6 +3148,9 @@
         }
         if (event.key === 'Escape' && document.getElementById('modalCliente').classList.contains('active')) {
           fecharModalCliente();
+        }
+        if (event.key === 'Escape' && document.getElementById('modalEquipe').classList.contains('active')) {
+          fecharModalEquipe();
         }
       });
     </script>
