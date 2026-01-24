@@ -507,6 +507,97 @@
       }
     }
 
+    /* ===== NOVA SEÇÃO: PRAZO PARA REVISÃO NA CRIAÇÃO ===== */
+    .review-config-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+    }
+
+    .review-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .review-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .review-checkbox label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .review-checkbox label:hover {
+      color: var(--primary);
+    }
+
+    .review-fields {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .review-fields.hidden {
+      display: none;
+    }
+
+    /* Estilos específicos para o datepicker na criação */
+    .review-config-section .datepicker-container {
+      max-width: 220px;
+    }
+
+    .review-config-section #reviewDate {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 10px;
+      font-size: 14px;
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .review-config-section #reviewDate:hover {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .review-config-section #reviewDate:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .review-config-section .calendar-toggle-btn {
+      height: 38px;
+      width: 38px;
+    }
+
+    /* Calendário para criação */
+    .calendar-modal.create {
+      z-index: 1100;
+    }
+
     .story-form-actions {
       display: flex;
       gap: 12px;
@@ -937,7 +1028,7 @@
       margin-bottom: 12px;
     }
 
-    /* ===== MODAL DE EDIÇÃO - LAYOUT MODIFICADO (MINIMALISTA) ===== */
+    /* ===== MODAL DE EDIÇÃO - CABEÇALHO COMPACTO ===== */
     .modal {
       position: fixed;
       top: 0;
@@ -983,34 +1074,103 @@
       }
     }
 
+    /* CABEÇALHO DO MODAL - COMPACTO */
     .modal-header {
-      padding: 16px 24px;
+      padding: 12px 20px;
       border-bottom: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--border-light);
+      background: var(--card);
+      flex-shrink: 0;
+      min-height: 56px;
+    }
+
+    .modal-header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .modal-title-container {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .modal-title-input {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
+      transition: all 0.2s ease;
+      min-height: 38px;
+    }
+
+    .modal-title-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .modal-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       flex-shrink: 0;
     }
 
-    .modal-header h2 {
-      font-size: 18px;
-      font-weight: 600;
+    .modal-status-select {
+      min-width: 140px;
+      padding: 6px 10px;
+      font-size: 13px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
       color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .modal-status-select:hover {
+      border-color: var(--primary);
+    }
+
+    .modal-status-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .modal-review-info {
       display: flex;
       align-items: center;
       gap: 8px;
+      padding: 6px 10px;
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 6px;
+      font-size: 12px;
+      color: var(--text);
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      white-space: nowrap;
+      height: 34px;
     }
 
-    .modal-header h2::before {
-      content: "📝";
-      font-size: 16px;
+    .modal-review-date {
+      font-weight: 600;
+      color: var(--primary);
     }
 
     .modal-close {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 22px;
       color: var(--text-light);
       cursor: pointer;
       width: 32px;
@@ -1020,6 +1180,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      flex-shrink: 0;
     }
 
     .modal-close:hover {
@@ -1028,58 +1189,84 @@
     }
 
     .modal-body {
-      padding: 20px 24px;
+      padding: 16px 20px;
       flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
-    /* FORMULÁRIO SUPERIOR - UMA LINHA - MODIFICADO */
+    /* ===== FORMULÁRIO SUPERIOR - COMPACTO ===== */
     .modal-top-form {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-light);
+      padding: 16px;
+      background: var(--border-light);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
       flex-wrap: wrap;
+      border: 1px solid var(--border);
     }
 
     .modal-top-form .form-group {
       flex: 1;
-      min-width: 200px;
+      min-width: 160px;
       margin-bottom: 0;
     }
 
     .modal-top-form .form-group:first-child {
       flex: 2;
-      min-width: 300px;
+      min-width: 200px;
     }
 
-    .modal-top-form .form-group label {
+    .modal-top-form label {
+      display: block;
       margin-bottom: 4px;
       font-size: 12px;
+      font-weight: 600;
       color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .modal-top-form input,
     .modal-top-form select {
       width: 100%;
-      padding: 8px 12px;
-      font-size: 14px;
+      padding: 8px 10px;
+      font-size: 13px;
       height: 36px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 5px;
+      transition: all 0.2s ease;
     }
 
-    /* Configuração de prazo de revisão - LADO A LADO */
+    .modal-top-form input:focus,
+    .modal-top-form select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .modal-top-form input:hover,
+    .modal-top-form select:hover {
+      border-color: var(--primary-hover);
+    }
+
+    /* Configuração de prazo de revisão - COMPACTO */
     .review-config-compact {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 0;
-      padding: 0;
-      border: none;
-      min-width: 250px;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 12px;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: var(--radius);
+      width: 100%;
     }
 
     .review-checkbox-compact {
@@ -1093,58 +1280,281 @@
       width: 16px;
       height: 16px;
       cursor: pointer;
+      accent-color: var(--primary);
     }
 
     .review-checkbox-compact label {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       white-space: nowrap;
+      user-select: none;
+    }
+
+    .review-checkbox-compact label:hover {
+      color: var(--primary);
     }
 
     .review-fields-compact {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       align-items: center;
       animation: fadeIn 0.3s ease;
+      flex: 1;
+      min-width: 180px;
     }
 
     .review-fields-compact.hidden {
       display: none;
     }
 
-    #editReviewDays {
-      width: 60px;
-      padding: 4px 8px;
+    /* ===== ESTILOS DO NOVO CALENDÁRIO ===== */
+    .datepicker-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 180px;
+    }
+
+    .date-input-wrapper {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      width: 100%;
+    }
+
+    #editReviewDate,
+    #reviewDate {
+      flex: 1;
+      min-width: 120px;
+      padding: 6px 8px;
       font-size: 13px;
-      height: 28px;
+      height: 34px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 5px;
       background: var(--card);
       color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    #editReviewDate:hover,
+    #reviewDate:hover {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    #editReviewDate:focus,
+    #reviewDate:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    .calendar-toggle-btn {
+      background: var(--primary);
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      height: 34px;
+      width: 34px;
+      flex-shrink: 0;
+    }
+
+    .calendar-toggle-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    }
+
+    .calendar-toggle-btn:active {
+      transform: translateY(0);
+    }
+
+    .calendar-modal {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      width: 280px;
+      padding: 12px;
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .calendar-modal.active {
+      display: block;
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .calendar-month-year {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .calendar-nav-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-nav-btn:hover {
+      background: var(--border-light);
+      color: var(--primary);
+    }
+
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 8px;
       text-align: center;
     }
 
-    .review-fields-compact span {
-      font-size: 12px;
+    .calendar-weekday {
+      font-size: 11px;
+      font-weight: 600;
       color: var(--text-light);
-      white-space: nowrap;
+      padding: 6px 4px;
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .calendar-day {
+      padding: 8px;
+      font-size: 12px;
+      text-align: center;
+      border: none;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calendar-day:hover {
+      background: var(--border-light);
+    }
+
+    .calendar-day.today {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--primary);
+      font-weight: 600;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .calendar-day.selected {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .calendar-day.other-month {
+      color: var(--text-light);
+      opacity: 0.5;
+    }
+
+    .calendar-day.disabled {
+      color: var(--text-light);
+      opacity: 0.3;
+      cursor: not-allowed;
+      background: none;
+    }
+
+    .calendar-day.disabled:hover {
+      background: none;
+    }
+
+    .calendar-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .calendar-today-btn {
+      background: var(--border-light);
+      color: var(--text);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-today-btn:hover {
+      background: var(--border);
+    }
+
+    .calendar-clear-btn {
+      background: none;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-clear-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
     }
 
     .modal-footer {
-      padding: 16px 24px;
+      padding: 12px 20px;
       border-top: 1px solid var(--border-light);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--border-light);
+      background: var(--card);
       flex-shrink: 0;
+      min-height: 56px;
     }
 
     .client-info {
       color: var(--text-light);
-      font-size: 13px;
+      font-size: 12px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -1179,35 +1589,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .modal-notes-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .modal-notes-title::before {
       content: "📝";
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .add-note-btn {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       transition: all 0.2s ease;
     }
 
@@ -1218,7 +1628,7 @@
     .notes-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       flex: 1;
       overflow-y: auto;
       padding-right: 4px;
@@ -1229,7 +1639,7 @@
       background: var(--note-bg);
       border: 1px solid var(--note-border);
       border-radius: 6px;
-      padding: 16px;
+      padding: 12px;
       position: relative;
     }
 
@@ -1237,13 +1647,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
       border-bottom: 1px dashed var(--border);
     }
 
     .note-date {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-light);
       font-weight: 500;
     }
@@ -1253,10 +1663,10 @@
       border: none;
       cursor: pointer;
       color: var(--expand-color);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1269,10 +1679,10 @@
     }
 
     .note-content {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.5;
       color: var(--text);
-      max-height: 80px;
+      max-height: 60px;
       overflow: hidden;
       transition: max-height 0.3s ease;
     }
@@ -1285,41 +1695,46 @@
     .note-content-placeholder {
       color: var(--text-light);
       font-style: italic;
-      font-size: 13px;
-      padding: 8px;
+      font-size: 12px;
+      padding: 6px;
     }
 
     .note-actions {
       display: flex;
-      gap: 8px;
-      margin-top: 12px;
+      gap: 6px;
+      margin-top: 10px;
       justify-content: flex-end;
     }
 
     .note-actions button {
-      padding: 6px 12px;
-      font-size: 12px;
+      padding: 4px 8px;
+      font-size: 11px;
       border-radius: 4px;
     }
 
     .note-edit-input {
       width: 100%;
-      min-height: 120px;
-      padding: 12px;
+      min-height: 100px;
+      padding: 10px;
       font-family: inherit;
-      font-size: 14px;
+      font-size: 13px;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--card);
       color: var(--text);
       resize: vertical;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .note-edit-input:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+
+    /* ===== CLASSE HIDDEN PARA ELEMENTOS OCULTOS ===== */
+    .hidden {
+      display: none !important;
     }
 
     /* Responsividade para o modal */
@@ -1343,6 +1758,28 @@
       .modal-box {
         width: 95%;
         height: 95%;
+      }
+
+      .modal-top-form {
+        gap: 12px;
+      }
+
+      .modal-top-form .form-group,
+      .modal-top-form .form-group:first-child {
+        min-width: calc(50% - 8px);
+      }
+
+      .review-config-compact {
+        min-width: 100%;
+        margin-top: 8px;
+      }
+
+      .review-config-section {
+        flex-direction: column;
+      }
+
+      .review-config-section .datepicker-container {
+        max-width: 100%;
       }
     }
 
@@ -1385,10 +1822,19 @@
         justify-content: center;
       }
 
-      .modal-header,
-      .modal-body,
+      .modal-header {
+        padding: 10px 16px;
+        min-height: 52px;
+      }
+
+      .modal-body {
+        padding: 12px 16px;
+        gap: 12px;
+      }
+
       .modal-footer {
-        padding: 16px;
+        padding: 10px 16px;
+        min-height: 52px;
       }
 
       .modal-box {
@@ -1396,10 +1842,35 @@
         height: 98%;
       }
 
+      .modal-header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .modal-title-container {
+        width: 100%;
+      }
+
+      .modal-header-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .modal-status-select {
+        min-width: 120px;
+      }
+
+      .modal-review-info {
+        font-size: 11px;
+        padding: 5px 8px;
+      }
+
       .modal-top-form {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        padding: 12px;
       }
 
       .modal-top-form .form-group,
@@ -1411,6 +1882,23 @@
       .review-config-compact {
         width: 100%;
         justify-content: space-between;
+        padding: 10px;
+        gap: 10px;
+      }
+
+      .review-config-section {
+        padding: 12px;
+      }
+
+      .review-fields {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .review-config-section .datepicker-container {
+        max-width: 100%;
       }
 
       .menu-sidebar {
@@ -1438,7 +1926,7 @@
       .modal-notes-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 8px;
       }
 
       .add-note-btn {
@@ -1449,10 +1937,26 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
+        width: 100%;
       }
 
-      #editReviewDays {
-        width: 100%;
+      .calendar-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 300px;
+        margin-top: 0;
+      }
+
+      .calendar-days {
+        gap: 2px;
+      }
+
+      .calendar-day {
+        padding: 6px;
+        min-height: 30px;
       }
     }
 
@@ -1488,27 +1992,56 @@
         height: 30px;
       }
 
+      .modal-header {
+        padding: 8px 12px;
+        min-height: 48px;
+      }
+
+      .modal-title-input {
+        font-size: 14px;
+        padding: 6px 8px;
+        min-height: 34px;
+      }
+
+      .modal-status-select {
+        height: 32px;
+        font-size: 12px;
+        min-width: 100px;
+      }
+
+      .modal-review-info {
+        height: 32px;
+        font-size: 10px;
+      }
+
       .modal-footer {
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
         align-items: stretch;
+        padding: 8px 12px;
       }
 
       .client-info {
         justify-content: center;
         text-align: center;
+        font-size: 11px;
       }
 
       .modal-footer-actions {
         justify-content: center;
       }
 
+      .modal-footer-actions button {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+
       .note-item {
-        padding: 12px;
+        padding: 10px;
       }
 
       .note-edit-input {
-        min-height: 100px;
+        min-height: 80px;
       }
 
       .card-dates {
@@ -1529,11 +2062,118 @@
       .review-config-compact {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
       }
 
       .review-checkbox-compact {
         width: 100%;
+      }
+
+      .review-fields-compact {
+        min-width: 160px;
+        width: 100%;
+      }
+
+      .datepicker-container {
+        max-width: 100%;
+      }
+
+      #editReviewDate,
+      #reviewDate {
+        min-width: 120px;
+        font-size: 12px;
+        height: 32px;
+      }
+
+      .calendar-toggle-btn {
+        width: 32px;
+        height: 32px;
+        padding: 7px;
+      }
+
+      .review-config-section #reviewDate {
+        min-width: 120px;
+        font-size: 12px;
+        height: 32px;
+      }
+
+      .review-config-section .calendar-toggle-btn {
+        width: 32px;
+        height: 32px;
+        padding: 7px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .modal-header {
+        min-height: 44px;
+      }
+
+      .modal-title-input {
+        font-size: 13px;
+        min-height: 32px;
+      }
+
+      .modal-header-right {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .modal-status-select {
+        min-width: 90px;
+        height: 30px;
+      }
+
+      .modal-review-info {
+        padding: 4px 6px;
+        height: 30px;
+      }
+
+      .review-config-compact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px;
+      }
+
+      .review-config-section {
+        padding: 10px;
+        gap: 10px;
+      }
+
+      .datepicker-container {
+        max-width: 100%;
+      }
+
+      #editReviewDate,
+      #reviewDate {
+        min-width: 100px;
+        font-size: 12px;
+        padding: 5px 6px;
+      }
+
+      .calendar-toggle-btn {
+        width: 30px;
+        height: 30px;
+        padding: 6px;
+      }
+
+      .modal-close {
+        width: 28px;
+        height: 28px;
+        font-size: 20px;
+      }
+
+      .review-config-section #reviewDate {
+        min-width: 100px;
+        font-size: 12px;
+        padding: 5px 6px;
+      }
+
+      .review-config-section .calendar-toggle-btn {
+        width: 30px;
+        height: 30px;
+        padding: 6px;
       }
     }
 
@@ -1675,7 +2315,50 @@
             <input id="titulo" placeholder="Digite um título para a história">
           </div>
 
-          <!-- 4. Ações -->
+          <!-- 4. Prazo para Revisão (QUARTO) - NOVO -->
+          <div class="review-config-section">
+            <div class="review-checkbox">
+              <input type="checkbox" id="reviewCheckbox" onchange="toggleReviewSection()">
+              <label for="reviewCheckbox">Definir Prazo para Revisão</label>
+            </div>
+
+            <div class="review-fields hidden" id="reviewFieldsCreate">
+              <div class="datepicker-container">
+                <input type="text" id="reviewDate" readonly onclick="toggleCalendar('create')" placeholder="Selecione uma data">
+                <button class="calendar-toggle-btn" onclick="toggleCalendar('create')" type="button" title="Abrir calendário">
+                  📅
+                </button>
+
+                <!-- Calendário para criação -->
+                <div class="calendar-modal create" id="calendarModalCreate">
+                  <div class="calendar-header">
+                    <button class="calendar-nav-btn" onclick="changeMonth('create', -1)" title="Mês anterior">‹</button>
+                    <div class="calendar-month-year" id="calendarMonthYearCreate"></div>
+                    <button class="calendar-nav-btn" onclick="changeMonth('create', 1)" title="Próximo mês">›</button>
+                  </div>
+
+                  <div class="calendar-weekdays">
+                    <div class="calendar-weekday">Dom</div>
+                    <div class="calendar-weekday">Seg</div>
+                    <div class="calendar-weekday">Ter</div>
+                    <div class="calendar-weekday">Qua</div>
+                    <div class="calendar-weekday">Qui</div>
+                    <div class="calendar-weekday">Sex</div>
+                    <div class="calendar-weekday">Sáb</div>
+                  </div>
+
+                  <div class="calendar-days" id="calendarDaysCreate"></div>
+
+                  <div class="calendar-footer">
+                    <button class="calendar-today-btn" onclick="selectToday('create')">Hoje</button>
+                    <button class="calendar-clear-btn" onclick="clearDate('create')">Limpar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Ações -->
           <div class="story-form-actions">
             <button class="primary full-width" onclick="addCard()">Salvar História</button>
           </div>
@@ -1799,16 +2482,46 @@
               </select>
             </div>
 
-            <!-- Prazo de Revisão - Compacto -->
+            <!-- Prazo de Revisão - MODIFICADO COM CALENDÁRIO -->
             <div class="review-config-compact">
               <div class="review-checkbox-compact">
                 <input type="checkbox" id="editReviewCheckbox" onchange="toggleReviewFields()">
                 <label for="editReviewCheckbox">Prazo de Revisão</label>
               </div>
 
-              <div class="review-fields-compact hidden" id="reviewFields">
-                <input type="number" id="editReviewDays" min="1" max="365" value="7" style="width: 60px;">
-                <span>dias</span>
+              <div class="review-fields-compact hidden" id="reviewFieldsEdit">
+                <div class="datepicker-container">
+                  <input type="text" id="editReviewDate" readonly onclick="toggleCalendar('edit')" placeholder="Selecione uma data">
+                  <button class="calendar-toggle-btn" onclick="toggleCalendar('edit')" type="button" title="Abrir calendário">
+                    📅
+                  </button>
+
+                  <!-- Calendário Minimalista -->
+                  <div class="calendar-modal edit" id="calendarModalEdit">
+                    <div class="calendar-header">
+                      <button class="calendar-nav-btn" onclick="changeMonth('edit', -1)" title="Mês anterior">‹</button>
+                      <div class="calendar-month-year" id="calendarMonthYearEdit"></div>
+                      <button class="calendar-nav-btn" onclick="changeMonth('edit', 1)" title="Próximo mês">›</button>
+                    </div>
+
+                    <div class="calendar-weekdays">
+                      <div class="calendar-weekday">Dom</div>
+                      <div class="calendar-weekday">Seg</div>
+                      <div class="calendar-weekday">Ter</div>
+                      <div class="calendar-weekday">Qua</div>
+                      <div class="calendar-weekday">Qui</div>
+                      <div class="calendar-weekday">Sex</div>
+                      <div class="calendar-weekday">Sáb</div>
+                    </div>
+
+                    <div class="calendar-days" id="calendarDaysEdit"></div>
+
+                    <div class="calendar-footer">
+                      <button class="calendar-today-btn" onclick="selectToday('edit')">Hoje</button>
+                      <button class="calendar-clear-btn" onclick="clearDate('edit')">Limpar</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1903,6 +2616,13 @@
       let editClienteNome = null;
       let editEquipeNome = null;
       let filtroVencidasAtivo = false; // Estado do filtro de vencidas
+
+      // ===== VARIÁVEIS DO CALENDÁRIO =====
+      let currentCalendarDate = new Date();
+      let selectedDate = null;
+      let selectedDateCreate = null; // Data selecionada na criação
+      let calendarVisible = false;
+      let calendarContext = 'edit'; // 'edit' ou 'create'
 
       // Inicialização
       document.addEventListener('DOMContentLoaded', function () {
@@ -2003,6 +2723,9 @@
             }
             if (document.getElementById('modalEquipe').classList.contains('active')) {
               fecharModalEquipe();
+            }
+            if (calendarVisible) {
+              closeCalendar();
             }
           }
         });
@@ -2389,6 +3112,43 @@
         renderEquipesList();
       }
 
+      // Função para converter data de YYYY-MM-DD para DD/MM/YYYY
+      function formatarDataBrasileira(dataISO) {
+        if (!dataISO) return '';
+        const partes = dataISO.split('-');
+        if (partes.length !== 3) return dataISO;
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
+
+      // Função para converter data de DD/MM/YYYY para YYYY-MM-DD
+      function formatarDataISO(dataBrasileira) {
+        if (!dataBrasileira) return '';
+        const partes = dataBrasileira.split('/');
+        if (partes.length !== 3) return dataBrasileira;
+        return `${partes[2]}-${partes[1]}-${partes[0]}`;
+      }
+
+      // ===== NOVA FUNÇÃO: ALTERNAR SEÇÃO DE REVISÃO NA CRIAÇÃO =====
+      function toggleReviewSection() {
+        const reviewCheckbox = document.getElementById('reviewCheckbox');
+        const reviewFields = document.getElementById('reviewFieldsCreate'); // CORRIGIDO: Agora usa o ID correto
+
+        if (reviewCheckbox.checked) {
+          reviewFields.classList.remove('hidden');
+          // Se não houver data selecionada, sugerir 7 dias a partir de hoje
+          if (!selectedDateCreate) {
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 7);
+            selectedDateCreate = futureDate;
+            document.getElementById('reviewDate').value = formatDate(futureDate);
+          }
+        } else {
+          reviewFields.classList.add('hidden');
+          selectedDateCreate = null;
+          document.getElementById('reviewDate').value = '';
+        }
+      }
+
       function addCard() {
         const cliente = document.getElementById('clienteSelect').value;
         if (!cliente) {
@@ -2406,26 +3166,60 @@
           return;
         }
 
-        const dataAtual = new Date().toISOString().split('T')[0];
-        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const dataAtual = new Date();
+        const dataISO = dataAtual.toISOString().split('T')[0];
+        const dataFormatada = formatarDataBrasileira(dataISO);
+        const horaAtual = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
         // Criar a primeira anotação com o conteúdo da história
         const primeiraAnotacao = {
           texto: texto,
-          data: dataAtual,
-          hora: horaAtual
+          data: dataFormatada, // Salvar já no formato brasileiro
+          hora: horaAtual,
+          timestamp: dataAtual.getTime() // Adicionar timestamp para ordenação
         };
+
+        // Verificar se deve adicionar prazo de revisão - NOVO
+        const reviewCheckbox = document.getElementById('reviewCheckbox');
+        let prazoRevisao = null;
+        let dataConfiguracaoRevisao = null;
+
+        if (reviewCheckbox.checked) {
+          // Calcular dias baseado na data selecionada
+          if (selectedDateCreate) {
+            const hoje = new Date();
+            const dataSelecionada = new Date(selectedDateCreate);
+
+            // Calcular diferença em dias
+            const diffTime = dataSelecionada - hoje;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 1) {
+              alert('Por favor, selecione uma data futura para a revisão.');
+              toggleCalendar('create');
+              return;
+            }
+
+            prazoRevisao = diffDays;
+            dataConfiguracaoRevisao = dataFormatada; // Data da configuração é hoje
+          } else {
+            alert('Por favor, selecione uma data para a revisão.');
+            toggleCalendar('create');
+            return;
+          }
+        }
 
         dados[cliente].push({
           titulo: titulo,
           status: status,
-          dataCriacao: dataAtual,
+          dataCriacao: dataFormatada, // Salvar já no formato brasileiro
           horaCriacao: horaAtual,
-          dataEdicao: dataAtual,
+          dataEdicao: dataFormatada, // Salvar já no formato brasileiro
           horaEdicao: horaAtual,
           cliente: cliente,
           notas: [primeiraAnotacao], // O conteúdo agora é a primeira anotação
-          // NÃO adicionamos prazo de revisão por padrão na criação
+          prazoRevisao: prazoRevisao, // NOVO: Adicionar prazo de revisão se definido
+          dataConfiguracaoRevisao: dataConfiguracaoRevisao // NOVO: Data de configuração
         });
 
         salvar();
@@ -2434,6 +3228,13 @@
         // Limpar os campos, mas manter o cliente selecionado
         document.getElementById('titulo').value = '';
         document.getElementById('texto').value = '';
+
+        // Resetar os campos de revisão
+        const reviewFields = document.getElementById('reviewFieldsCreate'); // CORRIGIDO: Agora usa o ID correto
+        document.getElementById('reviewCheckbox').checked = false;
+        reviewFields.classList.add('hidden');
+        document.getElementById('reviewDate').value = '';
+        selectedDateCreate = null;
 
         // Foco no campo de texto para próxima história
         document.getElementById('texto').focus();
@@ -2727,7 +3528,9 @@
         let reviewBadge = '';
         if (historia.prazoRevisao && historia.dataConfiguracaoRevisao) {
           const hoje = new Date();
-          const dataConfiguracao = new Date(historia.dataConfiguracaoRevisao);
+          // Converter data de configuração para formato correto
+          const dataConfigISO = formatarDataISO(historia.dataConfiguracaoRevisao);
+          const dataConfiguracao = new Date(dataConfigISO);
           const dataVencimento = new Date(dataConfiguracao);
           dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
 
@@ -2795,6 +3598,208 @@
         }
       }
 
+      // ===== FUNÇÕES DO CALENDÁRIO MODIFICADAS =====
+
+      // Função para formatar data como DD/MM/YYYY
+      function formatDate(date) {
+        if (!date) return '';
+        const d = new Date(date);
+        const day = d.getDate().toString().padStart(2, '0');
+        const month = (d.getMonth() + 1).toString().padStart(2, '0');
+        const year = d.getFullYear();
+        return `${day}/${month}/${year}`;
+      }
+
+      // Função para parse de data no formato DD/MM/YYYY
+      function parseDate(dateString) {
+        if (!dateString) return null;
+        const parts = dateString.split('/');
+        if (parts.length !== 3) return null;
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      }
+
+      // Função para alternar visibilidade do calendário
+      function toggleCalendar(context) {
+        calendarContext = context;
+        const calendarModal = document.getElementById(`calendarModal${capitalizeFirstLetter(context)}`);
+        calendarVisible = !calendarVisible;
+
+        if (calendarVisible) {
+          calendarModal.classList.add('active');
+          renderCalendar(context);
+
+          // Fechar calendário ao clicar fora
+          setTimeout(() => {
+            document.addEventListener('click', function closeCalendarOnClickOutside(event) {
+              const calendarModal = document.getElementById(`calendarModal${capitalizeFirstLetter(context)}`);
+              const dateInput = document.getElementById(context === 'edit' ? 'editReviewDate' : 'reviewDate');
+              const calendarToggle = calendarModal.parentElement.querySelector('.calendar-toggle-btn');
+
+              if (!calendarModal.contains(event.target) &&
+                event.target !== dateInput &&
+                event.target !== calendarToggle) {
+                closeCalendar();
+                document.removeEventListener('click', closeCalendarOnClickOutside);
+              }
+            });
+          }, 10);
+        } else {
+          closeCalendar();
+        }
+      }
+
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      // Fechar calendário
+      function closeCalendar() {
+        const editModal = document.getElementById('calendarModalEdit');
+        const createModal = document.getElementById('calendarModalCreate');
+
+        if (editModal) editModal.classList.remove('active');
+        if (createModal) createModal.classList.remove('active');
+
+        calendarVisible = false;
+      }
+
+      // Renderizar calendário
+      function renderCalendar(context) {
+        const monthYearElement = document.getElementById(`calendarMonthYear${capitalizeFirstLetter(context)}`);
+        const daysElement = document.getElementById(`calendarDays${capitalizeFirstLetter(context)}`);
+
+        // Configurar mês e ano atual
+        const monthNames = [
+          'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+
+        const currentMonth = currentCalendarDate.getMonth();
+        const currentYear = currentCalendarDate.getFullYear();
+
+        monthYearElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+        // Limpar dias anteriores
+        daysElement.innerHTML = '';
+
+        // Primeiro dia do mês
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        // Último dia do mês
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        // Dia da semana do primeiro dia (0 = Domingo, 6 = Sábado)
+        const firstDayOfWeek = firstDay.getDay();
+
+        // Hoje
+        const today = new Date();
+        const isToday = (day) =>
+          day.getDate() === today.getDate() &&
+          day.getMonth() === today.getMonth() &&
+          day.getFullYear() === today.getFullYear();
+
+        // Data selecionada
+        const selectedDateVar = context === 'edit' ? selectedDate : selectedDateCreate;
+        const isSelected = (day) =>
+          selectedDateVar &&
+          day.getDate() === selectedDateVar.getDate() &&
+          day.getMonth() === selectedDateVar.getMonth() &&
+          day.getFullYear() === selectedDateVar.getFullYear();
+
+        // Adicionar dias do mês anterior
+        const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
+        for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+          const day = new Date(currentYear, currentMonth - 1, prevMonthLastDay - i);
+          const button = document.createElement('button');
+          button.className = 'calendar-day other-month';
+          button.textContent = day.getDate();
+          button.disabled = true;
+          daysElement.appendChild(button);
+        }
+
+        // Adicionar dias do mês atual
+        for (let day = 1; day <= lastDay.getDate(); day++) {
+          const date = new Date(currentYear, currentMonth, day);
+          const button = document.createElement('button');
+          button.className = 'calendar-day';
+          button.textContent = day;
+
+          // Marcar hoje
+          if (isToday(date)) {
+            button.classList.add('today');
+          }
+
+          // Marcar selecionado
+          if (isSelected(date)) {
+            button.classList.add('selected');
+          }
+
+          // Desabilitar datas passadas
+          const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          const dateMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+          if (dateMidnight < todayMidnight) {
+            button.classList.add('disabled');
+            button.disabled = true;
+          } else {
+            button.onclick = () => selectDate(date, context);
+          }
+
+          daysElement.appendChild(button);
+        }
+
+        // Adicionar dias do próximo mês
+        const totalCells = 42; // 6 semanas * 7 dias
+        const daysInMonth = lastDay.getDate();
+        const daysSoFar = firstDayOfWeek + daysInMonth;
+        const nextMonthDays = totalCells - daysSoFar;
+
+        for (let i = 1; i <= nextMonthDays; i++) {
+          const day = new Date(currentYear, currentMonth + 1, i);
+          const button = document.createElement('button');
+          button.className = 'calendar-day other-month';
+          button.textContent = i;
+          button.disabled = true;
+          daysElement.appendChild(button);
+        }
+      }
+
+      // Mudar mês no calendário
+      function changeMonth(context, delta) {
+        currentCalendarDate.setMonth(currentCalendarDate.getMonth() + delta);
+        renderCalendar(context);
+      }
+
+      // Selecionar data
+      function selectDate(date, context) {
+        if (context === 'edit') {
+          selectedDate = date;
+          document.getElementById('editReviewDate').value = formatDate(date);
+        } else {
+          selectedDateCreate = date;
+          document.getElementById('reviewDate').value = formatDate(date);
+        }
+        closeCalendar();
+      }
+
+      // Selecionar hoje
+      function selectToday(context) {
+        const today = new Date();
+        selectDate(today, context);
+      }
+
+      // Limpar data
+      function clearDate(context) {
+        if (context === 'edit') {
+          selectedDate = null;
+          document.getElementById('editReviewDate').value = '';
+        } else {
+          selectedDateCreate = null;
+          document.getElementById('reviewDate').value = '';
+        }
+        closeCalendar();
+      }
+
+      // ===== FUNÇÕES DO MODAL MODIFICADAS =====
+
       function abrirModal(cliente, index) {
         editCliente = cliente;
         editIndex = index;
@@ -2806,17 +3811,28 @@
 
         // Configurar campos de revisão
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
-        const reviewFields = document.getElementById('reviewFields');
-        const reviewDays = document.getElementById('editReviewDays');
+        const reviewFields = document.getElementById('reviewFieldsEdit'); // CORRIGIDO: Agora usa o ID correto
 
-        if (historia.prazoRevisao) {
+        // Resetar calendário
+        currentCalendarDate = new Date();
+        selectedDate = null;
+
+        if (historia.prazoRevisao && historia.dataConfiguracaoRevisao) {
           reviewCheckbox.checked = true;
           reviewFields.classList.remove('hidden');
-          reviewDays.value = historia.prazoRevisao;
+
+          // Calcular data de vencimento baseado na configuração
+          const dataConfigISO = formatarDataISO(historia.dataConfiguracaoRevisao);
+          const dataConfiguracao = new Date(dataConfigISO);
+          const dataVencimento = new Date(dataConfiguracao);
+          dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
+
+          selectedDate = dataVencimento;
+          document.getElementById('editReviewDate').value = formatDate(dataVencimento);
         } else {
           reviewCheckbox.checked = false;
           reviewFields.classList.add('hidden');
-          reviewDays.value = 7; // Valor padrão
+          document.getElementById('editReviewDate').value = '';
         }
 
         // Garantir que a propriedade notas exista
@@ -2824,7 +3840,7 @@
           historia.notas = [];
         }
 
-        // Renderizar anotações
+        // Renderizar anotações (agora ordenadas por data/hora mais recente)
         renderizarAnotacoes(historia.notas);
 
         document.getElementById('modal').classList.add('active');
@@ -2839,17 +3855,26 @@
         document.getElementById('modal').classList.remove('active');
         editCliente = null;
         editIndex = null;
+        closeCalendar();
       }
 
       function toggleReviewFields() {
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
-        const reviewFields = document.getElementById('reviewFields');
+        const reviewFields = document.getElementById('reviewFieldsEdit'); // CORRIGIDO: Agora usa o ID correto
 
         if (reviewCheckbox.checked) {
           reviewFields.classList.remove('hidden');
-          document.getElementById('editReviewDays').focus();
+          // Se não houver data selecionada, sugerir 7 dias a partir de hoje
+          if (!selectedDate) {
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 7);
+            selectedDate = futureDate;
+            document.getElementById('editReviewDate').value = formatDate(futureDate);
+          }
         } else {
           reviewFields.classList.add('hidden');
+          selectedDate = null;
+          document.getElementById('editReviewDate').value = '';
         }
       }
 
@@ -2862,39 +3887,53 @@
           return;
         }
 
-        const dataAtual = new Date().toISOString().split('T')[0];
-        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const dataAtual = new Date();
+        const dataFormatada = formatarDataBrasileira(dataAtual.toISOString().split('T')[0]);
+        const horaAtual = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
         // Preservar dados existentes e atualizar
         const historiaExistente = dados[editCliente][editIndex];
 
-        // Preservar anotações se existirem
+        // Preservar anotações se existirem (mantendo a ordenação correta)
         const notas = historiaExistente.notas || [];
 
         // Verificar se deve adicionar/remover prazo de revisão
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
-        const reviewDays = document.getElementById('editReviewDays');
 
         let prazoRevisao = null;
         let dataConfiguracaoRevisao = null;
 
         if (reviewCheckbox.checked) {
-          prazoRevisao = parseInt(reviewDays.value);
-          if (isNaN(prazoRevisao) || prazoRevisao < 1 || prazoRevisao > 365) {
-            alert('Por favor, insira um número válido de dias (1-365).');
-            reviewDays.focus();
+          // Calcular dias baseado na data selecionada
+          if (selectedDate) {
+            const hoje = new Date();
+            const dataSelecionada = new Date(selectedDate);
+
+            // Calcular diferença em dias
+            const diffTime = dataSelecionada - hoje;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 1) {
+              alert('Por favor, selecione uma data futura para a revisão.');
+              toggleCalendar('edit');
+              return;
+            }
+
+            prazoRevisao = diffDays;
+            dataConfiguracaoRevisao = dataFormatada; // Data da configuração é hoje
+          } else {
+            alert('Por favor, selecione uma data para a revisão.');
+            toggleCalendar('edit');
             return;
           }
-          // Se já tinha uma data de configuração, mantém. Se não, cria nova.
-          dataConfiguracaoRevisao = historiaExistente.dataConfiguracaoRevisao || dataAtual;
         }
 
         dados[editCliente][editIndex] = {
           titulo: titulo,
           status: document.getElementById('editStatus').value,
-          dataCriacao: historiaExistente.dataCriacao || dataAtual,
+          dataCriacao: historiaExistente.dataCriacao || dataFormatada,
           horaCriacao: historiaExistente.horaCriacao || horaAtual,
-          dataEdicao: dataAtual,
+          dataEdicao: dataFormatada,
           horaEdicao: horaAtual,
           cliente: editCliente,
           notas: notas, // Preservar anotações
@@ -2907,7 +3946,53 @@
         renderCards();
       }
 
-      // FUNÇÕES PARA ANOTAÇÕES
+      // ===== FUNÇÕES PARA ANOTAÇÕES =====
+
+      // Função auxiliar para ordenar anotações por data/hora mais recente
+      function ordenarAnotacoes(notas) {
+        if (!notas || notas.length === 0) return [];
+
+        return notas.sort((a, b) => {
+          // Primeiro, verificar se tem timestamp (mais preciso)
+          if (a.timestamp && b.timestamp) {
+            return b.timestamp - a.timestamp; // Mais recente primeiro
+          }
+
+          // Se não tem timestamp, tentar comparar data + hora
+          const dataA = a.data ? new Date(formatarDataISO(a.data)) : new Date(0);
+          const dataB = b.data ? new Date(formatarDataISO(b.data)) : new Date(0);
+
+          if (dataA.getTime() !== dataB.getTime()) {
+            return dataB.getTime() - dataA.getTime(); // Mais recente primeiro
+          }
+
+          // Se datas são iguais, comparar horas
+          if (a.hora && b.hora) {
+            const horaA = a.hora.split(':').map(Number);
+            const horaB = b.hora.split(':').map(Number);
+
+            if (horaA[0] !== horaB[0]) return horaB[0] - horaA[0];
+            if (horaA[1] !== horaB[1]) return horaB[1] - horaA[1];
+          }
+
+          return 0;
+        });
+      }
+
+      // Função para preservar quebras de linha no HTML
+      function preservarQuebrasDeLinha(texto) {
+        if (!texto) return '';
+        // Substituir quebras de linha por tags <br>
+        return texto.replace(/\n/g, '<br>');
+      }
+
+      // Função para reverter quebras de linha ao editar
+      function reverterQuebrasDeLinha(texto) {
+        if (!texto) return '';
+        // Substituir tags <br> por quebras de linha reais
+        return texto.replace(/<br\s*\/?>/gi, '\n');
+      }
+
       function renderizarAnotacoes(notas) {
         const container = document.getElementById('notesContainer');
 
@@ -2924,24 +4009,72 @@
 
         container.innerHTML = '';
 
-        notas.forEach((nota, index) => {
-          const noteElement = document.createElement('div');
-          noteElement.className = 'note-item';
-          noteElement.innerHTML = `
+        // Ordenar anotações por data/hora mais recente
+        const notasOrdenadas = ordenarAnotacoes(notas);
+
+        notasOrdenadas.forEach((nota, index) => {
+          // Verificar se a anotação está em modo de edição
+          if (nota.editando) {
+            // Se estiver em modo de edição, criar o formulário de edição
+            criarFormularioEdicaoAnotacao(container, nota, index);
+          } else {
+            // Se não, criar a visualização normal
+            criarVisualizacaoAnotacao(container, nota, index);
+          }
+        });
+      }
+
+      function criarVisualizacaoAnotacao(container, nota, index) {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'note-item';
+
+        // Preservar quebras de linha no conteúdo
+        const conteudoComQuebras = preservarQuebrasDeLinha(nota.texto);
+
+        noteElement.innerHTML = `
           <div class="note-header">
             <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
             <button class="note-expand-btn" onclick="alternarExpansaoAnotacao(${index})">+</button>
           </div>
           <div class="note-content" id="noteContent${index}">
-            ${nota.texto || ''}
+            ${conteudoComQuebras || ''}
           </div>
           <div class="note-actions">
             <button class="secondary small" onclick="editarAnotacao(${index})">Editar</button>
             <button class="danger small" onclick="excluirAnotacao(${index})">Excluir</button>
           </div>
         `;
-          container.appendChild(noteElement);
-        });
+        container.appendChild(noteElement);
+      }
+
+      function criarFormularioEdicaoAnotacao(container, nota, index) {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'note-item';
+
+        // Reverter quebras de linha para o textarea
+        const textoParaEdicao = reverterQuebrasDeLinha(nota.texto);
+
+        noteElement.innerHTML = `
+          <div class="note-header">
+            <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
+          </div>
+          <textarea class="note-edit-input" id="editNoteInput${index}" placeholder="Digite sua anotação...">${textoParaEdicao || ''}</textarea>
+          <div class="note-actions">
+            <button class="secondary small" onclick="cancelarEdicaoAnotacao(${index})">Cancelar</button>
+            <button class="primary small" onclick="salvarEdicaoAnotacao(${index})">Salvar</button>
+          </div>
+        `;
+        container.appendChild(noteElement);
+
+        // Focar no textarea após um pequeno delay para garantir que o elemento foi renderizado
+        setTimeout(() => {
+          const textarea = document.getElementById(`editNoteInput${index}`);
+          if (textarea) {
+            textarea.focus();
+            // Colocar cursor no final do texto
+            textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+          }
+        }, 50);
       }
 
       function adicionarNovaAnotacao() {
@@ -2952,31 +4085,43 @@
           container.innerHTML = '';
         }
 
-        const dataAtual = new Date().toISOString().split('T')[0];
-        const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const dataAtual = new Date();
+        const dataFormatada = formatarDataBrasileira(dataAtual.toISOString().split('T')[0]);
+        const horaAtual = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const timestampAtual = dataAtual.getTime();
 
+        // Criar nova nota com flag de edição
         const novaNota = {
           texto: '',
-          data: dataAtual,
+          data: dataFormatada,
           hora: horaAtual,
-          editando: true
+          timestamp: timestampAtual, // Adicionar timestamp para ordenação
+          editando: true // Flag para indicar que está em modo de edição
         };
 
-        // Adicionar à array de anotações da história atual
+        // Garantir que a array de notas exista
         if (!dados[editCliente][editIndex].notas) {
           dados[editCliente][editIndex].notas = [];
         }
 
-        dados[editCliente][editIndex].notas.push(novaNota);
+        // Adicionar nova anotação NO INÍCIO da array (para aparecer no topo)
+        dados[editCliente][editIndex].notas.unshift(novaNota);
         salvar();
 
-        // Renderizar anotações novamente
+        // Renderizar anotações novamente - agora com a nova já em modo de edição no topo
         renderizarAnotacoes(dados[editCliente][editIndex].notas);
       }
 
       function alternarExpansaoAnotacao(index) {
-        const noteContent = document.getElementById(`noteContent${index}`);
-        const expandBtn = document.querySelectorAll('.note-expand-btn')[index];
+        const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
+        const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
+
+        if (notaOriginalIndex === -1) return;
+
+        const noteContent = document.getElementById(`noteContent${notaOriginalIndex}`);
+        const expandBtn = document.querySelectorAll('.note-expand-btn')[notaOriginalIndex];
+
+        if (!noteContent || !expandBtn) return;
 
         if (noteContent.classList.contains('expanded')) {
           noteContent.classList.remove('expanded');
@@ -2987,38 +4132,59 @@
         }
       }
 
+      // Função auxiliar para encontrar o índice original no array ordenado
+      function encontrarIndiceOriginal(indexOrdenado, notasOrdenadas) {
+        if (!notasOrdenadas[indexOrdenado]) return -1;
+
+        const notasOriginais = dados[editCliente][editIndex].notas;
+        const notaProcurada = notasOrdenadas[indexOrdenado];
+
+        // Encontrar a nota no array original
+        for (let i = 0; i < notasOriginais.length; i++) {
+          if (notasOriginais[i] === notaProcurada) {
+            return i;
+          }
+        }
+        return -1;
+      }
+
       function editarAnotacao(index) {
+        const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
+        const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
+
+        if (notaOriginalIndex === -1) return;
+
         const notas = dados[editCliente][editIndex].notas;
-        const nota = notas[index];
+        const nota = notas[notaOriginalIndex];
 
-        // Criar input de edição
-        const noteItem = document.querySelectorAll('.note-item')[index];
-        noteItem.innerHTML = `
-        <div class="note-header">
-          <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
-        </div>
-        <textarea class="note-edit-input" id="editNoteInput${index}">${nota.texto || ''}</textarea>
-        <div class="note-actions">
-          <button class="secondary small" onclick="cancelarEdicaoAnotacao(${index})">Cancelar</button>
-          <button class="primary small" onclick="salvarEdicaoAnotacao(${index})">Salvar</button>
-        </div>
-      `;
+        // Marcar a nota como em modo de edição
+        nota.editando = true;
 
-        // Focar no input de edição
-        setTimeout(() => {
-          document.getElementById(`editNoteInput${index}`).focus();
-        }, 100);
+        // Salvar o estado
+        salvar();
+
+        // Re-renderizar as anotações
+        renderizarAnotacoes(notas);
       }
 
       function salvarEdicaoAnotacao(index) {
+        const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
+        const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
+
+        if (notaOriginalIndex === -1) return;
+
         const notas = dados[editCliente][editIndex].notas;
-        const nota = notas[index];
+        const nota = notas[notaOriginalIndex];
         const novoTexto = document.getElementById(`editNoteInput${index}`).value.trim();
 
         if (novoTexto) {
           nota.texto = novoTexto;
-          nota.data = new Date().toISOString().split('T')[0];
-          nota.hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+          const dataAtual = new Date();
+          nota.data = formatarDataBrasileira(dataAtual.toISOString().split('T')[0]);
+          nota.hora = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+          nota.timestamp = dataAtual.getTime(); // Atualizar timestamp para ordenação
+          nota.editando = false; // Remover flag de edição
 
           salvar();
           renderizarAnotacoes(notas);
@@ -3029,13 +4195,35 @@
       }
 
       function cancelarEdicaoAnotacao(index) {
-        renderizarAnotacoes(dados[editCliente][editIndex].notas);
+        const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
+        const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
+
+        if (notaOriginalIndex === -1) return;
+
+        const notas = dados[editCliente][editIndex].notas;
+        const nota = notas[notaOriginalIndex];
+
+        // Se for uma anotação nova (texto vazio), removê-la
+        if (!nota.texto || nota.texto.trim() === '') {
+          notas.splice(notaOriginalIndex, 1);
+        } else {
+          // Se for uma anotação existente, apenas remover o modo de edição
+          nota.editando = false;
+        }
+
+        salvar();
+        renderizarAnotacoes(notas);
       }
 
       function excluirAnotacao(index) {
+        const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
+        const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
+
+        if (notaOriginalIndex === -1) return;
+
         if (!confirm('Tem certeza que deseja excluir esta anotação?')) return;
 
-        dados[editCliente][editIndex].notas.splice(index, 1);
+        dados[editCliente][editIndex].notas.splice(notaOriginalIndex, 1);
         salvar();
         renderizarAnotacoes(dados[editCliente][editIndex].notas);
       }
@@ -3047,7 +4235,7 @@
           clientes: dados,
           equipes: dadosEquipes,
           exportadoEm: new Date().toISOString(),
-          versao: '1.3' // Atualizado para incluir equipes
+          versao: '1.4' // Atualizado para incluir prazo de revisão na criação
         };
 
         // Converter para JSON
@@ -3140,21 +4328,12 @@
 
         alert('Todos os dados foram excluídos com sucesso.');
       }
-
-      // Fechar modal com ESC
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && document.getElementById('modal').classList.contains('active')) {
-          fecharModal();
-        }
-        if (event.key === 'Escape' && document.getElementById('modalCliente').classList.contains('active')) {
-          fecharModalCliente();
-        }
-        if (event.key === 'Escape' && document.getElementById('modalEquipe').classList.contains('active')) {
-          fecharModalEquipe();
-        }
-      });
     </script>
 
+
+
+
 </body>
+
 
 </html>
