@@ -664,34 +664,28 @@
 
     .cards-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       padding: 16px 0;
     }
 
-    .cards-header h2 {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0;
-    }
+
 
     .cards-header h2::before {
       content: "📋";
       font-size: 18px;
     }
 
-    /* ===== FILTROS MODIFICADOS - COM FILTRO DE VENCIDAS ===== */
     .filters-container {
       display: flex;
-      gap: 12px;
       align-items: center;
-      margin: 0;
-      padding: 0;
+      gap: 14px;
+      justify-content: flex-end;
+      flex-shrink: 0;
     }
+
+
 
     .filter-group {
       display: flex;
@@ -1585,6 +1579,15 @@
       min-height: 0;
     }
 
+
+    /* ===== FOCO VISUAL QUANDO EDITANDO ANOTAÇÃO ===== */
+    .notes-container:has(.note-item.editing) {
+      background: rgba(0, 0, 0, 0.02);
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+
     .modal-notes-header {
       display: flex;
       justify-content: space-between;
@@ -1628,14 +1631,19 @@
     .notes-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       flex: 1;
-      overflow-y: auto;
-      padding-right: 4px;
       min-height: 0;
+      overflow-y: auto;
     }
 
+    /* ===== ANOTAÇÃO (TAMANHO FIXO PADRÃO) ===== */
     .note-item {
+      min-height: 100px;
+      /* 👈 antes era height */
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       background: var(--note-bg);
       border: 1px solid var(--note-border);
       border-radius: 6px;
@@ -1643,6 +1651,14 @@
       position: relative;
     }
 
+
+    /* ===== ANOTAÇÃO EXPANDIDA (APENAS PELO +) ===== */
+    .note-item.expanded {
+      height: auto;
+      /* 🔓 cresce só aqui */
+    }
+
+    /* ===== CABEÇALHO ===== */
     .note-header {
       display: flex;
       justify-content: space-between;
@@ -1650,6 +1666,7 @@
       margin-bottom: 8px;
       padding-bottom: 6px;
       border-bottom: 1px dashed var(--border);
+      flex-shrink: 0;
     }
 
     .note-date {
@@ -1658,6 +1675,7 @@
       font-weight: 500;
     }
 
+    /* ===== BOTÃO DE EXPANSÃO ===== */
     .note-expand-btn {
       background: none;
       border: none;
@@ -1671,27 +1689,39 @@
       align-items: center;
       justify-content: center;
       border-radius: 4px;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease;
     }
 
     .note-expand-btn:hover {
       background: rgba(59, 130, 246, 0.1);
     }
 
+    /* ===== CONTEÚDO (NÃO CONTROLA ALTURA) ===== */
     .note-content {
       font-size: 13px;
       line-height: 1.5;
       color: var(--text);
-      max-height: 60px;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      /* corta o excesso */
+      max-height: 60px;
+      /* 👀 CONTROLA O SPOILER */
     }
 
-    .note-content.expanded {
-      max-height: 500px;
-      overflow-y: auto;
+
+    /* ===== ANOTAÇÃO EM MODO DE EDIÇÃO ===== */
+    .note-item.editing {
+      height: auto !important;
+      min-height: 300px;
+      overflow: visible;
     }
 
+    .note-item.editing .note-edit-input {
+      min-height: 260px;
+      resize: vertical;
+    }
+
+
+    /* Placeholder */
     .note-content-placeholder {
       color: var(--text-light);
       font-style: italic;
@@ -1699,11 +1729,13 @@
       padding: 6px;
     }
 
+    /* ===== AÇÕES ===== */
     .note-actions {
       display: flex;
       gap: 6px;
       margin-top: 10px;
       justify-content: flex-end;
+      flex-shrink: 0;
     }
 
     .note-actions button {
@@ -1712,18 +1744,20 @@
       border-radius: 4px;
     }
 
+    /* ===== TEXTAREA DE EDIÇÃO ===== */
     .note-edit-input {
       width: 100%;
-      min-height: 100px;
-      padding: 10px;
+      min-height: 250px;
+      padding: 14px;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 14px;
+      line-height: 1.6;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--card);
       color: var(--text);
       resize: vertical;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .note-edit-input:focus {
@@ -1732,56 +1766,57 @@
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
     }
 
-    /* ===== CLASSE HIDDEN PARA ELEMENTOS OCULTOS ===== */
+    /* ===== CLASSE HIDDEN ===== */
     .hidden {
       display: none !important;
     }
 
-    /* Responsividade para o modal */
-    @media (max-width: 1024px) {
-      .cards-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+    /* ===== AJUSTES RESPONSIVOS ===== */
+    @media (max-width: 640px) {
+      .note-item {
+        height: 100px;
+        /* mais compacto no mobile */
+        padding: 10px;
       }
 
-      .filters-container {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      #clienteSelectCards,
-      #statusFilter {
-        min-width: 140px;
-      }
-
-      .modal-box {
-        width: 95%;
-        height: 95%;
-      }
-
-      .modal-top-form {
-        gap: 12px;
-      }
-
-      .modal-top-form .form-group,
-      .modal-top-form .form-group:first-child {
-        min-width: calc(50% - 8px);
-      }
-
-      .review-config-compact {
-        min-width: 100%;
-        margin-top: 8px;
-      }
-
-      .review-config-section {
-        flex-direction: column;
-      }
-
-      .review-config-section .datepicker-container {
-        max-width: 100%;
+      .note-content {
+        font-size: 12px;
       }
     }
+
+
+    #clienteSelectCards,
+    #statusFilter {
+      min-width: 140px;
+    }
+
+    .modal-box {
+      width: 95%;
+      height: 95%;
+    }
+
+    .modal-top-form {
+      gap: 12px;
+    }
+
+    .modal-top-form .form-group,
+    .modal-top-form .form-group:first-child {
+      min-width: calc(50% - 8px);
+    }
+
+    .review-config-compact {
+      min-width: 100%;
+      margin-top: 8px;
+    }
+
+    .review-config-section {
+      flex-direction: column;
+    }
+
+    .review-config-section .datepicker-container {
+      max-width: 100%;
+    }
+
 
     @media (max-width: 768px) {
       .container {
@@ -2177,10 +2212,83 @@
       }
     }
 
+    .cards-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      flex: 1;
+      /* 🔥 ocupa todo o espaço à esquerda */
+    }
+
+
+
+    .quick-add-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-light, #e0e0e0);
+      background: transparent;
+      color: var(--text-secondary, #666);
+      font-size: 16px;
+      font-weight: 300;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-add-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .quick-add-btn:hover {
+      background: transparent;
+      color: var(--primary, #7c3aed);
+      border-color: var(--primary, #7c3aed);
+      transform: translateY(-1px);
+      box-shadow:
+        0 4px 12px rgba(124, 58, 237, 0.12),
+        0 1px 2px rgba(124, 58, 237, 0.08);
+    }
+
+    .quick-add-btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 4px rgba(124, 58, 237, 0.1),
+        0 1px 1px rgba(124, 58, 237, 0.05);
+    }
+
+    .quick-add-btn:hover::before {
+      opacity: 0.05;
+    }
+
+    .quick-add-btn:focus-visible {
+      outline: 2px solid var(--primary, #7c3aed);
+      outline-offset: 2px;
+    }
+
     @media (max-width: 1024px) {
       .cards-grid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       }
+    }
+
+    #bloco-notas {
+      height: calc(100vh - 120px);
     }
   </style>
 </head>
@@ -2213,6 +2321,12 @@
         <span class="menu-item-icon">💾</span>
         <span>Gerenciar Dados</span>
       </div>
+
+      <div class="menu-item" data-section="bloco-notas">
+        <span class="menu-item-icon">📝</span>
+        <span>Bloco de Notas</span>
+      </div>
+
       <div class="menu-item" id="themeToggle">
         <span class="menu-item-icon" id="themeIcon">🌙</span>
         <span id="themeText">Tema Claro</span>
@@ -2234,14 +2348,24 @@
       </div>
     </div>
 
-    <!-- Conteúdo: Histórias Salvas (visível por padrão) - COM FILTRO DE VENCIDAS -->
+    <!-- Conteúdo: Histórias Salvas -->
     <div class="main-content active" id="historias-salvas">
       <div class="section-cards">
-        <div class="cards-header">
-          <h2>Histórias Salvas</h2>
 
-          <!-- Filtros agora ao lado do título - COM BOTÃO DE VENCIDAS -->
+        <!-- CABEÇALHO -->
+        <div class="cards-header">
+
+          <div class="cards-title-row">
+            <h2>Histórias Salvas</h2>
+
+            <!-- Atalho rápido para criar nova história -->
+            <button class="quick-add-btn" title="Criar nova história" onclick="irParaCriarHistoria()">
+              +
+            </button>
+          </div>
+
           <div class="filters-container">
+
             <div class="filter-group">
               <label for="clienteSelectCards">Cliente:</label>
               <select id="clienteSelectCards" onchange="renderCards()">
@@ -2260,21 +2384,29 @@
               </select>
             </div>
 
-            <!-- Botão para mostrar apenas histórias vencidas - NOVO -->
             <div class="filter-vencidas-btn" id="filterVencidasBtn" onclick="toggleFiltroVencidas()">
               <span>⚠️ Mostrar Vencidas</span>
               <span class="badge" id="vencidasCount">0</span>
             </div>
+
+            <div class="filter-vencidas-btn" id="filterHojeBtn" onclick="toggleFiltroHoje()">
+              <span>📅 Vencem Hoje</span>
+              <span class="badge" id="hojeCount">0</span>
+            </div>
           </div>
         </div>
 
+        <!-- CONTEÚDO -->
         <div class="cards-container">
           <div class="cards-grid" id="cards">
             <!-- Cards serão renderizados aqui -->
           </div>
         </div>
+
       </div>
     </div>
+
+
 
     <!-- Conteúdo: Criar Nova História - LAYOUT SIMPLIFICADO -->
     <div class="main-content" id="criar-historia">
@@ -2420,6 +2552,26 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Conteúdo: Bloco de Notas -->
+    <div class="main-content" id="bloco-notas">
+      <div class="section-notes" style="height: 100%; display: flex; flex-direction: column;">
+        <h2 class="section-title">Bloco de Notas</h2>
+
+        <textarea id="quickNotes" placeholder="Digite aqui suas anotações rápidas..." style="
+        flex: 1;
+        width: 100%;
+        resize: none;
+        padding: 16px;
+        font-size: 14px;
+        line-height: 1.6;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+      "></textarea>
       </div>
     </div>
 
@@ -2615,7 +2767,10 @@
       let editIndex = null;
       let editClienteNome = null;
       let editEquipeNome = null;
-      let filtroVencidasAtivo = false; // Estado do filtro de vencidas
+      let filtroVencidasAtivo = false
+      let filtroHojeAtivo = false; // 📅 filtro Vencem Hoje
+
+      // Estado do filtro de vencidas
 
       // ===== VARIÁVEIS DO CALENDÁRIO =====
       let currentCalendarDate = new Date();
@@ -2623,6 +2778,8 @@
       let selectedDateCreate = null; // Data selecionada na criação
       let calendarVisible = false;
       let calendarContext = 'edit'; // 'edit' ou 'create'
+
+
 
       // Inicialização
       document.addEventListener('DOMContentLoaded', function () {
@@ -2643,11 +2800,28 @@
 
         // Inicializar dados
         atualizarSelects();
-        atualizarContadorVencidas(); // Atualizar contador
+        atualizarContadorVencidas();
         renderCards();
         renderClientesList();
         renderEquipesList();
+
+        // ===== BLOCO DE NOTAS (ANOTAÇÕES RÁPIDAS) =====
+        const QUICK_NOTES_KEY = 'blocoNotasRapidas';
+        const quickNotesTextarea = document.getElementById('quickNotes');
+
+        if (quickNotesTextarea) {
+          quickNotesTextarea.value =
+            localStorage.getItem(QUICK_NOTES_KEY) || '';
+
+          quickNotesTextarea.addEventListener('input', () => {
+            localStorage.setItem(
+              QUICK_NOTES_KEY,
+              quickNotesTextarea.value
+            );
+          });
+        }
       });
+
 
       // Configurar menu hambúrguer
       function setupMenu() {
@@ -2715,21 +2889,31 @@
         // Fechar com ESC
         document.addEventListener('keydown', function (event) {
           if (event.key === 'Escape') {
+
+            // Modal de histórias
             if (document.getElementById('modal').classList.contains('active')) {
+              salvarEFecharAnotacoesAbertas(); // 👈 garante que nenhuma anotação fique aberta
               fecharModal();
             }
+
+            // Modal de cliente
             if (document.getElementById('modalCliente').classList.contains('active')) {
               fecharModalCliente();
             }
+
+            // Modal de equipe
             if (document.getElementById('modalEquipe').classList.contains('active')) {
               fecharModalEquipe();
             }
+
+            // Calendário
             if (calendarVisible) {
               closeCalendar();
             }
           }
         });
       }
+
 
       // Função para alternar entre abas
       function switchTab(tab) {
@@ -2756,6 +2940,43 @@
         localStorage.setItem("equipes", JSON.stringify(dadosEquipes));
         atualizarContadorVencidas(); // Atualizar contador após salvar
       }
+
+      function salvarEFecharAnotacoesAbertas() {
+        if (editCliente === null || editIndex === null) return;
+
+        const historia = dados[editCliente][editIndex];
+        if (!historia || !historia.notas) return;
+
+        historia.notas.forEach((nota, i) => {
+          if (nota.editando) {
+            const textarea = document.getElementById(`editNoteInput${i}`);
+            const texto = textarea ? textarea.value.trim() : nota.texto;
+
+            if (texto) {
+              nota.texto = texto;
+
+              const agora = new Date();
+
+              // ✅ DATA LOCAL (sem UTC, sem ISO)
+              nota.data = formatarDataBrasileira(
+                `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`
+              );
+
+              nota.hora = agora.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+              });
+
+              nota.timestamp = agora.getTime();
+            }
+
+            nota.editando = false;
+          }
+        });
+
+        salvar();
+      }
+
 
       function toggleDark() {
         const body = document.body;
@@ -2805,22 +3026,28 @@
       // Função para contar histórias vencidas
       function contarHistoriasVencidas() {
         let contador = 0;
-        const hoje = new Date();
 
         Object.keys(dados).forEach(cliente => {
           dados[cliente].forEach(historia => {
-            if (historia.prazoRevisao && historia.dataConfiguracaoRevisao) {
-              const dataConfiguracao = new Date(historia.dataConfiguracaoRevisao);
-              const dataVencimento = new Date(dataConfiguracao);
-              dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
+            if (historiaEstaVencida(historia)) {
+              contador++;
+            }
+          });
+        });
 
-              const diffTime = dataVencimento - hoje;
-              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return contador;
+      }
 
-              // Contar apenas histórias vencidas (dias negativos)
-              if (diffDays < 0) {
-                contador++;
-              }
+
+
+      // Função para contar histórias que VENCEM HOJE
+      function contarHistoriasVencemHoje() {
+        let contador = 0;
+
+        Object.keys(dados).forEach(cliente => {
+          dados[cliente].forEach(historia => {
+            if (historiaVenceHoje(historia)) {
+              contador++;
             }
           });
         });
@@ -2830,59 +3057,116 @@
 
       // Atualizar contador de vencidas no botão
       function atualizarContadorVencidas() {
-        const contador = contarHistoriasVencidas();
-        const badgeElement = document.getElementById('vencidasCount');
-        const botaoElement = document.getElementById('filterVencidasBtn');
+        // ===== CONTADOR DE VENCIDAS =====
+        const contadorVencidas = contarHistoriasVencidas();
+        const badgeVencidas = document.getElementById('vencidasCount');
+        const botaoVencidas = document.getElementById('filterVencidasBtn');
 
-        badgeElement.textContent = contador;
+        badgeVencidas.textContent = contadorVencidas;
 
-        // Mostrar/esconder badge se não há vencidas
-        if (contador === 0) {
-          badgeElement.style.display = 'none';
-          // Se não há vencidas e o filtro está ativo, desativá-lo
+        if (contadorVencidas === 0) {
+          badgeVencidas.style.display = 'none';
+
           if (filtroVencidasAtivo) {
             filtroVencidasAtivo = false;
-            botaoElement.classList.remove('active');
+            botaoVencidas.classList.remove('active');
           }
         } else {
-          badgeElement.style.display = 'inline-flex';
+          badgeVencidas.style.display = 'inline-flex';
+        }
+
+        // ===== CONTADOR DE VENCEM HOJE =====
+        const contadorHoje = contarHistoriasVencemHoje();
+        const badgeHoje = document.getElementById('hojeCount');
+        const botaoHoje = document.getElementById('filterHojeBtn');
+
+        if (!badgeHoje) return; // segurança
+
+        badgeHoje.textContent = contadorHoje;
+
+        if (contadorHoje === 0) {
+          badgeHoje.style.display = 'none';
+
+          if (filtroHojeAtivo) {
+            filtroHojeAtivo = false;
+            botaoHoje.classList.remove('active');
+          }
+        } else {
+          badgeHoje.style.display = 'inline-flex';
         }
       }
+
 
       // Alternar filtro de vencidas
       function toggleFiltroVencidas() {
-        const botaoElement = document.getElementById('filterVencidasBtn');
+        const botaoVencidas = document.getElementById('filterVencidasBtn');
+        const botaoHoje = document.getElementById('filterHojeBtn');
+
         filtroVencidasAtivo = !filtroVencidasAtivo;
 
-        if (filtroVencidasAtivo) {
-          botaoElement.classList.add('active');
-          // Alterar texto quando ativo
-          botaoElement.innerHTML = '<span>⚠️ Mostrando Vencidas</span><span class="badge" id="vencidasCount">' + document.getElementById('vencidasCount').textContent + '</span>';
-        } else {
-          botaoElement.classList.remove('active');
-          // Voltar texto original
-          botaoElement.innerHTML = '<span>⚠️ Mostrar Vencidas</span><span class="badge" id="vencidasCount">' + document.getElementById('vencidasCount').textContent + '</span>';
+        // ✅ Se ativar Vencidas, desliga Vencem Hoje
+        if (filtroVencidasAtivo && filtroHojeAtivo) {
+          filtroHojeAtivo = false;
+          botaoHoje.classList.remove('active');
         }
 
-        renderCards(); // Re-renderizar os cards com o filtro aplicado
+        if (filtroVencidasAtivo) {
+          botaoVencidas.classList.add('active');
+          botaoVencidas.innerHTML =
+            '<span>⚠️ Mostrando Vencidas</span>' +
+            '<span class="badge" id="vencidasCount">' +
+            document.getElementById('vencidasCount').textContent +
+            '</span>';
+        } else {
+          botaoVencidas.classList.remove('active');
+          botaoVencidas.innerHTML =
+            '<span>⚠️ Mostrar Vencidas</span>' +
+            '<span class="badge" id="vencidasCount">' +
+            document.getElementById('vencidasCount').textContent +
+            '</span>';
+        }
+
+        renderCards();
       }
+
+
+      function toggleFiltroHoje() {
+        const botaoHoje = document.getElementById('filterHojeBtn');
+
+        filtroHojeAtivo = !filtroHojeAtivo;
+
+        // Desliga o filtro de vencidas se estiver ativo
+        if (filtroHojeAtivo && filtroVencidasAtivo) {
+          filtroVencidasAtivo = false;
+          document.getElementById('filterVencidasBtn').classList.remove('active');
+        }
+
+        if (filtroHojeAtivo) {
+          botaoHoje.classList.add('active');
+        } else {
+          botaoHoje.classList.remove('active');
+        }
+
+        renderCards();
+      }
+
 
       // Verificar se uma história está vencida
       function historiaEstaVencida(historia) {
-        if (!historia.prazoRevisao || !historia.dataConfiguracaoRevisao) {
-          return false;
-        }
+        if (!historia.dataRevisao) return false;
 
         const hoje = new Date();
-        const dataConfiguracao = new Date(historia.dataConfiguracaoRevisao);
-        const dataVencimento = new Date(dataConfiguracao);
-        dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
+        hoje.setHours(0, 0, 0, 0);
 
-        const diffTime = dataVencimento - hoje;
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const dataRevisao = parseDate(historia.dataRevisao);
+        if (!dataRevisao) return false;
 
-        return diffDays < 0; // Vencida se dias negativos
+        dataRevisao.setHours(0, 0, 0, 0);
+
+        return dataRevisao < hoje;
       }
+
+
 
       function renderClientesList() {
         const container = document.getElementById('clientsList');
@@ -3128,26 +3412,40 @@
         return `${partes[2]}-${partes[1]}-${partes[0]}`;
       }
 
+
+
+      function historiaVenceHoje(historia) {
+        if (!historia.dataRevisao) return false;
+
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        const dataRevisao = parseDate(historia.dataRevisao);
+        if (!dataRevisao) return false;
+
+        dataRevisao.setHours(0, 0, 0, 0);
+
+        return dataRevisao.getTime() === hoje.getTime();
+      }
+
+
+
+
+
       // ===== NOVA FUNÇÃO: ALTERNAR SEÇÃO DE REVISÃO NA CRIAÇÃO =====
       function toggleReviewSection() {
         const reviewCheckbox = document.getElementById('reviewCheckbox');
-        const reviewFields = document.getElementById('reviewFieldsCreate'); // CORRIGIDO: Agora usa o ID correto
+        const reviewFields = document.getElementById('reviewFieldsCreate');
 
         if (reviewCheckbox.checked) {
           reviewFields.classList.remove('hidden');
-          // Se não houver data selecionada, sugerir 7 dias a partir de hoje
-          if (!selectedDateCreate) {
-            const futureDate = new Date();
-            futureDate.setDate(futureDate.getDate() + 7);
-            selectedDateCreate = futureDate;
-            document.getElementById('reviewDate').value = formatDate(futureDate);
-          }
         } else {
           reviewFields.classList.add('hidden');
           selectedDateCreate = null;
           document.getElementById('reviewDate').value = '';
         }
       }
+
 
       function addCard() {
         const cliente = document.getElementById('clienteSelect').value;
@@ -3160,88 +3458,77 @@
         const texto = document.getElementById('texto').value;
         const status = document.getElementById('status').value;
 
-        if (!titulo) {
-          alert('Por favor, digite um título para a história.');
-          document.getElementById('titulo').focus();
-          return;
-        }
+        const agora = new Date();
 
-        const dataAtual = new Date();
-        const dataISO = dataAtual.toISOString().split('T')[0];
-        const dataFormatada = formatarDataBrasileira(dataISO);
-        const horaAtual = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        // ✅ DATA LOCAL (sem ISO, sem UTC)
+        const dataFormatada = formatarDataBrasileira(
+          `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`
+        );
 
-        // Criar a primeira anotação com o conteúdo da história
+        const horaAtual = agora.toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
         const primeiraAnotacao = {
-          texto: texto,
-          data: dataFormatada, // Salvar já no formato brasileiro
+          texto,
+          data: dataFormatada,
           hora: horaAtual,
-          timestamp: dataAtual.getTime() // Adicionar timestamp para ordenação
+          timestamp: agora.getTime()
         };
 
-        // Verificar se deve adicionar prazo de revisão - NOVO
         const reviewCheckbox = document.getElementById('reviewCheckbox');
-        let prazoRevisao = null;
-        let dataConfiguracaoRevisao = null;
+        let dataRevisao = null;
 
-        if (reviewCheckbox.checked) {
-          // Calcular dias baseado na data selecionada
-          if (selectedDateCreate) {
-            const hoje = new Date();
-            const dataSelecionada = new Date(selectedDateCreate);
-
-            // Calcular diferença em dias
-            const diffTime = dataSelecionada - hoje;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffDays < 1) {
-              alert('Por favor, selecione uma data futura para a revisão.');
-              toggleCalendar('create');
-              return;
-            }
-
-            prazoRevisao = diffDays;
-            dataConfiguracaoRevisao = dataFormatada; // Data da configuração é hoje
-          } else {
-            alert('Por favor, selecione uma data para a revisão.');
-            toggleCalendar('create');
-            return;
-          }
+        // ✅ Data de revisão vem EXATAMENTE do calendário
+        if (reviewCheckbox.checked && selectedDateCreate) {
+          dataRevisao = formatDate(selectedDateCreate); // DD/MM/YYYY
         }
 
         dados[cliente].push({
-          titulo: titulo,
-          status: status,
-          dataCriacao: dataFormatada, // Salvar já no formato brasileiro
+          titulo,
+          status,
+          dataCriacao: dataFormatada,
           horaCriacao: horaAtual,
-          dataEdicao: dataFormatada, // Salvar já no formato brasileiro
+          dataEdicao: dataFormatada,
           horaEdicao: horaAtual,
-          cliente: cliente,
-          notas: [primeiraAnotacao], // O conteúdo agora é a primeira anotação
-          prazoRevisao: prazoRevisao, // NOVO: Adicionar prazo de revisão se definido
-          dataConfiguracaoRevisao: dataConfiguracaoRevisao // NOVO: Data de configuração
+          cliente,
+          notas: [primeiraAnotacao],
+          dataRevisao
         });
 
         salvar();
         renderCards();
 
-        // Limpar os campos, mas manter o cliente selecionado
+        // Reset dos campos
         document.getElementById('titulo').value = '';
         document.getElementById('texto').value = '';
-
-        // Resetar os campos de revisão
-        const reviewFields = document.getElementById('reviewFieldsCreate'); // CORRIGIDO: Agora usa o ID correto
         document.getElementById('reviewCheckbox').checked = false;
-        reviewFields.classList.add('hidden');
         document.getElementById('reviewDate').value = '';
         selectedDateCreate = null;
 
-        // Foco no campo de texto para próxima história
-        document.getElementById('texto').focus();
+        // 🔁 Voltar automaticamente para Histórias Salvas
+        const menuItem = document.querySelector(
+          '.menu-item[data-section="historias-salvas"]'
+        );
 
-        // Voltar para a seção de histórias salvas após criar
-        document.querySelector('.menu-item[data-section="historias-salvas"]').click();
+        if (menuItem) {
+          menuItem.click();
+        }
       }
+
+
+
+
+      function diffDiasCalendario(dataA, dataB) {
+        const a = new Date(dataA.getFullYear(), dataA.getMonth(), dataA.getDate());
+        const b = new Date(dataB.getFullYear(), dataB.getMonth(), dataB.getDate());
+
+        return Math.round(
+          (a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24)
+        );
+      }
+
 
       function renderCards() {
         const container = document.getElementById('cards');
@@ -3253,22 +3540,25 @@
 
         if (totalHistorias === 0) {
           container.innerHTML = `
-          <div class="empty-state">
-            <h3>Nenhuma história encontrada</h3>
-            <p>Adicione clientes e crie histórias usando o menu.</p>
-          </div>
-        `;
+      <div class="empty-state">
+        <h3>Nenhuma história encontrada</h3>
+        <p>Adicione clientes e crie histórias usando o menu.</p>
+      </div>
+    `;
           return;
         }
 
-        // Se filtro de vencidas está ativo, mostrar apenas vencidas
-        if (filtroVencidasAtivo) {
+        // Verificar filtros ativos
+        if (filtroHojeAtivo) {
+          mostrarVencemHoje(container, clienteSelecionado, statusSelecionado);
+        } else if (filtroVencidasAtivo) {
           mostrarApenasVencidas(container, clienteSelecionado, statusSelecionado);
         } else if (!clienteSelecionado && !statusSelecionado) {
           mostrarTodasHistorias(container);
         } else {
           mostrarHistoriasFiltradas(container, clienteSelecionado, statusSelecionado);
         }
+
       }
 
       // Nova função para mostrar apenas histórias vencidas
@@ -3366,6 +3656,59 @@
           });
         });
       }
+
+      function mostrarVencemHoje(container, clienteFiltro, statusFiltro) {
+        container.innerHTML = '';
+
+        let historiasHoje = [];
+
+        Object.keys(dados).forEach(cliente => {
+          if (!clienteFiltro || cliente === clienteFiltro) {
+            dados[cliente].forEach(historia => {
+              if (historiaVenceHoje(historia)) {
+                if (!statusFiltro || historia.status === statusFiltro) {
+                  historiasHoje.push({
+                    cliente,
+                    historia,
+                    index: dados[cliente].indexOf(historia)
+                  });
+                }
+              }
+            });
+          }
+        });
+
+        if (historiasHoje.length === 0) {
+          container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nenhuma revisão para hoje</h3>
+        <p>Não há histórias com prazo de revisão vencendo hoje.</p>
+      </div>
+    `;
+          return;
+        }
+
+        const titulo = document.createElement('div');
+        titulo.style.cssText = `
+    grid-column: 1 / -1;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+  `;
+
+        titulo.textContent = `📅 Revisões de Hoje (${historiasHoje.length})`;
+        container.appendChild(titulo);
+
+        historiasHoje.forEach(item => {
+          container.appendChild(
+            criarCardElement(item.cliente, item.historia, item.index)
+          );
+        });
+      }
+
 
       function mostrarTodasHistorias(container) {
         container.innerHTML = '';
@@ -3515,75 +3858,96 @@
         card.className = 'card';
         card.dataset.status = historia.status;
 
-        // Formatar data para exibição
         const dataCriacao = historia.dataCriacao || 'Não informado';
         const horaCriacao = historia.horaCriacao || '';
         const dataEdicao = historia.dataEdicao || dataCriacao;
         const horaEdicao = historia.horaEdicao || horaCriacao;
 
-        // Verificar quantas anotações existem
         const numAnotacoes = historia.notas ? historia.notas.length : 0;
 
-        // Calcular status de revisão se existir
         let reviewBadge = '';
-        if (historia.prazoRevisao && historia.dataConfiguracaoRevisao) {
+
+        // ✅ NOVA LÓGICA BASEADA EM dataRevisao (DD/MM/YYYY)
+        if (historia.dataRevisao) {
           const hoje = new Date();
-          // Converter data de configuração para formato correto
-          const dataConfigISO = formatarDataISO(historia.dataConfiguracaoRevisao);
-          const dataConfiguracao = new Date(dataConfigISO);
-          const dataVencimento = new Date(dataConfiguracao);
-          dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
+          hoje.setHours(0, 0, 0, 0);
 
-          const diffTime = dataVencimento - hoje;
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          const dataRevisao = parseDate(historia.dataRevisao);
+          if (dataRevisao) {
+            dataRevisao.setHours(0, 0, 0, 0);
 
-          if (diffDays > 0) {
-            // Ainda tem tempo
-            reviewBadge = `<div class="review-badge future">⏰ Revisar em: ${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}</div>`;
-          } else if (diffDays === 0) {
-            // Vence hoje
-            reviewBadge = `<div class="review-badge today">⏰ Revisar hoje</div>`;
-          } else {
-            // Vencido
-            const diasAtraso = Math.abs(diffDays);
-            reviewBadge = `<div class="review-badge overdue">⏰ Vencido há: ${diasAtraso} ${diasAtraso === 1 ? 'dia' : 'dias'}</div>`;
+            const diffTime = dataRevisao - hoje;
+            const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 0) {
+              reviewBadge = `
+          <div class="review-badge future">
+            ⏰ Revisar em: ${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}
+          </div>
+        `;
+            } else if (diffDays === 0) {
+              reviewBadge = `
+          <div class="review-badge today">
+            📅 Vence hoje
+          </div>
+        `;
+            } else {
+              const diasAtraso = Math.abs(diffDays);
+              reviewBadge = `
+          <div class="review-badge overdue">
+            ⏰ Vencido há: ${diasAtraso} ${diasAtraso === 1 ? 'dia' : 'dias'}
+          </div>
+        `;
+            }
           }
         }
 
         card.innerHTML = `
-        <div class="card-header">
-          <div style="flex: 1;">
-            <h3>${historia.titulo}</h3>
-            ${reviewBadge}
-          </div>
-          <span class="status" data-status="${historia.status}">${historia.status}</span>
-        </div>
-        
-        <div class="card-dates">
-          <div class="date-info">
-            <span class="label">Criado em:</span>
-            <span class="value">${dataCriacao} ${horaCriacao ? `às ${horaCriacao}` : ''}</span>
-          </div>
-          <div class="date-info">
-            <span class="label">Editado em:</span>
-            <span class="value">${dataEdicao} ${horaEdicao ? `às ${horaEdicao}` : ''}</span>
-          </div>
-          <div class="date-info">
-            <span class="label">Anotações:</span>
-            <span class="value">${numAnotacoes} anotações</span>
-          </div>
-        </div>
-        
-        <div class="card-footer">
-          <div class="card-actions">
-            <button class="secondary small" onclick="abrirModal('${cliente}', ${index})">Editar</button>
-            <button class="danger small" onclick="excluir('${cliente}', ${index})">Excluir</button>
-          </div>
-        </div>
-      `;
+    <div class="card-header">
+      <div style="flex: 1;">
+        <h3>${historia.titulo || ''}</h3>
+        ${reviewBadge}
+      </div>
+      <span class="status" data-status="${historia.status}">
+        ${historia.status}
+      </span>
+    </div>
+
+    <div class="card-dates">
+      <div class="date-info">
+        <span class="label">Criado em:</span>
+        <span class="value">
+          ${dataCriacao} ${horaCriacao ? `às ${horaCriacao}` : ''}
+        </span>
+      </div>
+      <div class="date-info">
+        <span class="label">Editado em:</span>
+        <span class="value">
+          ${dataEdicao} ${horaEdicao ? `às ${horaEdicao}` : ''}
+        </span>
+      </div>
+      <div class="date-info">
+        <span class="label">Anotações:</span>
+        <span class="value">${numAnotacoes} anotações</span>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="card-actions">
+        <button class="secondary small" onclick="abrirModal('${cliente}', ${index})">
+          Editar
+        </button>
+        <button class="danger small" onclick="excluir('${cliente}', ${index})">
+          Excluir
+        </button>
+      </div>
+    </div>
+  `;
 
         return card;
       }
+
+
 
       function excluir(cliente, index) {
         if (!confirm("Tem certeza que deseja excluir esta história?")) return;
@@ -3665,8 +4029,12 @@
 
       // Renderizar calendário
       function renderCalendar(context) {
-        const monthYearElement = document.getElementById(`calendarMonthYear${capitalizeFirstLetter(context)}`);
-        const daysElement = document.getElementById(`calendarDays${capitalizeFirstLetter(context)}`);
+        const monthYearElement = document.getElementById(
+          `calendarMonthYear${capitalizeFirstLetter(context)}`
+        );
+        const daysElement = document.getElementById(
+          `calendarDays${capitalizeFirstLetter(context)}`
+        );
 
         // Configurar mês e ano atual
         const monthNames = [
@@ -3682,11 +4050,9 @@
         // Limpar dias anteriores
         daysElement.innerHTML = '';
 
-        // Primeiro dia do mês
+        // Primeiro e último dia do mês
         const firstDay = new Date(currentYear, currentMonth, 1);
-        // Último dia do mês
         const lastDay = new Date(currentYear, currentMonth + 1, 0);
-        // Dia da semana do primeiro dia (0 = Domingo, 6 = Sábado)
         const firstDayOfWeek = firstDay.getDay();
 
         // Hoje
@@ -3704,7 +4070,7 @@
           day.getMonth() === selectedDateVar.getMonth() &&
           day.getFullYear() === selectedDateVar.getFullYear();
 
-        // Adicionar dias do mês anterior
+        // Dias do mês anterior (visual)
         const prevMonthLastDay = new Date(currentYear, currentMonth, 0).getDate();
         for (let i = firstDayOfWeek - 1; i >= 0; i--) {
           const day = new Date(currentYear, currentMonth - 1, prevMonthLastDay - i);
@@ -3715,7 +4081,7 @@
           daysElement.appendChild(button);
         }
 
-        // Adicionar dias do mês atual
+        // Dias do mês atual
         for (let day = 1; day <= lastDay.getDate(); day++) {
           const date = new Date(currentYear, currentMonth, day);
           const button = document.createElement('button');
@@ -3732,24 +4098,15 @@
             button.classList.add('selected');
           }
 
-          // Desabilitar datas passadas
-          const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-          const dateMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-          if (dateMidnight < todayMidnight) {
-            button.classList.add('disabled');
-            button.disabled = true;
-          } else {
-            button.onclick = () => selectDate(date, context);
-          }
+          // ✅ PERMITIR TODAS AS DATAS (passadas, hoje e futuras)
+          button.onclick = () => selectDate(date, context);
 
           daysElement.appendChild(button);
         }
 
-        // Adicionar dias do próximo mês
-        const totalCells = 42; // 6 semanas * 7 dias
-        const daysInMonth = lastDay.getDate();
-        const daysSoFar = firstDayOfWeek + daysInMonth;
+        // Dias do próximo mês (visual)
+        const totalCells = 42;
+        const daysSoFar = firstDayOfWeek + lastDay.getDate();
         const nextMonthDays = totalCells - daysSoFar;
 
         for (let i = 1; i <= nextMonthDays; i++) {
@@ -3761,6 +4118,7 @@
           daysElement.appendChild(button);
         }
       }
+
 
       // Mudar mês no calendário
       function changeMonth(context, delta) {
@@ -3805,53 +4163,44 @@
         editIndex = index;
 
         const historia = dados[cliente][index];
-        document.getElementById('editTitulo').value = historia.titulo;
+
+        document.getElementById('editTitulo').value = historia.titulo || '';
         document.getElementById('editStatus').value = historia.status;
         document.getElementById('currentClienteName').textContent = cliente;
 
-        // Configurar campos de revisão
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
-        const reviewFields = document.getElementById('reviewFieldsEdit'); // CORRIGIDO: Agora usa o ID correto
+        const reviewFields = document.getElementById('reviewFieldsEdit');
+        const reviewDateInput = document.getElementById('editReviewDate');
 
-        // Resetar calendário
         currentCalendarDate = new Date();
-        selectedDate = null;
+        selectedDate = null; // importante: não marcar como "alterado"
 
-        if (historia.prazoRevisao && historia.dataConfiguracaoRevisao) {
+        if (historia.dataRevisao) {
           reviewCheckbox.checked = true;
           reviewFields.classList.remove('hidden');
 
-          // Calcular data de vencimento baseado na configuração
-          const dataConfigISO = formatarDataISO(historia.dataConfiguracaoRevisao);
-          const dataConfiguracao = new Date(dataConfigISO);
-          const dataVencimento = new Date(dataConfiguracao);
-          dataVencimento.setDate(dataVencimento.getDate() + historia.prazoRevisao);
+          reviewDateInput.value = historia.dataRevisao;
 
-          selectedDate = dataVencimento;
-          document.getElementById('editReviewDate').value = formatDate(dataVencimento);
         } else {
           reviewCheckbox.checked = false;
           reviewFields.classList.add('hidden');
-          document.getElementById('editReviewDate').value = '';
+          reviewDateInput.value = '';
         }
 
-        // Garantir que a propriedade notas exista
-        if (!historia.notas) {
+        if (!Array.isArray(historia.notas)) {
           historia.notas = [];
         }
 
-        // Renderizar anotações (agora ordenadas por data/hora mais recente)
         renderizarAnotacoes(historia.notas);
 
         document.getElementById('modal').classList.add('active');
 
-        // Foco no título ao abrir o modal
-        setTimeout(() => {
-          document.getElementById('editTitulo').focus();
-        }, 100);
       }
 
+
+
       function fecharModal() {
+        salvarEFecharAnotacoesAbertas();
         document.getElementById('modal').classList.remove('active');
         editCliente = null;
         editIndex = null;
@@ -3860,17 +4209,10 @@
 
       function toggleReviewFields() {
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
-        const reviewFields = document.getElementById('reviewFieldsEdit'); // CORRIGIDO: Agora usa o ID correto
+        const reviewFields = document.getElementById('reviewFieldsEdit');
 
         if (reviewCheckbox.checked) {
           reviewFields.classList.remove('hidden');
-          // Se não houver data selecionada, sugerir 7 dias a partir de hoje
-          if (!selectedDate) {
-            const futureDate = new Date();
-            futureDate.setDate(futureDate.getDate() + 7);
-            selectedDate = futureDate;
-            document.getElementById('editReviewDate').value = formatDate(futureDate);
-          }
         } else {
           reviewFields.classList.add('hidden');
           selectedDate = null;
@@ -3878,67 +4220,47 @@
         }
       }
 
+
       function salvarEdicao() {
         const titulo = document.getElementById('editTitulo').value.trim();
+        const status = document.getElementById('editStatus').value;
 
-        if (!titulo) {
-          alert('O título é obrigatório.');
-          document.getElementById('editTitulo').focus();
-          return;
-        }
+        const agora = new Date();
 
-        const dataAtual = new Date();
-        const dataFormatada = formatarDataBrasileira(dataAtual.toISOString().split('T')[0]);
-        const horaAtual = dataAtual.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        // ✅ DATA LOCAL (sem UTC)
+        const dataFormatada = formatarDataBrasileira(
+          `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`
+        );
 
-        // Preservar dados existentes e atualizar
+        const horaAtual = agora.toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
         const historiaExistente = dados[editCliente][editIndex];
-
-        // Preservar anotações se existirem (mantendo a ordenação correta)
         const notas = historiaExistente.notas || [];
 
-        // Verificar se deve adicionar/remover prazo de revisão
         const reviewCheckbox = document.getElementById('editReviewCheckbox');
 
-        let prazoRevisao = null;
-        let dataConfiguracaoRevisao = null;
+        let dataRevisao = historiaExistente.dataRevisao || null;
 
-        if (reviewCheckbox.checked) {
-          // Calcular dias baseado na data selecionada
-          if (selectedDate) {
-            const hoje = new Date();
-            const dataSelecionada = new Date(selectedDate);
+        // 🔒 Só altera se o usuário REALMENTE escolheu outra data
+        if (reviewCheckbox.checked && selectedDate) {
+          dataRevisao = formatDate(selectedDate); // DD/MM/YYYY
+        }
 
-            // Calcular diferença em dias
-            const diffTime = dataSelecionada - hoje;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffDays < 1) {
-              alert('Por favor, selecione uma data futura para a revisão.');
-              toggleCalendar('edit');
-              return;
-            }
-
-            prazoRevisao = diffDays;
-            dataConfiguracaoRevisao = dataFormatada; // Data da configuração é hoje
-          } else {
-            alert('Por favor, selecione uma data para a revisão.');
-            toggleCalendar('edit');
-            return;
-          }
+        if (!reviewCheckbox.checked) {
+          dataRevisao = null;
         }
 
         dados[editCliente][editIndex] = {
-          titulo: titulo,
-          status: document.getElementById('editStatus').value,
-          dataCriacao: historiaExistente.dataCriacao || dataFormatada,
-          horaCriacao: historiaExistente.horaCriacao || horaAtual,
+          ...historiaExistente,
+          titulo,
+          status,
           dataEdicao: dataFormatada,
           horaEdicao: horaAtual,
-          cliente: editCliente,
-          notas: notas, // Preservar anotações
-          prazoRevisao: prazoRevisao,
-          dataConfiguracaoRevisao: dataConfiguracaoRevisao
+          notas,
+          dataRevisao
         };
 
         salvar();
@@ -3946,9 +4268,14 @@
         renderCards();
       }
 
-      // ===== FUNÇÕES PARA ANOTAÇÕES =====
+      function getHojeISO() {
+        const hoje = new Date();
+        const year = hoje.getFullYear();
+        const month = String(hoje.getMonth() + 1).padStart(2, '0');
+        const day = String(hoje.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
 
-      // Função auxiliar para ordenar anotações por data/hora mais recente
       function ordenarAnotacoes(notas) {
         if (!notas || notas.length === 0) return [];
 
@@ -3998,12 +4325,12 @@
 
         if (!notas || notas.length === 0) {
           container.innerHTML = `
-          <div class="note-item">
-            <div class="note-content note-content-placeholder">
-              Nenhuma anotação ainda. Clique em "Nova Anotação" para adicionar.
-            </div>
-          </div>
-        `;
+      <div class="note-item">
+        <div class="note-content note-content-placeholder">
+          Nenhuma anotação ainda. Clique em "Nova Anotação" para adicionar.
+        </div>
+      </div>
+    `;
           return;
         }
 
@@ -4012,17 +4339,24 @@
         // Ordenar anotações por data/hora mais recente
         const notasOrdenadas = ordenarAnotacoes(notas);
 
+        // 🔥 VERIFICA SE EXISTE ALGUMA NOTA EM EDIÇÃO
+        const existeNotaEmEdicao = notasOrdenadas.some(nota => nota.editando);
+
         notasOrdenadas.forEach((nota, index) => {
-          // Verificar se a anotação está em modo de edição
+
+          // 🔒 SE EXISTE UMA NOTA EM EDIÇÃO, ESCONDE TODAS AS OUTRAS
+          if (existeNotaEmEdicao && !nota.editando) {
+            return;
+          }
+
           if (nota.editando) {
-            // Se estiver em modo de edição, criar o formulário de edição
             criarFormularioEdicaoAnotacao(container, nota, index);
           } else {
-            // Se não, criar a visualização normal
             criarVisualizacaoAnotacao(container, nota, index);
           }
         });
       }
+
 
       function criarVisualizacaoAnotacao(container, nota, index) {
         const noteElement = document.createElement('div');
@@ -4049,29 +4383,32 @@
 
       function criarFormularioEdicaoAnotacao(container, nota, index) {
         const noteElement = document.createElement('div');
-        noteElement.className = 'note-item';
-
+        noteElement.className = 'note-item editing';
         // Reverter quebras de linha para o textarea
         const textoParaEdicao = reverterQuebrasDeLinha(nota.texto);
 
         noteElement.innerHTML = `
-          <div class="note-header">
-            <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
-          </div>
-          <textarea class="note-edit-input" id="editNoteInput${index}" placeholder="Digite sua anotação...">${textoParaEdicao || ''}</textarea>
-          <div class="note-actions">
-            <button class="secondary small" onclick="cancelarEdicaoAnotacao(${index})">Cancelar</button>
-            <button class="primary small" onclick="salvarEdicaoAnotacao(${index})">Salvar</button>
-          </div>
-        `;
+    <div class="note-header">
+      <span class="note-date">${nota.data} ${nota.hora ? `às ${nota.hora}` : ''}</span>
+    </div>
+    <textarea class="note-edit-input" id="editNoteInput${index}" placeholder="Digite sua anotação...">${textoParaEdicao || ''}</textarea>
+    <div class="note-actions">
+      <button type="button" class="secondary small" onclick="cancelarEdicaoAnotacao(${index})">
+        Cancelar
+      </button>
+      <button type="button" class="primary small" onclick="salvarEdicaoAnotacao(${index})">
+        Salvar
+      </button>
+    </div>
+  `;
+
         container.appendChild(noteElement);
 
-        // Focar no textarea após um pequeno delay para garantir que o elemento foi renderizado
+        // Focar no textarea após renderizar
         setTimeout(() => {
           const textarea = document.getElementById(`editNoteInput${index}`);
           if (textarea) {
             textarea.focus();
-            // Colocar cursor no final do texto
             textarea.setSelectionRange(textarea.value.length, textarea.value.length);
           }
         }, 50);
@@ -4118,19 +4455,33 @@
 
         if (notaOriginalIndex === -1) return;
 
-        const noteContent = document.getElementById(`noteContent${notaOriginalIndex}`);
-        const expandBtn = document.querySelectorAll('.note-expand-btn')[notaOriginalIndex];
+        const noteItems = document.querySelectorAll('.note-item');
+        const noteItem = noteItems[notaOriginalIndex];
 
-        if (!noteContent || !expandBtn) return;
+        if (!noteItem) return;
 
-        if (noteContent.classList.contains('expanded')) {
-          noteContent.classList.remove('expanded');
-          expandBtn.textContent = '+';
+        const expandBtn = noteItem.querySelector('.note-expand-btn');
+        const content = noteItem.querySelector('.note-content');
+
+        const estaExpandida = noteItem.classList.contains('expanded');
+
+        if (estaExpandida) {
+          // 🔒 FECHAR
+          noteItem.classList.remove('expanded');
+          noteItem.style.height = '120px';
+
+          if (content) content.style.maxHeight = '60px';
+          if (expandBtn) expandBtn.textContent = '+';
         } else {
-          noteContent.classList.add('expanded');
-          expandBtn.textContent = '-';
+          // 🔓 ABRIR
+          noteItem.classList.add('expanded');
+          noteItem.style.height = 'auto';
+
+          if (content) content.style.maxHeight = 'none';
+          if (expandBtn) expandBtn.textContent = '−';
         }
       }
+
 
       // Função auxiliar para encontrar o índice original no array ordenado
       function encontrarIndiceOriginal(indexOrdenado, notasOrdenadas) {
@@ -4147,6 +4498,7 @@
         }
         return -1;
       }
+
 
       function editarAnotacao(index) {
         const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
@@ -4194,6 +4546,7 @@
         }
       }
 
+
       function cancelarEdicaoAnotacao(index) {
         const notasOrdenadas = ordenarAnotacoes(dados[editCliente][editIndex].notas);
         const notaOriginalIndex = encontrarIndiceOriginal(index, notasOrdenadas);
@@ -4230,23 +4583,34 @@
 
       // FUNÇÕES PARA IMPORTAR/EXPORTAR DADOS
       function exportarDados() {
-        // Obter todos os dados do localStorage
+        const agora = new Date();
+
+        // ✅ Data local para metadados
+        const dataExportacao = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
+        const horaExportacao = agora.toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+
+        // Obter todos os dados
         const dadosCompletos = {
           clientes: dados,
           equipes: dadosEquipes,
-          exportadoEm: new Date().toISOString(),
-          versao: '1.4' // Atualizado para incluir prazo de revisão na criação
+          exportadoEm: `${dataExportacao} ${horaExportacao}`, // ✅ local
+          versao: '1.5' // atualizado após correção definitiva de datas
         };
 
         // Converter para JSON
         const jsonDados = JSON.stringify(dadosCompletos, null, 2);
 
-        // Criar um blob e fazer download
+        // Criar arquivo para download
         const blob = new Blob([jsonDados], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
+
         const a = document.createElement('a');
         a.href = url;
-        a.download = `historias-clientes-backup-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `historias-clientes-backup-${dataExportacao}.json`;
+
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -4254,6 +4618,7 @@
 
         alert('Dados exportados com sucesso!');
       }
+
 
       function importarDados() {
         const fileInput = document.getElementById('jsonFile');
@@ -4327,6 +4692,26 @@
         renderEquipesList();
 
         alert('Todos os dados foram excluídos com sucesso.');
+      }
+
+
+      function irParaCriarHistoria() {
+        // Simula o clique no menu lateral
+        const menuItem = document.querySelector(
+          '.menu-item[data-section="criar-historia"]'
+        );
+
+        if (menuItem) {
+          menuItem.click();
+        }
+
+        // Pequeno delay para garantir que a seção abriu
+        setTimeout(() => {
+          const textarea = document.getElementById('texto');
+          if (textarea) {
+            textarea.focus();
+          }
+        }, 150);
       }
     </script>
 
